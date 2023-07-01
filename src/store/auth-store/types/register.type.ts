@@ -4,10 +4,8 @@ export type Register = {
   name: string;
   surname: string;
   email: string;
-  roles: string[];
   address: Address;
-  phoneNumber: string;
+  phone: string;
   password: string;
   confirmPassword: string;
-  seniority: string;
 };

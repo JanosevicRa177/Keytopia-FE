@@ -6,9 +6,14 @@ import { useApplicationStore } from "../store/store";
 interface CustomRouteProps {
   element: JSX.Element;
   requiredRole?: string[];
+  needAuthorization?: boolean;
 }
 
-const ProtectedRoute = ({ element, requiredRole }: CustomRouteProps) => {
+const ProtectedRoute = ({
+  element,
+  requiredRole,
+  needAuthorization,
+}: CustomRouteProps) => {
   useEffect(() => {}, []);
 
   const user = useApplicationStore((state) => state.user);
@@ -36,7 +41,7 @@ const ProtectedRoute = ({ element, requiredRole }: CustomRouteProps) => {
     return false;
   }
 
-  if (!isAuthenticated()) {
+  if (!isAuthenticated() && needAuthorization) {
     return <Navigate to="/"></Navigate>;
   }
   if (userHasNoRole()) {

@@ -4,14 +4,16 @@ import { colors } from "../style/color";
 export const Footer = () => {
   return (
     <Flex
-      bgGradient={colors.background}
+      bgGradient={colors.component}
       color={"#fff"}
       h={"35px"}
       alignItems="center"
       justifyContent="center"
       mt="auto"
+      backdropFilter="auto"
+      backdropBlur="4px"
     >
-      <Text>© 2023 Keytopia</Text>
+      <Text fontSize={"xl"}>© 2023 Keytopia</Text>
     </Flex>
   );
 };

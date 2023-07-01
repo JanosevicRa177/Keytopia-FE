@@ -1,21 +1,30 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { ToastContainer } from "react-toastify";
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
 import { routes } from "./routes/routes";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import "react-toastify/dist/ReactToastify.css";
+import { ImgComponent } from "./components/img-component";
 
 function App() {
   return (
     <Router>
       <Flex w="100%" h="100%" minH="100vh" direction="column">
-        <Header></Header>
+        <ImgComponent />
+        <Header />
+        <Box
+          bg={"#fbd3c7"}
+          position={"fixed"}
+          w={"100vw"}
+          h={"100vh"}
+          zIndex={"-1"}
+        />
         <Routes>
           {routes.map((route, index) => {
-            const { path, isProtected, requiredRole, element: Element } = route;
-            if (isProtected && requiredRole) {
+            const { path, needAuth, requiredRole, element: Element } = route;
+            if (needAuth && requiredRole) {
               return (
                 <Route
                   key={index}
@@ -25,6 +34,7 @@ function App() {
                       key={index}
                       requiredRole={requiredRole}
                       element={Element}
+                      needAuthorization={needAuth}
                     />
                   }
                 />
@@ -34,7 +44,7 @@ function App() {
           })}
         </Routes>
         <Footer></Footer>
-        <ToastContainer position={"top-right"} />
+        <ToastContainer position={"top-right"} theme={"colored"} />
       </Flex>
     </Router>
   );

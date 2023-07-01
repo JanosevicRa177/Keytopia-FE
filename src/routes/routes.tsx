@@ -1,22 +1,22 @@
-import { HomePage } from "../pages/HomePage";
-import { LoginPage } from "../pages/LoginPage";
+import { AuthPage } from "../pages/AuthPage";
+import { MainPage } from "../pages/MainPage";
 
 interface CustomRouteProps {
   path: string;
   element: JSX.Element;
-  isProtected: boolean;
+  needAuth: boolean;
   requiredRole?: string[];
 }
 
 export const routes: CustomRouteProps[] = [
   {
-    path: "/",
-    element: <HomePage />,
-    isProtected: false,
+    path: "/authorization",
+    element: <AuthPage />,
+    needAuth: false,
   },
   {
-    path: "/login",
-    element: <LoginPage />,
-    isProtected: false,
+    path: "/",
+    element: <MainPage />,
+    needAuth: false,
   },
 ];
