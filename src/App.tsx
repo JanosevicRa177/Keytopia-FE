@@ -12,8 +12,8 @@ function App() {
   return (
     <Router>
       <Flex w="100%" h="100%" minH="100vh" direction="column">
-        <ImgComponent />
         <Header />
+        <ImgComponent />
         <Box
           bg={"#fbd3c7"}
           position={"fixed"}

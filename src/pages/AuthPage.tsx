@@ -37,7 +37,7 @@ export const AuthPage = () => {
             flexDirection={"column"}
             opacity={isOpenLogin ? "0" : "1"}
             transition={"0.2s"}
-            transitionDelay={"0.2s"}
+            transitionDelay={"0.3s"}
             mx={"32px"}
             justifyContent={"center"}
             alignContent={"center"}
@@ -79,7 +79,7 @@ export const AuthPage = () => {
             flexDirection={"column"}
             opacity={isOpenRegister ? "0" : "1"}
             transition={"0.2s"}
-            transitionDelay={"0.2s"}
+            transitionDelay={"0.3s"}
             mx={"32px"}
             justifyContent={"center"}
             alignContent={"center"}
