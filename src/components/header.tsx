@@ -9,11 +9,23 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const user = useApplicationStore((state) => state.user);
   const logout = useApplicationStore((state) => state.logout);
+  const showLogin = useApplicationStore((state) => state.showLogin);
+  const showRegister = useApplicationStore((state) => state.showRegister);
   let location = useLocation();
-  const handleLogout = () => {
+  function handleLogout() {
     logout();
     navigate("/unauthorized");
-  };
+  }
+  async function handleLogin() {
+    showLogin().then(() => {
+      navigate("/authorization");
+    });
+  }
+  async function handleRegister() {
+    showRegister().then(() => {
+      navigate("/authorization");
+    });
+  }
   useEffect(() => {
     setIsOpen(Boolean(!location.pathname.match("/authorization")));
   }, [location]);
@@ -59,13 +71,9 @@ export const Header = () => {
                   Logout
                 </Text>
               ) : (
-                <Flex gap="15px">
-                  <Link to="/authorization" color={"white"}>
-                    Login
-                  </Link>
-                  <Link to="/register" color={"white"}>
-                    Register
-                  </Link>
+                <Flex gap="15px" color={"white"}>
+                  <Text onClick={() => handleLogin()}>Login</Text>
+                  <Text onClick={() => handleRegister()}>Register</Text>
                 </Flex>
               )}
             </Flex>

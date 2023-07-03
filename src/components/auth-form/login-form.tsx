@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Text,
   Center,
@@ -7,6 +8,7 @@ import {
   FormLabel,
   Input,
   FormErrorMessage,
+  Box,
 } from "@chakra-ui/react";
 import { colorPallete } from "../../style/color";
 import { useApplicationStore } from "../../store/store";
@@ -17,43 +19,41 @@ import {
   LOGIN_VALIDATION_SCHEMA,
 } from "../../utils/auth.constants";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
-interface LoginFormProps {
-  setShowLogin: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export type FormValues = {
+export type LoginFormValues = {
   email: string;
   password: string;
 };
 
-export const LoginForm: React.FC<LoginFormProps> = (props) => {
+export const LoginForm = () => {
+  const showRegister = useApplicationStore((state) => state.showRegister);
   const login = useApplicationStore((state) => state.login);
+  const token = useApplicationStore((state) => state.token);
   const navigate = useNavigate();
   function handleSwitchOnRegister() {
-    props.setShowRegister(true);
-    props.setShowLogin(false);
+    showRegister();
   }
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
-  } = useForm<FormValues>({
+  } = useForm<LoginFormValues>({
     defaultValues: LOGIN_DEFAULT_VALUES,
     resolver: yupResolver(LOGIN_VALIDATION_SCHEMA),
   });
-  async function handleLogin(values: FormValues) {
-    console.log("login!");
-    console.log(values);
-    //await login(values);
-    navigate("/");
+  async function handleLogin(values: LoginFormValues) {
+    await login(values);
   }
+  useEffect(() => {
+    if (token != null) {
+      navigate("/");
+    }
+  }, [token]);
   return (
     <Flex
       bg={"rgba(255,255,255,1)"}
-      color={"#000"}
+      color={colorPallete.text}
       w={"100%"}
       mt="auto"
       backdropFilter="auto"
@@ -71,7 +71,7 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
         <Text fontWeight={"semibold"} textAlign={"center"} fontSize={"5xl"}>
           Login
         </Text>
-        <FormControl mt={"16px"} isInvalid={errors.email != null}>
+        <FormControl isInvalid={errors.email != null}>
           <FormLabel fontWeight={"semibold"}>Email address</FormLabel>
           <Input
             type="text"
@@ -81,11 +81,15 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
             {...register("email")}
             _hover={{ borderColor: colorPallete.inputBorderHover }}
           />
-          {errors.email && (
-            <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+          {errors.email ? (
+            <FormErrorMessage ml={"8px"}>
+              {errors.email.message}
+            </FormErrorMessage>
+          ) : (
+            <Box h={"25px"} w="100%" ml={"8px"}></Box>
           )}
         </FormControl>
-        <FormControl mt={"16px"} isInvalid={errors.password != null}>
+        <FormControl isInvalid={errors.password != null}>
           <FormLabel mt={"8px"} fontWeight={"semibold"}>
             Password
           </FormLabel>
@@ -97,16 +101,20 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
             borderColor={colorPallete.inputBorder}
             _hover={{ borderColor: colorPallete.inputBorderHover }}
           />
-          {errors.password && (
-            <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+          {errors.password ? (
+            <FormErrorMessage ml={"8px"}>
+              {errors.password.message}
+            </FormErrorMessage>
+          ) : (
+            <Box h={"25px"} w="100%" ml={"8px"}></Box>
           )}
         </FormControl>
-        <Center h={"45px"} mt={"32px"} w={"auto"}>
+        <Center h={"45px"} mt={"16px"} w={"auto"}>
           <Button
             w={"calc(100% - 64px)"}
             h={"45px"}
             rounded={"32px"}
-            onClick={() => handleSubmit(handleLogin)}
+            onClick={handleSubmit(handleLogin)}
             overflow={"hidden"}
             bg={colorPallete.button}
             _hover={{
@@ -123,7 +131,7 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
         </Center>
         <Flex
           h={"45px"}
-          mt={"32px"}
+          mt={"12px"}
           w={"auto"}
           justifyContent={"end"}
           alignContent={"center"}

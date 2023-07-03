@@ -27,39 +27,39 @@ export const KeycapsImages = () => {
       <Box w={"55%"} h={"80%"} position={"relative"}>
         <Img
           src="keycaps.png"
-          left={"-22%"}
-          top={position ? "38%" : "33%"}
+          left={"-27%"}
+          top={position ? "41%" : "36%"}
           transition={"0.5s ease"}
           position={"absolute"}
-          transform={"rotate(-170deg)"}
-          w={"55%"}
+          transform={"rotate(-160deg)"}
+          w={"60%"}
         />
         <Img
           src="keycaps.png"
-          left={"-22%"}
-          top={position ? "-25%" : "-30%"}
+          left={"-27%"}
+          top={position ? "-28%" : "-33%"}
           transition={"0.5s ease"}
           position={"absolute"}
           transform={"rotate(-30deg)"}
-          w={"55%"}
+          w={"60%"}
         />
         <Img
           src="keycaps.png"
-          right={"-22%"}
-          top={position ? "38%" : "33%"}
+          right={"-27%"}
+          top={position ? "41%" : "36%"}
           transition={"0.5s ease"}
           position={"absolute"}
           transform={"rotate(-230deg)"}
-          w={"55%"}
+          w={"68%"}
         />
         <Img
           src="keycaps.png"
-          right={"-22%"}
-          top={position ? "-25%" : "-30%"}
+          right={"-27%"}
+          top={position ? "-28%" : "-33%"}
           transition={"0.5s ease"}
           position={"absolute"}
           transform={"rotate(-20deg)"}
-          w={"55%"}
+          w={"60%"}
         />
       </Box>
     </Center>

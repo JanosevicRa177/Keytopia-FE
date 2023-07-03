@@ -1,14 +1,13 @@
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
-import { colors } from "../style/color";
-import { useState } from "react";
+import { colorPallete, colors } from "../style/color";
 import { RegisterForm } from "../components/auth-form/register-form";
 import { KeycapsImages } from "../components/auth-form/keycaps-images";
 import { LoginForm } from "../components/auth-form/login-form";
 import { AuthLogo } from "../components/auth-form/auth-logo";
+import { useApplicationStore } from "../store/store";
 
 export const AuthPage = () => {
-  const [isOpenLogin, setIsOpenLogin] = useState(true);
-  const [isOpenRegister, setIsOpenRegister] = useState(false);
+  const formState = useApplicationStore((state) => state.formState);
   return (
     <Center
       w={"calc(100vw - 32px)"}
@@ -20,7 +19,7 @@ export const AuthPage = () => {
       <AuthLogo />
       <Flex
         bgGradient={colors.component}
-        w={"55%"}
+        w={"65%"}
         h={"calc(80% + 70px)"}
         boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
         rounded={"8px"}
@@ -35,7 +34,7 @@ export const AuthPage = () => {
             position={"absolute"}
             w={"calc(50% - 64px)"}
             flexDirection={"column"}
-            opacity={isOpenLogin ? "0" : "1"}
+            opacity={formState.state === "LOGIN" ? "0" : "1"}
             transition={"0.2s"}
             transitionDelay={"0.3s"}
             mx={"32px"}
@@ -44,6 +43,7 @@ export const AuthPage = () => {
             h={"calc(0.8 * (100vh - 35px))"}
             textAlign={"justify"}
             fontSize={"large"}
+            color={colorPallete.text}
           >
             <Text
               textAlign={"center"}
@@ -62,13 +62,10 @@ export const AuthPage = () => {
           </Flex>
           <Box
             position={"relative"}
-            left={isOpenLogin ? "0px" : "-100%"}
+            left={formState.state === "LOGIN" ? "0px" : "-101%"}
             transition={"0.3s ease"}
           >
-            <LoginForm
-              setShowLogin={setIsOpenLogin}
-              setShowRegister={setIsOpenRegister}
-            />
+            <LoginForm />
           </Box>
         </Box>
         <Box w={"100%"} flexGrow={"1"}>
@@ -77,7 +74,7 @@ export const AuthPage = () => {
             position={"absolute"}
             w={"calc(50% - 64px)"}
             flexDirection={"column"}
-            opacity={isOpenRegister ? "0" : "1"}
+            opacity={formState.state === "REGISTER" ? "0" : "1"}
             transition={"0.2s"}
             transitionDelay={"0.3s"}
             mx={"32px"}
@@ -106,14 +103,13 @@ export const AuthPage = () => {
             your dream keyboard to life.
           </Flex>
           <Box
-            position={"relative"}
-            left={isOpenRegister ? "0px" : "100%"}
+            left={formState.state === "LOGIN" ? "0px" : "100%"}
             transition={"0.3s ease"}
+            h={"100%"}
+            overflowY={"scroll"}
+            bg={"rgba(255,255,255,1)"}
           >
-            <RegisterForm
-              setShowLogin={setIsOpenLogin}
-              setShowRegister={setIsOpenRegister}
-            />
+            <RegisterForm />
           </Box>
         </Box>
       </Flex>

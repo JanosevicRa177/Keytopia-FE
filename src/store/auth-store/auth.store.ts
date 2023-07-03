@@ -1,3 +1,4 @@
+import { AuthOpenFormState } from './types/state.type';
 import { produce } from 'immer';
 import { StateCreator } from 'zustand';
 import { Login } from './types/login.type';
@@ -11,18 +12,22 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export type AuthStoreState = {
   user: User | null;
   token: string | null;
+  formState: AuthOpenFormState;
 };
 
 export type AuthActions = {
   login: (data: Login) => Promise<void>;
   logout: () => void;
   fetchLoggedUser: (token: string) => Promise<void>;
+  showLogin: () => Promise<void>;
+  showRegister: () => Promise<void>;
   setLoginData: (token: string) => void;
 };
 
 export const state: AuthStoreState = {
   user: null,
-  token: null
+  token: null,
+  formState: {state:"LOGIN"},
 };
 
 export type AuthStore = AuthStoreState & AuthActions;
@@ -42,10 +47,10 @@ export const authStoreSlice: StateCreator<Store, [], [], AuthStore> = (
         },
       }
       );
-      await get().fetchLoggedUser(resp.data.accessToken);
+      await get().fetchLoggedUser(resp.data);
       set(
         produce((state: AuthStoreState) => {
-          state.token = resp.data.accessToken;
+          state.token = resp.data;
           return state;
         })
       );
@@ -61,7 +66,23 @@ export const authStoreSlice: StateCreator<Store, [], [], AuthStore> = (
       toast.error(e.response.data.message);
     }
   },
-  
+  showLogin: async () => {
+    set(
+      produce((state: AuthStore) => {
+        state.formState.state = "LOGIN"
+        return state;
+      })
+    );
+  },
+  showRegister: async () => {
+    set(
+      produce((state: AuthStore) => {
+        state.formState.state = "REGISTER"
+        state.user = null;
+        return state;
+      })
+    );
+  },
   logout: () => {
     set(
       produce((state: AuthStore) => {
@@ -75,7 +96,7 @@ export const authStoreSlice: StateCreator<Store, [], [], AuthStore> = (
     try {
       const resp = await axios.get(`${BASE_URL}/auth/current`, {
         headers: {
-          Authorization: 'Bearer ' + token,
+            'Authorization': 'Bearer ' + token,
         },
       });
       set(

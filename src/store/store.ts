@@ -10,9 +10,10 @@ export const useApplicationStore = create<Store>()(
       ...authStoreSlice(...a),
     })),
     {
-      partialize: ({ token, user }) => ({
+      partialize: ({ token, user,formState }) => ({
         token,
         user,
+        formState
       }),
       name: 'application-store',
     }

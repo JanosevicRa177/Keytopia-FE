@@ -9,6 +9,7 @@ export const colorPallete = {
     link: "#8E2DE2",
     inputBorder: "#c07dfa",
     inputBorderHover: "#d1a2fa",
+    text: "#242424",
 }
 
 export const colors = {

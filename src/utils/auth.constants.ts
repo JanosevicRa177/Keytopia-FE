@@ -22,7 +22,7 @@ export const REGISTER_VALIDATION_SCHEMA = yup.object({
     ),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password')], 'Passwords must match'),
+    .oneOf([yup.ref('password')], 'Passwords must match').required(),
   name: yup.string().required(),
   surname: yup.string().required(),
   phone: yup.string().required(),
@@ -36,17 +36,10 @@ export const REGISTER_VALIDATION_SCHEMA = yup.object({
 });
 
 export const REGISTER_DEFAULT_VALUES = {
-  email: '',
-  password: '',
-  confirmPassword: '',
-  name: '',
-  surname: '',
-  phoneNumber: '',
-};
-export const REGISTER_USER_DEFAULT_VALUES = {
   name: '',
   surname: '',
   email: '',
+  phone: '',
   address: {
     street: '',
     streetNumber: '',
@@ -54,11 +47,6 @@ export const REGISTER_USER_DEFAULT_VALUES = {
     zipCode: '',
     country: '',
   },
-  phoneNumber: '',
   password: '',
   confirmPassword: '',
-  role: 'ENGINEER',
-};
-export const DEFAULT_HEADERS = {
-  'Content-Type': 'application/json',
 };

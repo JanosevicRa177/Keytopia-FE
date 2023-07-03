@@ -7,131 +7,245 @@ import {
   FormLabel,
   Input,
   Box,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { colorPallete } from "../../style/color";
-interface RegisterFormProps {
-  setShowLogin: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowRegister: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import {
+  REGISTER_DEFAULT_VALUES,
+  REGISTER_VALIDATION_SCHEMA,
+} from "../../utils/auth.constants";
+import { useRegisterUser } from "../../hooks/auth-hooks/register-hook";
+import { ApiResponse } from "../../store/auth-store/types/response.type";
+import { useRef } from "react";
+import { useApplicationStore } from "../../store/store";
 
-export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
-  function handleSwitchOnLogin() {
-    props.setShowRegister(false);
-    props.setShowLogin(true);
+export type RegisterFormValues = {
+  name: string;
+  surname: string;
+  email: string;
+  phone: string;
+  address: {
+    street: string;
+    streetNumber: string;
+    city: string;
+    zipCode: string;
+    country: string;
+  };
+  password: string;
+  confirmPassword: string;
+};
+
+export const RegisterForm = () => {
+  const ref = useRef<null | HTMLDivElement>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormValues>({
+    defaultValues: REGISTER_DEFAULT_VALUES,
+    resolver: yupResolver(REGISTER_VALIDATION_SCHEMA),
+  });
+  const { registerUser } = useRegisterUser();
+  const showLogin = useApplicationStore((state) => state.showLogin);
+
+  async function handleSwitchOnLogin() {
+    showLogin();
+    ref.current?.scrollIntoView();
   }
-  function handleRegister() {
-    console.log("registracija!");
+
+  async function handleRegister(values: RegisterFormValues) {
+    await registerUser(values).then((res: ApiResponse<null>) => {
+      if (res.status === "SUCCESS") {
+        showLogin();
+        ref.current?.scrollIntoView();
+      }
+    });
   }
   return (
     <Flex
-      bg={"rgba(255,255,255,1)"}
-      color={"#000"}
-      w={"100%"}
+      color={colorPallete.text}
       mt="auto"
       backdropFilter="auto"
       backdropBlur="3px"
       flexDirection={"column"}
-      h={"calc(0.8 * (100vh - 17.5px))"}
+      ref={ref}
+      h={"100%"}
     >
-      <Flex
-        h={"100%"}
-        mx="32px"
-        flexDirection={"column"}
-        alignContent={"center"}
-        justifyContent={"center"}
-      >
+      <Flex mx="32px" flexDirection={"column"} my="auto" py="70px">
         <Text fontWeight={"semibold"} textAlign={"center"} fontSize={"5xl"}>
           Register
         </Text>
-        <FormControl>
+        <FormControl isInvalid={errors.email != null}>
           <FormLabel fontWeight={"semibold"} fontSize={"small"}>
             Email address
           </FormLabel>
           <Input
-            type="email"
             rounded={"30px"}
             h={"35px"}
             borderColor={colorPallete.inputBorder}
+            {...register("email")}
             _hover={{ borderColor: colorPallete.inputBorderHover }}
           />
-          <Flex gap={"16px"} mt={"4px"}>
-            <Box flexGrow={"1"}>
+          {errors.email ? (
+            <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+          ) : (
+            <Box h={"25px"} w="100%"></Box>
+          )}
+        </FormControl>
+        <Flex gap={"16px"}>
+          <Box flexGrow={"1"}>
+            <FormControl isInvalid={errors.name != null}>
               <FormLabel fontWeight={"semibold"} fontSize={"small"}>
                 Name
               </FormLabel>
               <Input
-                type="name"
                 rounded={"30px"}
                 h={"35px"}
                 borderColor={colorPallete.inputBorder}
+                {...register("name")}
                 _hover={{ borderColor: colorPallete.inputBorderHover }}
               />
-            </Box>
-            <Box flexGrow={"1"}>
+              {errors.name ? (
+                <FormErrorMessage>{errors.name.message}</FormErrorMessage>
+              ) : (
+                <Box h={"25px"} w="100%"></Box>
+              )}
+            </FormControl>
+          </Box>
+          <Box flexGrow={"1"}>
+            <FormControl isInvalid={errors.surname != null}>
               <FormLabel fontWeight={"semibold"} fontSize={"small"}>
                 Surname
               </FormLabel>
               <Input
-                type="surname"
                 rounded={"30px"}
                 h={"35px"}
                 borderColor={colorPallete.inputBorder}
+                {...register("surname")}
                 _hover={{ borderColor: colorPallete.inputBorderHover }}
               />
-            </Box>
-          </Flex>
-          <Flex gap={"16px"} mt={"4px"}>
-            <Box w={"95%"}>
+              {errors.surname ? (
+                <FormErrorMessage>{errors.surname.message}</FormErrorMessage>
+              ) : (
+                <Box h={"25px"} w="100%"></Box>
+              )}
+            </FormControl>
+          </Box>
+        </Flex>
+        <Flex gap={"16px"}>
+          <Box w="160px">
+            <FormControl isInvalid={errors.phone != null}>
+              <FormLabel fontWeight={"semibold"} fontSize={"small"}>
+                Phone
+              </FormLabel>
+              <Input
+                rounded={"30px"}
+                h={"35px"}
+                borderColor={colorPallete.inputBorder}
+                {...register("phone")}
+                _hover={{ borderColor: colorPallete.inputBorderHover }}
+              />
+              {errors.phone ? (
+                <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
+              ) : (
+                <Box h={"25px"} w="100%"></Box>
+              )}
+            </FormControl>
+          </Box>
+          <Box flexGrow={"1"}>
+            <FormControl isInvalid={errors.address?.street != null}>
               <FormLabel fontWeight={"semibold"} fontSize={"small"}>
                 Street
               </FormLabel>
               <Input
-                type="street"
                 rounded={"30px"}
                 h={"35px"}
                 borderColor={colorPallete.inputBorder}
+                {...register("address.street")}
                 _hover={{ borderColor: colorPallete.inputBorderHover }}
               />
-            </Box>
-            <Box w={"35%"}>
-              <FormLabel fontWeight={"semibold"} fontSize={"small"}>
+              {errors.address?.street ? (
+                <FormErrorMessage>
+                  {errors.address?.street?.message}
+                </FormErrorMessage>
+              ) : (
+                <Box h={"25px"} w="100%"></Box>
+              )}
+            </FormControl>
+          </Box>
+          <Box w="70px">
+            <FormControl isInvalid={errors.address?.streetNumber != null}>
+              <FormLabel
+                fontWeight={"semibold"}
+                fontSize={"small"}
+                whiteSpace={"nowrap"}
+              >
                 Street Number
               </FormLabel>
               <Input
-                type="streetNumber"
                 rounded={"30px"}
                 h={"35px"}
                 borderColor={colorPallete.inputBorder}
+                {...register("address.streetNumber")}
                 _hover={{ borderColor: colorPallete.inputBorderHover }}
               />
-            </Box>
-          </Flex>
-          <Flex gap={"16px"} mt={"4px"}>
-            <Box flexGrow={"1"}>
+              {errors.address?.streetNumber ? (
+                <FormErrorMessage>
+                  {errors.address?.streetNumber?.message}
+                </FormErrorMessage>
+              ) : (
+                <Box h={"25px"} w="100%"></Box>
+              )}
+            </FormControl>
+          </Box>
+        </Flex>
+        <Flex gap={"16px"}>
+          <Box flexGrow={"1"}>
+            <FormControl isInvalid={errors.address?.city != null}>
               <FormLabel fontWeight={"semibold"} fontSize={"small"}>
                 City
               </FormLabel>
               <Input
-                type="city"
                 rounded={"30px"}
                 h={"35px"}
                 borderColor={colorPallete.inputBorder}
+                {...register("address.city")}
                 _hover={{ borderColor: colorPallete.inputBorderHover }}
               />
-            </Box>
-            <Box flexGrow={"1"}>
+              {errors.address?.city ? (
+                <FormErrorMessage>
+                  {errors.address?.city?.message}
+                </FormErrorMessage>
+              ) : (
+                <Box h={"25px"} w="100%"></Box>
+              )}
+            </FormControl>
+          </Box>
+          <Box flexGrow={"1"}>
+            <FormControl isInvalid={errors.address?.zipCode != null}>
               <FormLabel fontWeight={"semibold"} fontSize={"small"}>
                 Zip code
               </FormLabel>
               <Input
-                type="zipCode"
                 rounded={"30px"}
                 h={"35px"}
                 borderColor={colorPallete.inputBorder}
+                {...register("address.zipCode")}
                 _hover={{ borderColor: colorPallete.inputBorderHover }}
               />
-            </Box>
-            <Box flexGrow={"1"}>
+              {errors.address?.zipCode ? (
+                <FormErrorMessage>
+                  {errors.address?.zipCode?.message}
+                </FormErrorMessage>
+              ) : (
+                <Box h={"25px"} w="100%"></Box>
+              )}
+            </FormControl>
+          </Box>
+          <Box flexGrow={"1"}>
+            <FormControl isInvalid={errors.address?.country != null}>
               <FormLabel fontWeight={"semibold"} fontSize={"small"}>
                 Country
               </FormLabel>
@@ -140,12 +254,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                 rounded={"30px"}
                 h={"35px"}
                 borderColor={colorPallete.inputBorder}
+                {...register("address.country")}
                 _hover={{ borderColor: colorPallete.inputBorderHover }}
               />
-            </Box>
-          </Flex>
-          <Flex gap={"16px"} mt={"4px"}>
-            <Box flexGrow={"1"}>
+              {errors.address?.country ? (
+                <FormErrorMessage>
+                  {errors.address?.country?.message}
+                </FormErrorMessage>
+              ) : (
+                <Box h={"25px"} w="100%"></Box>
+              )}
+            </FormControl>
+          </Box>
+        </Flex>
+        <Flex gap={"16px"}>
+          <Box flexGrow={"1"}>
+            <FormControl isInvalid={errors.password != null}>
               <FormLabel fontWeight={"semibold"} fontSize={"small"}>
                 Password
               </FormLabel>
@@ -154,10 +278,18 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                 rounded={"30px"}
                 h={"35px"}
                 borderColor={colorPallete.inputBorder}
+                {...register("password")}
                 _hover={{ borderColor: colorPallete.inputBorderHover }}
               />
-            </Box>
-            <Box flexGrow={"1"}>
+              {errors.password ? (
+                <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+              ) : (
+                <Box h={"25px"} w="100%"></Box>
+              )}
+            </FormControl>
+          </Box>
+          <Box flexGrow={"1"}>
+            <FormControl isInvalid={errors.confirmPassword != null}>
               <FormLabel fontWeight={"semibold"} fontSize={"small"}>
                 Confirm password
               </FormLabel>
@@ -166,17 +298,25 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
                 rounded={"30px"}
                 h={"35px"}
                 borderColor={colorPallete.inputBorder}
+                {...register("confirmPassword")}
                 _hover={{ borderColor: colorPallete.inputBorderHover }}
               />
-            </Box>
-          </Flex>
-        </FormControl>
-        <Center h={"50px"} mt={"32px"} w={"auto"}>
+              {errors.confirmPassword ? (
+                <FormErrorMessage>
+                  {errors.confirmPassword?.message}
+                </FormErrorMessage>
+              ) : (
+                <Box h={"25px"} w="100%"></Box>
+              )}
+            </FormControl>
+          </Box>
+        </Flex>
+        <Center h={"50px"} w={"auto"}>
           <Button
             w={"calc(100% - 64px)"}
             h={"45px"}
             rounded={"32px"}
-            onClick={() => handleRegister()}
+            onClick={handleSubmit(handleRegister)}
             overflow={"hidden"}
             bg={colorPallete.button}
             _hover={{
@@ -193,7 +333,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
         </Center>
         <Flex
           h={"45px"}
-          mt={"12px"}
+          mt={"32px"}
           w={"auto"}
           justifyContent={"end"}
           alignContent={"center"}
@@ -202,7 +342,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = (props) => {
             Already have an account?
           </Text>
           <Text
-            h={"50px"}
+            h={"45px"}
             onClick={() => handleSwitchOnLogin()}
             fontSize={"large"}
             cursor={"pointer"}
