@@ -103,7 +103,8 @@ export const AuthPage = () => {
             your dream keyboard to life.
           </Flex>
           <Box
-            left={formState.state === "LOGIN" ? "0px" : "100%"}
+            left={formState.state === "REGISTER" ? "0px" : "100%"}
+            position={"relative"}
             transition={"0.3s ease"}
             h={"100%"}
             overflowY={"scroll"}

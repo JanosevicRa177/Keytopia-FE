@@ -1,9 +1,12 @@
 import { Box, Text } from "@chakra-ui/react";
+import { MainContrainer } from "../components/page-component/mainContainer";
 
 export const MainPage = () => {
   return (
-    <Box h={"1500px"}>
-      <Text>Main!</Text>
-    </Box>
+    <MainContrainer>
+      <Box h={"1500px"}>
+        <Text>Main!</Text>
+      </Box>
+    </MainContrainer>
   );
 };

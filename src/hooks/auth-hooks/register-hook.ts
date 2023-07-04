@@ -11,7 +11,7 @@ export const useRegisterUser = () => {
     values: RegisterFormValues
   ): Promise<ApiResponse<null>> => {
     try {
-      await axios.post(`${BASE_URL}/auth/register`, values);
+      await axios.post(`${BASE_URL}/auth/register/buyer`, values);
       toast.success('You registered successfuly! Now you can login!');
       return {
         data: null,
