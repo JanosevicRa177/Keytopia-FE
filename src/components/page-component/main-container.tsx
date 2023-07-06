@@ -1,4 +1,4 @@
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 export const MainContrainer: React.FC<{ children: React.ReactNode }> = (
   props
@@ -12,6 +12,7 @@ export const MainContrainer: React.FC<{ children: React.ReactNode }> = (
       mx={"auto"}
       backdropFilter="auto"
       backdropBlur="4px"
+      flexDir={"column"}
     >
       {props.children}
     </Flex>

@@ -1,3 +1,4 @@
+import { ActivateRedirectPage } from "../pages/ActivateRedirecPage";
 import { AuthPage } from "../pages/AuthPage";
 import { MainPage } from "../pages/MainPage";
 
@@ -17,6 +18,11 @@ export const routes: CustomRouteProps[] = [
   {
     path: "/",
     element: <MainPage />,
+    needAuth: false,
+  },
+  {
+    path: "/user/activation/:token",
+    element: <ActivateRedirectPage />,
     needAuth: false,
   },
 ];
