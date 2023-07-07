@@ -58,15 +58,26 @@ export const Header = () => {
               <Flex gap={"16px"}>
                 <CustomLink link={"/"} text={"Security"} />
                 <Box w={"24px"}></Box>
-                <CustomLink link={"/shop-parts"} text={"Shop parts"} />
-                <CustomLink
-                  link={"/shop-keyboard"}
-                  text={"Shop custom keyboard"}
-                />
-                <CustomLink
-                  link={"/custom-keyboard"}
-                  text={"Make your own keyboard"}
-                />
+                {user?.role !== "ADMIN" ? (
+                  <>
+                    <CustomLink link={"/shop-parts"} text={"Shop parts"} />
+                    <CustomLink
+                      link={"/shop-keyboard"}
+                      text={"Shop custom keyboard"}
+                    />
+                    <CustomLink
+                      link={"/custom-keyboard"}
+                      text={"Make your own keyboard"}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <CustomLink link={"/parts"} text={"Parts"} />
+                    <CustomLink link={"/add-part"} text={"Add part"} />
+                    <CustomLink link={"/procurements"} text={"Procurements"} />
+                    <CustomLink link={"/orders"} text={"Orders"} />
+                  </>
+                )}
               </Flex>
               <Flex gap="15px">
                 {user ? (

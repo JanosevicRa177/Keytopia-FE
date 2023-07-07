@@ -5,7 +5,7 @@ import { useApplicationStore } from "../store/store";
 
 interface CustomRouteProps {
   element: JSX.Element;
-  requiredRole?: string[];
+  requiredRole?: string;
   needAuthorization?: boolean;
 }
 
@@ -18,10 +18,10 @@ const ProtectedRoute = ({
 
   const user = useApplicationStore((state) => state.user);
 
-  function hasUserRole(roles?: string[]): boolean {
+  function hasUserRole(role?: string): boolean {
     if (!user) return false;
-    if (!roles) return false;
-    return roles.some((role) => user.role === role);
+    if (!role) return false;
+    return user.role === role;
   }
   const userHasRole = hasUserRole(requiredRole);
 

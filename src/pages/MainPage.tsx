@@ -76,7 +76,7 @@ export const MainPage = () => {
                 bg={colorPallete.button}
                 _hover={{
                   bg: colorPallete.buttonHover,
-                  transform: "scale(1.1,1.1)",
+                  transform: "scale(1.05,1.05)",
                   transition: "0.2s",
                 }}
                 fontSize={"xl"}
@@ -127,7 +127,7 @@ export const MainPage = () => {
                 }}
                 _hover={{
                   bg: colorPallete.buttonHover,
-                  transform: "scale(1.1,1.1)",
+                  transform: "scale(1.05,1.05)",
                   transition: "0.2s",
                 }}
                 fontSize={"xl"}
@@ -178,7 +178,7 @@ export const MainPage = () => {
                 }}
                 _hover={{
                   bg: colorPallete.buttonHover,
-                  transform: "scale(1.1,1.1)",
+                  transform: "scale(1.05,1.05)",
                   transition: "0.2s",
                 }}
                 fontSize={"xl"}
@@ -229,7 +229,7 @@ export const MainPage = () => {
                 }}
                 _hover={{
                   bg: colorPallete.buttonHover,
-                  transform: "scale(1.1,1.1)",
+                  transform: "scale(1.05,1.05)",
                   transition: "0.2s",
                 }}
                 fontSize={"xl"}

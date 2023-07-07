@@ -1,4 +1,5 @@
 import { ActivateRedirectPage } from "../pages/ActivateRedirecPage";
+import { AddPartPage } from "../pages/AddPartPage";
 import { AuthPage } from "../pages/AuthPage";
 import { MainPage } from "../pages/MainPage";
 
@@ -6,7 +7,7 @@ interface CustomRouteProps {
   path: string;
   element: JSX.Element;
   needAuth: boolean;
-  requiredRole?: string[];
+  requiredRole?: string;
 }
 
 export const routes: CustomRouteProps[] = [
@@ -24,5 +25,11 @@ export const routes: CustomRouteProps[] = [
     path: "/user/activation/:token",
     element: <ActivateRedirectPage />,
     needAuth: false,
+  },
+  {
+    path: "/add-part",
+    element: <AddPartPage />,
+    needAuth: true,
+    requiredRole: "ADMIN",
   },
 ];
