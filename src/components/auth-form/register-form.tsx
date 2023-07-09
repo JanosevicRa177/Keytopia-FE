@@ -16,7 +16,7 @@ import {
   REGISTER_DEFAULT_VALUES,
   REGISTER_VALIDATION_SCHEMA,
 } from "../../utils/auth.constants";
-import { useRegisterUser } from "../../hooks/auth-hooks/register-hook";
+import { useRegisterUser } from "../../hooks/auth-hooks/register.hook";
 import { ApiResponse } from "../../store/auth-store/types/response.type";
 import { useRef } from "react";
 import { useApplicationStore } from "../../store/store";

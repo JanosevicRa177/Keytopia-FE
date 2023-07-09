@@ -272,6 +272,7 @@ export const MainPage = () => {
           </Box>
         </Flex>
       </SectionContainer>
+      <Box height={"calc(100vh - 2815px)"} />
     </MainContrainer>
   );
 };

@@ -12,7 +12,7 @@ export const useRegisterUser = () => {
   ): Promise<ApiResponse<null>> => {
     try {
       await axios.post(`${BASE_URL}/auth/register/buyer`, values);
-      toast.success('You registered successfuly! Activate your account so you cal login!');
+      toast.success('You registered successfuly! Activate your account so you can login!');
       return {
         data: null,
         error: null,
