@@ -9,32 +9,32 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../style/color";
+import { colorPallete } from "../../../styles/color";
 import {
-  SIZE_DEFAULT_VALUES,
-  SIZE_VALIDATION_SCHEMA,
-} from "../../utils/part-data.constatns";
+  LAYOUT_DEFAULT_VALUES,
+  LAYOUT_VALIDATION_SCHEMA,
+} from "../../../utils/part-data.constatns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useCreateSize } from "../../hooks/part-data-hooks/size.hook";
+import { useCreateLayout } from "../../../hooks/part-data-hooks/create/layout.create.hook";
 
-export type SizeFormValues = {
+export type LayoutFormValues = {
   name: string;
-  neededNumberOfKeys: number;
+  localization: string;
 };
 
-export const SizeForm = () => {
-  const { createSize } = useCreateSize();
+export const LayoutForm = () => {
+  const { createLayout } = useCreateLayout();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SizeFormValues>({
-    defaultValues: SIZE_DEFAULT_VALUES,
-    resolver: yupResolver(SIZE_VALIDATION_SCHEMA),
+  } = useForm<LayoutFormValues>({
+    defaultValues: LAYOUT_DEFAULT_VALUES,
+    resolver: yupResolver(LAYOUT_VALIDATION_SCHEMA),
   });
-  async function handleCreateSize(values: SizeFormValues) {
-    createSize(values);
+  async function handleCreateLayout(values: LayoutFormValues) {
+    createLayout(values);
   }
   return (
     <Box height={"calc(100vh - 215px)"} w={"100%"}>
@@ -59,7 +59,7 @@ export const SizeForm = () => {
           fontSize={"3xl"}
           mb={"16px"}
         >
-          Size
+          Layout
         </Text>
         <Flex gap={"16px"}>
           <FormControl isInvalid={errors.name != null}>
@@ -80,20 +80,19 @@ export const SizeForm = () => {
               <Box h={"25px"} w="100%" ml={"8px"}></Box>
             )}
           </FormControl>
-          <FormControl isInvalid={errors.neededNumberOfKeys != null}>
-            <FormLabel fontWeight={"semibold"}>Needed Number Of Keys</FormLabel>
+          <FormControl isInvalid={errors.localization != null}>
+            <FormLabel fontWeight={"semibold"}>Localization</FormLabel>
             <Input
-              type="number"
+              type="text"
               rounded={"30px"}
               h={"45px"}
               borderColor={colorPallete.inputBorder}
-              {...register("neededNumberOfKeys")}
+              {...register("localization")}
               _hover={{ borderColor: colorPallete.inputBorderHover }}
             />
-            {errors.neededNumberOfKeys ? (
+            {errors.localization ? (
               <FormErrorMessage ml={"8px"}>
-                Needed number of keys is required and should be a positive
-                number
+                {errors.localization.message}
               </FormErrorMessage>
             ) : (
               <Box h={"25px"} w="100%" ml={"8px"}></Box>
@@ -105,7 +104,7 @@ export const SizeForm = () => {
             w={"calc(100% - 64px)"}
             h={"45px"}
             rounded={"32px"}
-            onClick={handleSubmit(handleCreateSize)}
+            onClick={handleSubmit(handleCreateLayout)}
             overflow={"hidden"}
             bg={colorPallete.button}
             _hover={{
@@ -117,7 +116,7 @@ export const SizeForm = () => {
             fontSize={"xl"}
             position={"absolute"}
           >
-            Create size
+            Create layout
           </Button>
         </Center>
       </Flex>

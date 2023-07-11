@@ -1,5 +1,5 @@
 import { Text } from "@chakra-ui/react";
-import { colorPallete } from "../../style/color";
+import { colorPallete } from "../../styles/color";
 import { Link, useLocation } from "react-router-dom";
 
 interface CustomLinkProps {

@@ -3,12 +3,7 @@ import { ControlContainer } from "../components/page-component/control-container
 import { MainContrainer } from "../components/page-component/main-container";
 import { InnerLink } from "../components/page-component/inner-link";
 import { useState } from "react";
-import { CableForm } from "../components/add-part-comonent/cable.form";
-import { CaseForm } from "../components/add-part-comonent/case.form";
-import { KeycapProfileForm } from "../components/add-part-comonent/keycap-profile.form";
-import { LayoutForm } from "../components/add-part-comonent/layout.form";
-import { SizeForm } from "../components/add-part-comonent/size.form";
-import { SwitchForm } from "../components/add-part-comonent/switch.form";
+import { KeycapProfileView } from "../components/add-part-component/view/keycap-profile.view";
 
 export const AddPartPage = () => {
   const [part, setPart] = useState("Cable");
@@ -49,12 +44,7 @@ export const AddPartPage = () => {
           <Box w="230px" />
         </Flex>
       </ControlContainer>
-      {part === "Cable" && <CableForm />}
-      {part === "Case" && <CaseForm />}
-      {part === "Keycap profile" && <KeycapProfileForm />}
-      {part === "Layout" && <LayoutForm />}
-      {part === "Size" && <SizeForm />}
-      {part === "Switch" && <SwitchForm />}
+      {part === "Keycap profile" && <KeycapProfileView />}
     </MainContrainer>
   );
 };

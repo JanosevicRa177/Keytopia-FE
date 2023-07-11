@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Spinner, Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useUserActivation } from "../hooks/auth-hooks/activate-user.hook";
-import { colorPallete } from "../style/color";
+import { colorPallete } from "../styles/color";
 import { ApiResponse } from "../store/auth-store/types/response.type";
 import { useApplicationStore } from "../store/store";
 

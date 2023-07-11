@@ -1,7 +1,7 @@
 export enum SwitchType {
     CLICKY = "CLICKY",
     TACTILE = "TACTILE",
-    LINEAR = "LINEAR"
+    LINEAR = "LINEAR",
   }
 
   export enum PinType {

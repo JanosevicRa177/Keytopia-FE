@@ -4,7 +4,7 @@ import {
   SectionContainer,
   SectionStyle,
 } from "../components/page-component/section-container";
-import { colorPallete } from "../style/color";
+import { colorPallete } from "../styles/color";
 import { useNavigate } from "react-router-dom";
 
 export const MainPage = () => {

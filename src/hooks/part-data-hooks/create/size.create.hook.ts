@@ -1,24 +1,24 @@
 import { toast } from "react-toastify";
-import { ApiResponse } from "../../store/auth-store/types/response.type";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import axios from "axios";
-import { useApplicationStore } from "../../store/store";
-import { SwitchFormValues } from "../../components/add-part-comonent/switch.form";
+import { useApplicationStore } from "../../../store/store";
+import { SizeFormValues } from "../../../components/add-part-component/form/size.form";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export const useCreateSwitch = () => {
+export const useCreateSize = () => {
   const token = useApplicationStore((state) => state.token);
-  const createSwitch = async (
-    values: SwitchFormValues
+  const createSize = async (
+    values: SizeFormValues
   ): Promise<ApiResponse<null>> => {
     try {
-      await axios.post(`${BASE_URL}/part-data/create/switch`, values, {
+      await axios.post(`${BASE_URL}/part-data/size`, values, {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
         },
       });
-      toast.success("Switch successfuly created!");
+      toast.success("Size successfuly created!");
       return {
         data: null,
         error: null,
@@ -35,6 +35,6 @@ export const useCreateSwitch = () => {
   };
 
   return {
-    createSwitch,
+    createSize,
   };
 };

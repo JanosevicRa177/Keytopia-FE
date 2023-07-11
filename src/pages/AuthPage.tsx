@@ -1,5 +1,5 @@
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
-import { colorPallete, colors } from "../style/color";
+import { colorPallete, colors } from "../styles/color";
 import { RegisterForm } from "../components/auth-form/register-form";
 import { KeycapsImages } from "../components/auth-form/keycaps-images";
 import { LoginForm } from "../components/auth-form/login-form";

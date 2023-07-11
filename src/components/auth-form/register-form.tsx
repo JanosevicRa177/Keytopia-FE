@@ -9,7 +9,7 @@ import {
   Box,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../style/color";
+import { colorPallete } from "../../styles/color";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import {

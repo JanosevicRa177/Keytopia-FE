@@ -10,15 +10,15 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../style/color";
+import { colorPallete } from "../../../styles/color";
 import {
   SWTICH_DEFAULT_VALUES,
   SWTICH_VALIDATION_SCHEMA,
-} from "../../utils/part-data.constatns";
+} from "../../../utils/part-data.constatns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { PinType, SwitchType } from "../../utils/enum";
-import { useCreateSwitch } from "../../hooks/part-data-hooks/switch.hook";
+import { PinType, SwitchType } from "../../../utils/enum";
+import { useCreateSwitch } from "../../../hooks/part-data-hooks/create/switch.create.hook";
 
 export type SwitchFormValues = {
   name: string;

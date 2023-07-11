@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import { colorPallete } from "../../style/color";
+import { colorPallete } from "../../styles/color";
 
 interface InnerLinkProps {
   chosen: string;

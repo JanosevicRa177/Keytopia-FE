@@ -10,7 +10,7 @@ import {
   FormErrorMessage,
   Box,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../style/color";
+import { colorPallete } from "../../styles/color";
 import { useApplicationStore } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";

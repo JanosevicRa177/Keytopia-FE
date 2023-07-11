@@ -1,24 +1,24 @@
 import { toast } from "react-toastify";
-import { ApiResponse } from "../../store/auth-store/types/response.type";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import axios from "axios";
-import { useApplicationStore } from "../../store/store";
-import { LayoutFormValues } from "../../components/add-part-comonent/layout.form";
+import { useApplicationStore } from "../../../store/store";
+import { KeycapProfileFormValues } from "../../../components/add-part-component/form/keycap-profile.form";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export const useCreateLayout = () => {
+export const useCreateKeycapProfile = () => {
   const token = useApplicationStore((state) => state.token);
-  const createLayout = async (
-    values: LayoutFormValues
+  const createKeycapProfile = async (
+    values: KeycapProfileFormValues
   ): Promise<ApiResponse<null>> => {
     try {
-      await axios.post(`${BASE_URL}/part-data/create/layout`, values, {
+      await axios.post(`${BASE_URL}/part-data/keycap-profile`, values, {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
         },
       });
-      toast.success("Layout successfuly created!");
+      toast.success("Keycap profile successfuly created!");
       return {
         data: null,
         error: null,
@@ -35,6 +35,6 @@ export const useCreateLayout = () => {
   };
 
   return {
-    createLayout,
+    createKeycapProfile,
   };
 };

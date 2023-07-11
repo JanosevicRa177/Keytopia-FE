@@ -10,6 +10,8 @@ export const colorPallete = {
     inputBorder: "#c07dfa",
     inputBorderHover: "#d1a2fa",
     text: "#242424",
+    deleteButton: "#FF416C",
+    deleteButtonHover: "#FF4B2B",
 }
 
 export const colors = {

@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useApplicationStore } from "../../store/store";
-import { colors } from "../../style/color";
+import { colors } from "../../styles/color";
 import { useEffect, useState } from "react";
 import { CustomLink } from "./link";
 
