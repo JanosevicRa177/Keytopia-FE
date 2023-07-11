@@ -1,16 +1,13 @@
 import { toast } from "react-toastify";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { KeycapProfile } from "../../../model/part-data";
 import { useAxios } from "../../../utils/axios.hook";
 
-export const useCreateKeycapProfile = () => {
+export const useDeleteSize = () => {
 	const { axios } = useAxios();
-	const createKeycapProfile = async (
-		values: KeycapProfile
-	): Promise<ApiResponse<null>> => {
+	const deleteSize = async (name: String): Promise<ApiResponse<null>> => {
 		try {
-			await axios.post(`/part-data/keycap-profile`, values);
-			toast.success("Keycap profile successfuly created!");
+			await axios.delete(`/part-data/size/${name}`);
+			toast.success("Keycap profile successfuly deleted!");
 			return {
 				data: null,
 				error: null,
@@ -27,6 +24,6 @@ export const useCreateKeycapProfile = () => {
 	};
 
 	return {
-		createKeycapProfile,
+		deleteSize,
 	};
 };

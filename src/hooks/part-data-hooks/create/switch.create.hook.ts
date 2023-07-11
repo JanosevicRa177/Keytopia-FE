@@ -1,40 +1,30 @@
 import { toast } from "react-toastify";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import axios from "axios";
-import { useApplicationStore } from "../../../store/store";
-import { SwitchFormValues } from "../../../components/add-part-component/form/switch.form";
-
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+import { Switch } from "../../../model/part-data";
+import { useAxios } from "../../../utils/axios.hook";
 
 export const useCreateSwitch = () => {
-  const token = useApplicationStore((state) => state.token);
-  const createSwitch = async (
-    values: SwitchFormValues
-  ): Promise<ApiResponse<null>> => {
-    try {
-      await axios.post(`${BASE_URL}/part-data/switch`, values, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      toast.success("Switch successfuly created!");
-      return {
-        data: null,
-        error: null,
-        status: "SUCCESS",
-      };
-    } catch (e: any) {
-      toast.error(e.response.data.message);
-      return {
-        data: null,
-        error: e.response.data.message,
-        status: "ERROR",
-      };
-    }
-  };
+	const { axios } = useAxios();
+	const createSwitch = async (values: Switch): Promise<ApiResponse<null>> => {
+		try {
+			await axios.post(`/part-data/switch`, values);
+			toast.success("Switch successfuly created!");
+			return {
+				data: null,
+				error: null,
+				status: "SUCCESS",
+			};
+		} catch (e: any) {
+			toast.error(e.response.data.message);
+			return {
+				data: null,
+				error: e.response.data.message,
+				status: "ERROR",
+			};
+		}
+	};
 
-  return {
-    createSwitch,
-  };
+	return {
+		createSwitch,
+	};
 };

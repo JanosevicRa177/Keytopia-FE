@@ -1,3 +1,3 @@
 export type AuthOpenFormState = {
-    state: "REGISTER" |"LOGIN"
-}
+	state: "REGISTER" | "LOGIN";
+};

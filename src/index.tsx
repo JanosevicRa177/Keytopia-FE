@@ -7,20 +7,20 @@ import { theme as glassTheme } from "@saas-ui/theme-glass";
 import "@fontsource/dosis";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+	document.getElementById("root") as HTMLElement
 );
 
 export const theme = extendTheme({
-  fonts: {
-    heading: `'Dosis', sans-serif`,
-    body: `'Dosis', sans-serif`,
-  },
-  glassTheme,
+	fonts: {
+		heading: `'Dosis', sans-serif`,
+		body: `'Dosis', sans-serif`,
+	},
+	glassTheme,
 });
 
 root.render(
-  <ChakraProvider theme={theme}>
-    <App />
-  </ChakraProvider>
+	<ChakraProvider theme={theme}>
+		<App />
+	</ChakraProvider>
 );
 reportWebVitals();

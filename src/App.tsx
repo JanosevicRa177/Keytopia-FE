@@ -9,45 +9,52 @@ import { ImgComponent } from "./components/img-component";
 import { Header } from "./components/header/header";
 
 function App() {
-  return (
-    <Router>
-      <Flex w="100%" h="100%" minH="100vh" direction="column">
-        <Header />
-        <ImgComponent />
-        <Box
-          bg={"#fbd3c7"}
-          position={"fixed"}
-          w={"100vw"}
-          h={"100vh"}
-          zIndex={"-1"}
-        />
-        <Routes>
-          {routes.map((route, index) => {
-            const { path, needAuth, requiredRole, element: Element } = route;
-            if (needAuth && requiredRole) {
-              return (
-                <Route
-                  key={index}
-                  path={path}
-                  element={
-                    <ProtectedRoute
-                      key={index}
-                      requiredRole={requiredRole}
-                      element={Element}
-                      needAuthorization={needAuth}
-                    />
-                  }
-                />
-              );
-            }
-            return <Route key={index} path={path} element={Element} />;
-          })}
-        </Routes>
-        <Footer></Footer>
-        <ToastContainer position={"top-right"} theme={"colored"} />
-      </Flex>
-    </Router>
-  );
+	return (
+		<Router>
+			<Flex w="100%" h="100%" minH="100vh" direction="column">
+				<Header />
+				<ImgComponent />
+				<Box
+					bg={"#fbd3c7"}
+					position={"fixed"}
+					w={"100vw"}
+					h={"100vh"}
+					zIndex={"-1"}
+				/>
+				<Routes>
+					{routes.map((route, index) => {
+						const {
+							path,
+							needAuth,
+							requiredRole,
+							element: Element,
+						} = route;
+						if (needAuth && requiredRole) {
+							return (
+								<Route
+									key={index}
+									path={path}
+									element={
+										<ProtectedRoute
+											key={index}
+											requiredRole={requiredRole}
+											element={Element}
+											needAuthorization={needAuth}
+										/>
+									}
+								/>
+							);
+						}
+						return (
+							<Route key={index} path={path} element={Element} />
+						);
+					})}
+				</Routes>
+				<Footer></Footer>
+				<ToastContainer position={"top-right"} theme={"colored"} />
+			</Flex>
+		</Router>
+	);
 }
 
 export default App;

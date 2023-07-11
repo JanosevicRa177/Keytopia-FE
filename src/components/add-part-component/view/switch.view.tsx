@@ -14,31 +14,30 @@ import {
 	Thead,
 } from "@chakra-ui/react";
 import { colorPallete } from "../../../styles/color";
-import { KeycapProfileForm } from "../form/keycap-profile.form";
 import { useEffect, useState } from "react";
-import { useFetchKeycapProfiles } from "../../../hooks/part-data-hooks/get-all/keycap-profile.get-all.hook";
 import { Pagination } from "../../paging/pagination/pagination";
-import { useDeleteKeycapProfile } from "../../../hooks/part-data-hooks/delete/keycap-profile.delete.hook";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { KeycapProfile } from "../../../model/part-data";
+import { Switch } from "../../../model/part-data";
+import { useDeleteSwitch } from "../../../hooks/part-data-hooks/delete/switch.delete.hook";
+import { useFetchSwitches } from "../../../hooks/part-data-hooks/get-all/switch.get-all.hook";
+import { SwitchForm } from "../form/switch.form";
 
-export const KeycapProfileView = () => {
+export const SwitchView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getKeycapProfiles, getKeycapProfilesRes } =
-		useFetchKeycapProfiles();
-	const { deleteKeycapProfile } = useDeleteKeycapProfile();
+	const { getSwitches, getSwitchesRes } = useFetchSwitches();
+	const { deleteSwitch } = useDeleteSwitch();
 	const {
 		isOpen: isOpenForm,
 		onClose: onCloseForm,
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getKeycapProfiles(0).then(() => setCurrentPage(1));
+		getSwitches(0).then(() => setCurrentPage(1));
 	}, []);
-	async function handleDeleteKeycapProfile(name: String) {
-		deleteKeycapProfile(name).then((response: ApiResponse<null>) => {
+	async function handleDeleteSwitch(name: String) {
+		deleteSwitch(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getKeycapProfiles(0).then(() => setCurrentPage(1));
+				getSwitches(0).then(() => setCurrentPage(1));
 			}
 		});
 	}
@@ -61,7 +60,7 @@ export const KeycapProfileView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Keycap profile</Text>
+					<Text fontSize={"2xl"}>Switch</Text>
 					<Button
 						w={"90px"}
 						rounded={"32px"}
@@ -90,14 +89,22 @@ export const KeycapProfileView = () => {
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
+									<Th>Actuation force</Th>
+									<Th>Actuation point</Th>
+									<Th>Pin type</Th>
+									<Th>Switch type</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getKeycapProfilesRes.data.content &&
-									getKeycapProfilesRes.data.content.map(
-										(item: KeycapProfile) => (
+								{getSwitchesRes.data.content &&
+									getSwitchesRes.data.content.map(
+										(item: Switch) => (
 											<Tr key={item.name}>
-												<Td w={"80%"}>{item.name}</Td>
+												<Td>{item.name}</Td>
+												<Td>{item.actuationForce}</Td>
+												<Td>{item.actuationPoint}</Td>
+												<Td>{item.pinType}</Td>
+												<Td>{item.switchType}</Td>
 												<Td>
 													<Flex gap={"4"}>
 														<Button
@@ -109,7 +116,7 @@ export const KeycapProfileView = () => {
 															}
 															color={"white"}
 															onClick={() =>
-																handleDeleteKeycapProfile(
+																handleDeleteSwitch(
 																	item.name
 																)
 															}
@@ -134,18 +141,18 @@ export const KeycapProfileView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getKeycapProfilesRes.data.totalPages}
+					lastPage={getSwitchesRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getKeycapProfiles}
+					getPage={getSwitches}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<KeycapProfileForm
+			<SwitchForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchKeycapProfiles={getKeycapProfiles}
-			></KeycapProfileForm>
+				fetchSwitch={getSwitches}
+			></SwitchForm>
 		</Box>
 	);
 };

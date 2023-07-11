@@ -1,40 +1,30 @@
 import { toast } from "react-toastify";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import axios from "axios";
-import { useApplicationStore } from "../../../store/store";
-import { LayoutFormValues } from "../../../components/add-part-component/form/layout.form";
-
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+import { Layout } from "../../../model/part-data";
+import { useAxios } from "../../../utils/axios.hook";
 
 export const useCreateLayout = () => {
-  const token = useApplicationStore((state) => state.token);
-  const createLayout = async (
-    values: LayoutFormValues
-  ): Promise<ApiResponse<null>> => {
-    try {
-      await axios.post(`${BASE_URL}/part-data/layout`, values, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      toast.success("Layout successfuly created!");
-      return {
-        data: null,
-        error: null,
-        status: "SUCCESS",
-      };
-    } catch (e: any) {
-      toast.error(e.response.data.message);
-      return {
-        data: null,
-        error: e.response.data.message,
-        status: "ERROR",
-      };
-    }
-  };
+	const { axios } = useAxios();
+	const createLayout = async (values: Layout): Promise<ApiResponse<null>> => {
+		try {
+			await axios.post(`/part-data/layout`, values);
+			toast.success("Layout successfuly created!");
+			return {
+				data: null,
+				error: null,
+				status: "SUCCESS",
+			};
+		} catch (e: any) {
+			toast.error(e.response.data.message);
+			return {
+				data: null,
+				error: e.response.data.message,
+				status: "ERROR",
+			};
+		}
+	};
 
-  return {
-    createLayout,
-  };
+	return {
+		createLayout,
+	};
 };

@@ -14,31 +14,30 @@ import {
 	Thead,
 } from "@chakra-ui/react";
 import { colorPallete } from "../../../styles/color";
-import { KeycapProfileForm } from "../form/keycap-profile.form";
 import { useEffect, useState } from "react";
-import { useFetchKeycapProfiles } from "../../../hooks/part-data-hooks/get-all/keycap-profile.get-all.hook";
 import { Pagination } from "../../paging/pagination/pagination";
-import { useDeleteKeycapProfile } from "../../../hooks/part-data-hooks/delete/keycap-profile.delete.hook";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { KeycapProfile } from "../../../model/part-data";
+import { Layout } from "../../../model/part-data";
+import { useFetchLayouts } from "../../../hooks/part-data-hooks/get-all/layout.get-all.hook";
+import { LayoutForm } from "../form/layout.form";
+import { useDeleteLayout } from "../../../hooks/part-data-hooks/delete/layout.delete.hook";
 
-export const KeycapProfileView = () => {
+export const LayoutView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getKeycapProfiles, getKeycapProfilesRes } =
-		useFetchKeycapProfiles();
-	const { deleteKeycapProfile } = useDeleteKeycapProfile();
+	const { getLayouts, getLayoutsRes } = useFetchLayouts();
+	const { deleteLayout } = useDeleteLayout();
 	const {
 		isOpen: isOpenForm,
 		onClose: onCloseForm,
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getKeycapProfiles(0).then(() => setCurrentPage(1));
+		getLayouts(0).then(() => setCurrentPage(1));
 	}, []);
-	async function handleDeleteKeycapProfile(name: String) {
-		deleteKeycapProfile(name).then((response: ApiResponse<null>) => {
+	async function handleDeleteSize(name: String) {
+		deleteLayout(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getKeycapProfiles(0).then(() => setCurrentPage(1));
+				getLayouts(0).then(() => setCurrentPage(1));
 			}
 		});
 	}
@@ -61,7 +60,7 @@ export const KeycapProfileView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Keycap profile</Text>
+					<Text fontSize={"2xl"}>Layout</Text>
 					<Button
 						w={"90px"}
 						rounded={"32px"}
@@ -90,14 +89,18 @@ export const KeycapProfileView = () => {
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
+									<Th>Localization</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getKeycapProfilesRes.data.content &&
-									getKeycapProfilesRes.data.content.map(
-										(item: KeycapProfile) => (
+								{getLayoutsRes.data.content &&
+									getLayoutsRes.data.content.map(
+										(item: Layout) => (
 											<Tr key={item.name}>
-												<Td w={"80%"}>{item.name}</Td>
+												<Td w={"40%"}>{item.name}</Td>
+												<Td w={"40%"}>
+													{item.localization}
+												</Td>
 												<Td>
 													<Flex gap={"4"}>
 														<Button
@@ -109,7 +112,7 @@ export const KeycapProfileView = () => {
 															}
 															color={"white"}
 															onClick={() =>
-																handleDeleteKeycapProfile(
+																handleDeleteSize(
 																	item.name
 																)
 															}
@@ -134,18 +137,18 @@ export const KeycapProfileView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getKeycapProfilesRes.data.totalPages}
+					lastPage={getLayoutsRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getKeycapProfiles}
+					getPage={getLayouts}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<KeycapProfileForm
+			<LayoutForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchKeycapProfiles={getKeycapProfiles}
-			></KeycapProfileForm>
+				fetchLayouts={getLayouts}
+			></LayoutForm>
 		</Box>
 	);
 };
