@@ -19,12 +19,12 @@ import { Pagination } from "../../paging/pagination/pagination";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { Switch } from "../../../model/part-data";
 import { useDeleteSwitch } from "../../../hooks/part-data-hooks/delete/switch.delete.hook";
-import { useFetchSwitches } from "../../../hooks/part-data-hooks/get-all/switch.get-all.hook";
 import { SwitchForm } from "../form/switch.form";
+import { useFetchSwitchesPage } from "../../../hooks/part-data-hooks/get-all/switch.get-all-page.hook";
 
 export const SwitchView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getSwitches, getSwitchesRes } = useFetchSwitches();
+	const { getSwitchesPage, getSwitchesPageRes } = useFetchSwitchesPage();
 	const { deleteSwitch } = useDeleteSwitch();
 	const {
 		isOpen: isOpenForm,
@@ -32,12 +32,12 @@ export const SwitchView = () => {
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getSwitches(0).then(() => setCurrentPage(1));
+		getSwitchesPage(0).then(() => setCurrentPage(1));
 	}, []);
 	async function handleDeleteSwitch(name: String) {
 		deleteSwitch(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getSwitches(0).then(() => setCurrentPage(1));
+				getSwitchesPage(0).then(() => setCurrentPage(1));
 			}
 		});
 	}
@@ -93,11 +93,12 @@ export const SwitchView = () => {
 									<Th>Actuation point</Th>
 									<Th>Pin type</Th>
 									<Th>Switch type</Th>
+									<Th>Price weight</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getSwitchesRes.data.content &&
-									getSwitchesRes.data.content.map(
+								{getSwitchesPageRes.data.content &&
+									getSwitchesPageRes.data.content.map(
 										(item: Switch) => (
 											<Tr key={item.name}>
 												<Td>{item.name}</Td>
@@ -105,6 +106,7 @@ export const SwitchView = () => {
 												<Td>{item.actuationPoint}</Td>
 												<Td>{item.pinType}</Td>
 												<Td>{item.switchType}</Td>
+												<Td>{item.priceWeight}</Td>
 												<Td>
 													<Flex gap={"4"}>
 														<Button
@@ -141,17 +143,17 @@ export const SwitchView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getSwitchesRes.data.totalPages}
+					lastPage={getSwitchesPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getSwitches}
+					getPage={getSwitchesPage}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
 			<SwitchForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchSwitch={getSwitches}
+				fetchSwitch={getSwitchesPage}
 			></SwitchForm>
 		</Box>
 	);

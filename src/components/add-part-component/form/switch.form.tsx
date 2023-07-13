@@ -22,7 +22,7 @@ import {
 } from "../../../utils/part-data.constatns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { PinType, SwitchType } from "../../../utils/enum";
+import { PinType, PriceWight, SwitchType } from "../../../utils/enum";
 import { useCreateSwitch } from "../../../hooks/part-data-hooks/create/switch.create.hook";
 import { Switch } from "../../../model/part-data";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
@@ -218,6 +218,35 @@ export const SwitchForm = ({
 								)}
 							</FormControl>
 						</Flex>
+						<FormControl isInvalid={errors.priceWeight != null}>
+							<FormLabel fontWeight={"semibold"}>
+								Price weight
+							</FormLabel>
+							<Select
+								rounded={"30px"}
+								h={"45px"}
+								borderColor={colorPallete.inputBorder}
+								{...register("priceWeight")}
+								_hover={{
+									borderColor: colorPallete.inputBorderHover,
+								}}
+							>
+								<option value={PriceWight.LIGHT} selected>
+									Light
+								</option>
+								<option value={PriceWight.MEDIUM}>
+									Medium
+								</option>
+								<option value={PriceWight.HEAVY}>Heavy</option>
+							</Select>
+							{errors.priceWeight ? (
+								<FormErrorMessage ml={"8px"}>
+									Price weight is required
+								</FormErrorMessage>
+							) : (
+								<Box h={"25px"} w="100%" ml={"8px"}></Box>
+							)}
+						</FormControl>
 						<Center h={"45px"} mt={"16px"} w={"auto"}>
 							<Button
 								w={"calc(100% - 64px)"}

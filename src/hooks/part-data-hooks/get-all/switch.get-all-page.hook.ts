@@ -4,14 +4,14 @@ import { Page } from "../../../utils/types";
 import { Switch } from "../../../model/part-data";
 import { useAxios } from "../../../utils/axios.hook";
 
-export const useFetchSwitches = () => {
+export const useFetchSwitchesPage = () => {
 	const { axios } = useAxios();
 	const {
 		setError,
 		setSuccess,
-		state: getSwitchesRes,
+		state: getSwitchesPageRes,
 	} = useResponseState<Page<Switch>>({ totalPages: 0, content: [] });
-	const getSwitches = async (pageNumber: number) => {
+	const getSwitchesPage = async (pageNumber: number) => {
 		try {
 			const res = await axios.get(`/part-data/switch/5/${pageNumber}`);
 			setSuccess(res.data);
@@ -22,7 +22,7 @@ export const useFetchSwitches = () => {
 	};
 
 	return {
-		getSwitches,
-		getSwitchesRes,
+		getSwitchesPage,
+		getSwitchesPageRes,
 	};
 };

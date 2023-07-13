@@ -16,7 +16,7 @@ import {
 import { colorPallete } from "../../../styles/color";
 import { KeycapProfileForm } from "../form/keycap-profile.form";
 import { useEffect, useState } from "react";
-import { useFetchKeycapProfiles } from "../../../hooks/part-data-hooks/get-all/keycap-profile.get-all.hook";
+import { useFetchKeycapProfilesPage } from "../../../hooks/part-data-hooks/get-all/keycap-profile.get-all-page.hook";
 import { Pagination } from "../../paging/pagination/pagination";
 import { useDeleteKeycapProfile } from "../../../hooks/part-data-hooks/delete/keycap-profile.delete.hook";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
@@ -24,8 +24,8 @@ import { KeycapProfile } from "../../../model/part-data";
 
 export const KeycapProfileView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getKeycapProfiles, getKeycapProfilesRes } =
-		useFetchKeycapProfiles();
+	const { getKeycapProfilesPage, getKeycapProfilesPageRes } =
+		useFetchKeycapProfilesPage();
 	const { deleteKeycapProfile } = useDeleteKeycapProfile();
 	const {
 		isOpen: isOpenForm,
@@ -33,12 +33,12 @@ export const KeycapProfileView = () => {
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getKeycapProfiles(0).then(() => setCurrentPage(1));
+		getKeycapProfilesPage(0).then(() => setCurrentPage(1));
 	}, []);
 	async function handleDeleteKeycapProfile(name: String) {
 		deleteKeycapProfile(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getKeycapProfiles(0).then(() => setCurrentPage(1));
+				getKeycapProfilesPage(0).then(() => setCurrentPage(1));
 			}
 		});
 	}
@@ -93,8 +93,8 @@ export const KeycapProfileView = () => {
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getKeycapProfilesRes.data.content &&
-									getKeycapProfilesRes.data.content.map(
+								{getKeycapProfilesPageRes.data.content &&
+									getKeycapProfilesPageRes.data.content.map(
 										(item: KeycapProfile) => (
 											<Tr key={item.name}>
 												<Td w={"80%"}>{item.name}</Td>
@@ -134,17 +134,17 @@ export const KeycapProfileView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getKeycapProfilesRes.data.totalPages}
+					lastPage={getKeycapProfilesPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getKeycapProfiles}
+					getPage={getKeycapProfilesPage}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
 			<KeycapProfileForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchKeycapProfiles={getKeycapProfiles}
+				fetchKeycapProfiles={getKeycapProfilesPage}
 			></KeycapProfileForm>
 		</Box>
 	);

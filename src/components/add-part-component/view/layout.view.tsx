@@ -18,13 +18,13 @@ import { useEffect, useState } from "react";
 import { Pagination } from "../../paging/pagination/pagination";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { Layout } from "../../../model/part-data";
-import { useFetchLayouts } from "../../../hooks/part-data-hooks/get-all/layout.get-all.hook";
+import { useFetchLayoutsPage } from "../../../hooks/part-data-hooks/get-all/layout.get-all-page.hook";
 import { LayoutForm } from "../form/layout.form";
 import { useDeleteLayout } from "../../../hooks/part-data-hooks/delete/layout.delete.hook";
 
 export const LayoutView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getLayouts, getLayoutsRes } = useFetchLayouts();
+	const { getLayoutsPage, getLayoutsPageRes } = useFetchLayoutsPage();
 	const { deleteLayout } = useDeleteLayout();
 	const {
 		isOpen: isOpenForm,
@@ -32,12 +32,12 @@ export const LayoutView = () => {
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getLayouts(0).then(() => setCurrentPage(1));
+		getLayoutsPage(0).then(() => setCurrentPage(1));
 	}, []);
 	async function handleDeleteSize(name: String) {
 		deleteLayout(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getLayouts(0).then(() => setCurrentPage(1));
+				getLayoutsPage(0).then(() => setCurrentPage(1));
 			}
 		});
 	}
@@ -93,8 +93,8 @@ export const LayoutView = () => {
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getLayoutsRes.data.content &&
-									getLayoutsRes.data.content.map(
+								{getLayoutsPageRes.data.content &&
+									getLayoutsPageRes.data.content.map(
 										(item: Layout) => (
 											<Tr key={item.name}>
 												<Td w={"40%"}>{item.name}</Td>
@@ -137,17 +137,17 @@ export const LayoutView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getLayoutsRes.data.totalPages}
+					lastPage={getLayoutsPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getLayouts}
+					getPage={getLayoutsPage}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
 			<LayoutForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchLayouts={getLayouts}
+				fetchLayouts={getLayoutsPage}
 			></LayoutForm>
 		</Box>
 	);

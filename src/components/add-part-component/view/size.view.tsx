@@ -19,12 +19,12 @@ import { Pagination } from "../../paging/pagination/pagination";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { Size } from "../../../model/part-data";
 import { useDeleteSize } from "../../../hooks/part-data-hooks/delete/size.delete.hook";
-import { useFetchSizes } from "../../../hooks/part-data-hooks/get-all/size.get-all-hook";
+import { useFetchSizesPage } from "../../../hooks/part-data-hooks/get-all/size.get-all-page.hook";
 import { SizeForm } from "../form/size.form";
 
 export const SizeView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getSizes, getSizesRes } = useFetchSizes();
+	const { getSizesPage, getSizesPageRes } = useFetchSizesPage();
 	const { deleteSize } = useDeleteSize();
 	const {
 		isOpen: isOpenForm,
@@ -32,12 +32,12 @@ export const SizeView = () => {
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getSizes(0).then(() => setCurrentPage(1));
+		getSizesPage(0).then(() => setCurrentPage(1));
 	}, []);
 	async function handleDeleteSize(name: String) {
 		deleteSize(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getSizes(0).then(() => setCurrentPage(1));
+				getSizesPage(0).then(() => setCurrentPage(1));
 			}
 		});
 	}
@@ -93,8 +93,8 @@ export const SizeView = () => {
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getSizesRes.data.content &&
-									getSizesRes.data.content.map(
+								{getSizesPageRes.data.content &&
+									getSizesPageRes.data.content.map(
 										(item: Size) => (
 											<Tr key={item.name}>
 												<Td w={"40%"}>{item.name}</Td>
@@ -137,17 +137,17 @@ export const SizeView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getSizesRes.data.totalPages}
+					lastPage={getSizesPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getSizes}
+					getPage={getSizesPage}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
 			<SizeForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchSizes={getSizes}
+				fetchSizes={getSizesPage}
 			></SizeForm>
 		</Box>
 	);
