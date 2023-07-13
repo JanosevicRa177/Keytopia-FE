@@ -24,7 +24,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { PinType, PriceWight, SwitchType } from "../../../utils/enum";
 import { useCreateSwitch } from "../../../hooks/part-data-hooks/create/switch.create.hook";
-import { Switch } from "../../../model/part-data";
+import { Switch } from "../../../model/part-data.model";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 
 interface SwitchFormProps {

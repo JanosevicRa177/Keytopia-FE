@@ -1,4 +1,4 @@
-import { Address } from "./address.model";
+import { Address } from "./util.model";
 
 export type User = {
 	id: number;

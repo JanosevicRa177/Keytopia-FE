@@ -23,7 +23,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useCreateKeycapProfile } from "../../../hooks/part-data-hooks/create/keycap-profile.create.hook";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { KeycapProfile } from "../../../model/part-data";
+import { KeycapProfile } from "../../../model/part-data.model";
 
 interface KeycapProfileFormProps {
 	isOpen: boolean;

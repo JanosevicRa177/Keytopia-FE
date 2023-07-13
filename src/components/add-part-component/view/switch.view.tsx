@@ -17,7 +17,7 @@ import { colorPallete } from "../../../styles/color";
 import { useEffect, useState } from "react";
 import { Pagination } from "../../paging/pagination/pagination";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { Switch } from "../../../model/part-data";
+import { Switch } from "../../../model/part-data.model";
 import { useDeleteSwitch } from "../../../hooks/part-data-hooks/delete/switch.delete.hook";
 import { SwitchForm } from "../form/switch.form";
 import { useFetchSwitchesPage } from "../../../hooks/part-data-hooks/get-all/switch.get-all-page.hook";

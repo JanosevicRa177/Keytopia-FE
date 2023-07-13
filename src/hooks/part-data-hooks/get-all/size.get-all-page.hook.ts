@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { useResponseState } from "../../util-hooks/response-state.hook";
 import { Page } from "../../../utils/types";
-import { Size } from "../../../model/part-data";
+import { Size } from "../../../model/part-data.model";
 import { useAxios } from "../../../utils/axios.hook";
 
 export const useFetchSizesPage = () => {

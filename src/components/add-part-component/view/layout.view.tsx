@@ -17,7 +17,7 @@ import { colorPallete } from "../../../styles/color";
 import { useEffect, useState } from "react";
 import { Pagination } from "../../paging/pagination/pagination";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { Layout } from "../../../model/part-data";
+import { Layout } from "../../../model/part-data.model";
 import { useFetchLayoutsPage } from "../../../hooks/part-data-hooks/get-all/layout.get-all-page.hook";
 import { LayoutForm } from "../form/layout.form";
 import { useDeleteLayout } from "../../../hooks/part-data-hooks/delete/layout.delete.hook";

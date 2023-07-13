@@ -4,8 +4,8 @@ import { StateCreator } from "zustand";
 import { Login } from "./types/login.type";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { User } from "./model/user.model";
 import { Store } from "../store";
+import { User } from "../../model/auth.model";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 

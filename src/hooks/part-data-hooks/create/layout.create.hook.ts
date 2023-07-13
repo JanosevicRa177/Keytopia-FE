@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { Layout } from "../../../model/part-data";
+import { Layout } from "../../../model/part-data.model";
 import { useAxios } from "../../../utils/axios.hook";
 
 export const useCreateLayout = () => {

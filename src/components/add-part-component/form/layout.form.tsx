@@ -22,7 +22,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useCreateLayout } from "../../../hooks/part-data-hooks/create/layout.create.hook";
-import { Layout } from "../../../model/part-data";
+import { Layout } from "../../../model/part-data.model";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 
 interface LayoutFormProps {

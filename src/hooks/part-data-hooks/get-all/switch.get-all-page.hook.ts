@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { useResponseState } from "../../util-hooks/response-state.hook";
 import { Page } from "../../../utils/types";
-import { Switch } from "../../../model/part-data";
+import { Switch } from "../../../model/part-data.model";
 import { useAxios } from "../../../utils/axios.hook";
 
 export const useFetchSwitchesPage = () => {

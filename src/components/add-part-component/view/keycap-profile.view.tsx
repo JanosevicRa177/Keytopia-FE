@@ -20,7 +20,7 @@ import { useFetchKeycapProfilesPage } from "../../../hooks/part-data-hooks/get-a
 import { Pagination } from "../../paging/pagination/pagination";
 import { useDeleteKeycapProfile } from "../../../hooks/part-data-hooks/delete/keycap-profile.delete.hook";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { KeycapProfile } from "../../../model/part-data";
+import { KeycapProfile } from "../../../model/part-data.model";
 
 export const KeycapProfileView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
