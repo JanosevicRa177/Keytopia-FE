@@ -9,4 +9,6 @@ export type Supplier = {
 	name: string;
 	phone: string;
 	address: Address;
+	brands: string[];
+	penals?: number;
 };

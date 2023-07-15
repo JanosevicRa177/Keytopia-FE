@@ -14,16 +14,16 @@ import {
 	ModalCloseButton,
 	ModalBody,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../styles/color";
+import { colorPallete } from "../../../../styles/color";
 import {
 	KEYCAP_PROFILE_DEFAULT_VALUES,
 	KEYCAP_PROFILE_VALIDATION_SCHEMA,
-} from "../../../utils/part-data.constatns";
+} from "../../../../utils/constants/part-data.constatns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useCreateKeycapProfile } from "../../../hooks/part-data-hooks/create/keycap-profile.create.hook";
-import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { KeycapProfile } from "../../../model/part-data.model";
+import { useCreateKeycapProfile } from "../../../../hooks/part-data-hooks/create/keycap-profile.create.hook";
+import { ApiResponse } from "../../../../store/auth-store/types/response.type";
+import { KeycapProfile } from "../../../../model/part-data.model";
 
 interface KeycapProfileFormProps {
 	isOpen: boolean;
@@ -66,7 +66,7 @@ export const KeycapProfileForm = ({
 			<ModalOverlay />
 			<ModalContent margin={"auto"}>
 				<ModalHeader textAlign={"center"} mt={4}>
-					Create keycap profile
+					Add keycap profile
 				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
@@ -122,7 +122,7 @@ export const KeycapProfileForm = ({
 								fontSize={"xl"}
 								position={"absolute"}
 							>
-								Create keycap profile
+								Add keycap profile
 							</Button>
 						</Center>
 					</Flex>

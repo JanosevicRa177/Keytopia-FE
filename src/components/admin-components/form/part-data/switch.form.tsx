@@ -15,17 +15,17 @@ import {
 	ModalOverlay,
 	ModalCloseButton,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../styles/color";
+import { colorPallete } from "../../../../styles/color";
 import {
 	SWTICH_DEFAULT_VALUES,
 	SWTICH_VALIDATION_SCHEMA,
-} from "../../../utils/part-data.constatns";
+} from "../../../../utils/constants/part-data.constatns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { PinType, PriceWight, SwitchType } from "../../../utils/enum";
-import { useCreateSwitch } from "../../../hooks/part-data-hooks/create/switch.create.hook";
-import { Switch } from "../../../model/part-data.model";
-import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { PinType, PriceWight, SwitchType } from "../../../../utils/enum";
+import { useCreateSwitch } from "../../../../hooks/part-data-hooks/create/switch.create.hook";
+import { Switch } from "../../../../model/part-data.model";
+import { ApiResponse } from "../../../../store/auth-store/types/response.type";
 
 interface SwitchFormProps {
 	isOpen: boolean;
@@ -68,7 +68,7 @@ export const SwitchForm = ({
 			<ModalOverlay />
 			<ModalContent margin={"auto"}>
 				<ModalHeader textAlign={"center"} mt={4}>
-					Create switch
+					Add switch
 				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
@@ -264,7 +264,7 @@ export const SwitchForm = ({
 								fontSize={"xl"}
 								position={"absolute"}
 							>
-								Create switch
+								Add switch
 							</Button>
 						</Center>
 					</Flex>

@@ -14,16 +14,16 @@ import {
 	ModalOverlay,
 	ModalCloseButton,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../styles/color";
+import { colorPallete } from "../../../../styles/color";
 import {
 	SIZE_DEFAULT_VALUES,
 	SIZE_VALIDATION_SCHEMA,
-} from "../../../utils/part-data.constatns";
+} from "../../../../utils/constants/part-data.constatns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useCreateSize } from "../../../hooks/part-data-hooks/create/size.create.hook";
-import { Size } from "../../../model/part-data.model";
-import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { useCreateSize } from "../../../../hooks/part-data-hooks/create/size.create.hook";
+import { Size } from "../../../../model/part-data.model";
+import { ApiResponse } from "../../../../store/auth-store/types/response.type";
 
 interface SizeFormProps {
 	isOpen: boolean;
@@ -62,7 +62,7 @@ export const SizeForm = ({ isOpen, onClose, fetchSizes }: SizeFormProps) => {
 			<ModalOverlay />
 			<ModalContent margin={"auto"}>
 				<ModalHeader textAlign={"center"} mt={4}>
-					Create size
+					Add size
 				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
@@ -141,7 +141,7 @@ export const SizeForm = ({ isOpen, onClose, fetchSizes }: SizeFormProps) => {
 								fontSize={"xl"}
 								position={"absolute"}
 							>
-								Create size
+								Add size
 							</Button>
 						</Center>
 					</Flex>

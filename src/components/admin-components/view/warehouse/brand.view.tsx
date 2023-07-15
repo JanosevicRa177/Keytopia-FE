@@ -13,31 +13,31 @@ import {
 	Th,
 	Thead,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../styles/color";
+import { colorPallete } from "../../../../styles/color";
 import { useEffect, useState } from "react";
-import { Pagination } from "../../paging/pagination/pagination";
-import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { Switch } from "../../../model/part-data.model";
-import { useDeleteSwitch } from "../../../hooks/part-data-hooks/delete/switch.delete.hook";
-import { SwitchForm } from "../form/switch.form";
-import { useFetchSwitchesPage } from "../../../hooks/part-data-hooks/get-all/switch.get-all-page.hook";
+import { Pagination } from "../../../paging/pagination/pagination";
+import { ApiResponse } from "../../../../store/auth-store/types/response.type";
+import { useDeleteBrand } from "../../../../hooks/warehouse-hooks/delete/brand.delete.hook";
+import { useFetchBrandsPage } from "../../../../hooks/warehouse-hooks/get-all/brand.get-all-page.hook";
+import { Brand } from "../../../../model/warehouse.model";
+import { BrandForm } from "../../form/warehouse/brand.form";
 
-export const SwitchView = () => {
+export const BrandView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getSwitchesPage, getSwitchesPageRes } = useFetchSwitchesPage();
-	const { deleteSwitch } = useDeleteSwitch();
+	const { getBrandsPage, getBrandsPageRes } = useFetchBrandsPage();
+	const { deleteBrand } = useDeleteBrand();
 	const {
 		isOpen: isOpenForm,
 		onClose: onCloseForm,
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getSwitchesPage(0).then(() => setCurrentPage(1));
+		getBrandsPage(0).then(() => setCurrentPage(1));
 	}, []);
-	async function handleDeleteSwitch(name: String) {
-		deleteSwitch(name).then((response: ApiResponse<null>) => {
+	async function handleDeleteBrand(name: String) {
+		deleteBrand(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getSwitchesPage(0).then(() => setCurrentPage(1));
+				getBrandsPage(0).then(() => setCurrentPage(1));
 			}
 		});
 	}
@@ -60,7 +60,7 @@ export const SwitchView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Switch</Text>
+					<Text fontSize={"2xl"}>Brand</Text>
 					<Button
 						w={"90px"}
 						rounded={"32px"}
@@ -89,24 +89,16 @@ export const SwitchView = () => {
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
-									<Th>Actuation force</Th>
-									<Th>Actuation point</Th>
-									<Th>Pin type</Th>
-									<Th>Switch type</Th>
-									<Th>Price weight</Th>
+									<Th>Slogan</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getSwitchesPageRes.data.content &&
-									getSwitchesPageRes.data.content.map(
-										(item: Switch) => (
+								{getBrandsPageRes.data.content &&
+									getBrandsPageRes.data.content.map(
+										(item: Brand) => (
 											<Tr key={item.name}>
-												<Td>{item.name}</Td>
-												<Td>{item.actuationForce}</Td>
-												<Td>{item.actuationPoint}</Td>
-												<Td>{item.pinType}</Td>
-												<Td>{item.switchType}</Td>
-												<Td>{item.priceWeight}</Td>
+												<Td w={"40%"}>{item.name}</Td>
+												<Td w={"40%"}>{item.slogan}</Td>
 												<Td>
 													<Flex gap={"4"}>
 														<Button
@@ -118,7 +110,7 @@ export const SwitchView = () => {
 															}
 															color={"white"}
 															onClick={() =>
-																handleDeleteSwitch(
+																handleDeleteBrand(
 																	item.name
 																)
 															}
@@ -143,18 +135,18 @@ export const SwitchView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getSwitchesPageRes.data.totalPages}
+					lastPage={getBrandsPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getSwitchesPage}
+					getPage={getBrandsPage}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<SwitchForm
+			<BrandForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchSwitch={getSwitchesPage}
-			></SwitchForm>
+				fetchBrands={getBrandsPage}
+			/>
 		</Box>
 	);
 };

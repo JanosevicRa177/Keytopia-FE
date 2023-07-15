@@ -13,31 +13,31 @@ import {
 	Th,
 	Thead,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../styles/color";
+import { colorPallete } from "../../../../styles/color";
 import { useEffect, useState } from "react";
-import { Pagination } from "../../paging/pagination/pagination";
-import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { Size } from "../../../model/part-data.model";
-import { useDeleteSize } from "../../../hooks/part-data-hooks/delete/size.delete.hook";
-import { useFetchSizesPage } from "../../../hooks/part-data-hooks/get-all/size.get-all-page.hook";
-import { SizeForm } from "../form/size.form";
+import { Pagination } from "../../../paging/pagination/pagination";
+import { ApiResponse } from "../../../../store/auth-store/types/response.type";
+import { useDeleteBrand } from "../../../../hooks/warehouse-hooks/delete/brand.delete.hook";
+import { useFetchSuppliersPage } from "../../../../hooks/warehouse-hooks/get-all/supplier.get-all-page.hook";
+import { Supplier } from "../../../../model/warehouse.model";
+import { SupplierForm } from "../../form/warehouse/supplier.form";
 
-export const SizeView = () => {
+export const SupplierView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getSizesPage, getSizesPageRes } = useFetchSizesPage();
-	const { deleteSize } = useDeleteSize();
+	const { getSuppliersPage, getSuppliersPageRes } = useFetchSuppliersPage();
+	const { deleteBrand } = useDeleteBrand();
 	const {
 		isOpen: isOpenForm,
 		onClose: onCloseForm,
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getSizesPage(0).then(() => setCurrentPage(1));
+		getSuppliersPage(0).then(() => setCurrentPage(1));
 	}, []);
-	async function handleDeleteSize(name: String) {
-		deleteSize(name).then((response: ApiResponse<null>) => {
+	async function handleDeleteSupplier(name: String) {
+		deleteBrand(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getSizesPage(0).then(() => setCurrentPage(1));
+				getSuppliersPage(0).then(() => setCurrentPage(1));
 			}
 		});
 	}
@@ -60,7 +60,7 @@ export const SizeView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Size</Text>
+					<Text fontSize={"2xl"}>Supplier</Text>
 					<Button
 						w={"90px"}
 						rounded={"32px"}
@@ -89,18 +89,16 @@ export const SizeView = () => {
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
-									<Th>Needed number of keys</Th>
+									<Th>Slogan</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getSizesPageRes.data.content &&
-									getSizesPageRes.data.content.map(
-										(item: Size) => (
+								{getSuppliersPageRes.data.content &&
+									getSuppliersPageRes.data.content.map(
+										(item: Supplier) => (
 											<Tr key={item.name}>
 												<Td w={"40%"}>{item.name}</Td>
-												<Td w={"40%"}>
-													{item.neededNumberOfKeys}
-												</Td>
+												<Td w={"40%"}>{item.phone}</Td>
 												<Td>
 													<Flex gap={"4"}>
 														<Button
@@ -112,7 +110,7 @@ export const SizeView = () => {
 															}
 															color={"white"}
 															onClick={() =>
-																handleDeleteSize(
+																handleDeleteSupplier(
 																	item.name
 																)
 															}
@@ -137,18 +135,18 @@ export const SizeView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getSizesPageRes.data.totalPages}
+					lastPage={getSuppliersPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getSizesPage}
+					getPage={getSuppliersPage}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<SizeForm
+			<SupplierForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchSizes={getSizesPage}
-			></SizeForm>
+				fetchSuppliers={getSuppliersPage}
+			/>
 		</Box>
 	);
 };

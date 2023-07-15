@@ -14,16 +14,16 @@ import {
 	ModalOverlay,
 	ModalCloseButton,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../styles/color";
+import { colorPallete } from "../../../../styles/color";
 import {
 	LAYOUT_DEFAULT_VALUES,
 	LAYOUT_VALIDATION_SCHEMA,
-} from "../../../utils/part-data.constatns";
+} from "../../../../utils/constants/part-data.constatns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useCreateLayout } from "../../../hooks/part-data-hooks/create/layout.create.hook";
-import { Layout } from "../../../model/part-data.model";
-import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { useCreateLayout } from "../../../../hooks/part-data-hooks/create/layout.create.hook";
+import { Layout } from "../../../../model/part-data.model";
+import { ApiResponse } from "../../../../store/auth-store/types/response.type";
 
 interface LayoutFormProps {
 	isOpen: boolean;
@@ -59,7 +59,6 @@ export const LayoutForm = ({
 		<Modal
 			isOpen={isOpen}
 			onClose={() => {
-				fetchLayouts(0);
 				reset();
 				onClose();
 			}}
@@ -67,7 +66,7 @@ export const LayoutForm = ({
 			<ModalOverlay />
 			<ModalContent margin={"auto"}>
 				<ModalHeader textAlign={"center"} mt={4}>
-					Create layout
+					Add layout
 				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
@@ -151,7 +150,7 @@ export const LayoutForm = ({
 								fontSize={"xl"}
 								position={"absolute"}
 							>
-								Create layout
+								Add layout
 							</Button>
 						</Center>
 					</Flex>

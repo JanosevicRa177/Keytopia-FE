@@ -13,31 +13,31 @@ import {
 	Th,
 	Thead,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../styles/color";
+import { colorPallete } from "../../../../styles/color";
 import { useEffect, useState } from "react";
-import { Pagination } from "../../paging/pagination/pagination";
-import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { Layout } from "../../../model/part-data.model";
-import { useFetchLayoutsPage } from "../../../hooks/part-data-hooks/get-all/layout.get-all-page.hook";
-import { LayoutForm } from "../form/layout.form";
-import { useDeleteLayout } from "../../../hooks/part-data-hooks/delete/layout.delete.hook";
+import { Pagination } from "../../../paging/pagination/pagination";
+import { ApiResponse } from "../../../../store/auth-store/types/response.type";
+import { Size } from "../../../../model/part-data.model";
+import { useDeleteSize } from "../../../../hooks/part-data-hooks/delete/size.delete.hook";
+import { useFetchSizesPage } from "../../../../hooks/part-data-hooks/get-all/size.get-all-page.hook";
+import { SizeForm } from "../../form/part-data/size.form";
 
-export const LayoutView = () => {
+export const SizeView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getLayoutsPage, getLayoutsPageRes } = useFetchLayoutsPage();
-	const { deleteLayout } = useDeleteLayout();
+	const { getSizesPage, getSizesPageRes } = useFetchSizesPage();
+	const { deleteSize } = useDeleteSize();
 	const {
 		isOpen: isOpenForm,
 		onClose: onCloseForm,
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getLayoutsPage(0).then(() => setCurrentPage(1));
+		getSizesPage(0).then(() => setCurrentPage(1));
 	}, []);
 	async function handleDeleteSize(name: String) {
-		deleteLayout(name).then((response: ApiResponse<null>) => {
+		deleteSize(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getLayoutsPage(0).then(() => setCurrentPage(1));
+				getSizesPage(0).then(() => setCurrentPage(1));
 			}
 		});
 	}
@@ -60,7 +60,7 @@ export const LayoutView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Layout</Text>
+					<Text fontSize={"2xl"}>Size</Text>
 					<Button
 						w={"90px"}
 						rounded={"32px"}
@@ -89,17 +89,17 @@ export const LayoutView = () => {
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
-									<Th>Localization</Th>
+									<Th>Needed number of keys</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getLayoutsPageRes.data.content &&
-									getLayoutsPageRes.data.content.map(
-										(item: Layout) => (
+								{getSizesPageRes.data.content &&
+									getSizesPageRes.data.content.map(
+										(item: Size) => (
 											<Tr key={item.name}>
 												<Td w={"40%"}>{item.name}</Td>
 												<Td w={"40%"}>
-													{item.localization}
+													{item.neededNumberOfKeys}
 												</Td>
 												<Td>
 													<Flex gap={"4"}>
@@ -137,18 +137,18 @@ export const LayoutView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getLayoutsPageRes.data.totalPages}
+					lastPage={getSizesPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getLayoutsPage}
+					getPage={getSizesPage}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<LayoutForm
+			<SizeForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchLayouts={getLayoutsPage}
-			></LayoutForm>
+				fetchSizes={getSizesPage}
+			/>
 		</Box>
 	);
 };

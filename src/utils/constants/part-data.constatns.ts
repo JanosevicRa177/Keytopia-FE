@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { PinType, PriceWight, SwitchType } from "./enum";
+import { PinType, PriceWight, SwitchType } from "./../enum";
 
 export const KEYCAP_PROFILE_VALIDATION_SCHEMA = yup.object({
 	name: yup.string().required(),

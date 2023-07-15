@@ -1,7 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Box, Flex } from "@chakra-ui/react";
 import { ToastContainer } from "react-toastify";
-import { Footer } from "./components/footer";
+import { Footer } from "./components/footer/footer";
 import { routes } from "./routes/routes";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import "react-toastify/dist/ReactToastify.css";

@@ -1,4 +1,4 @@
-import { Address } from "../../../model/address.model";
+import { Address } from "../../../model/util.model";
 
 export type Register = {
 	name: string;
