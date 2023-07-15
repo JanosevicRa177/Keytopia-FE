@@ -17,29 +17,42 @@ import { colorPallete } from "../../../../styles/color";
 import { useEffect, useState } from "react";
 import { Pagination } from "../../../paging/pagination/pagination";
 import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { useDeleteBrand } from "../../../../hooks/warehouse-hooks/delete/brand.delete.hook";
 import { useFetchSuppliersPage } from "../../../../hooks/warehouse-hooks/get-all/supplier.get-all-page.hook";
 import { Supplier } from "../../../../model/warehouse.model";
 import { SupplierForm } from "../../form/warehouse/supplier.form";
+import { useDeleteSupplier } from "../../../../hooks/warehouse-hooks/delete/supplier.delete.hook";
+import { DataArrayModal } from "../../../util-components/data-array.component";
 
 export const SupplierView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const { getSuppliersPage, getSuppliersPageRes } = useFetchSuppliersPage();
-	const { deleteBrand } = useDeleteBrand();
+	const [brandNames, setBrandNames] = useState<string[]>([]);
+	const [chosenSupplierName, setChosenSupplierName] = useState("");
+	const { deleteSupplier } = useDeleteSupplier();
 	const {
 		isOpen: isOpenForm,
 		onClose: onCloseForm,
 		onOpen: onOpenForm,
 	} = useDisclosure();
+	const {
+		isOpen: isOpenModal,
+		onClose: onCloseModal,
+		onOpen: onOpenModal,
+	} = useDisclosure();
 	useEffect(() => {
 		getSuppliersPage(0).then(() => setCurrentPage(1));
 	}, []);
 	async function handleDeleteSupplier(name: String) {
-		deleteBrand(name).then((response: ApiResponse<null>) => {
+		deleteSupplier(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
 				getSuppliersPage(0).then(() => setCurrentPage(1));
 			}
 		});
+	}
+	async function handleShowBrands(brands: string[], supplierName: string) {
+		setBrandNames(brands);
+		setChosenSupplierName(supplierName);
+		onOpenModal();
 	}
 
 	return (
@@ -89,7 +102,9 @@ export const SupplierView = () => {
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
-									<Th>Slogan</Th>
+									<Th>Address</Th>
+									<Th>Phone</Th>
+									<Th>Penals</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
@@ -97,12 +112,44 @@ export const SupplierView = () => {
 									getSuppliersPageRes.data.content.map(
 										(item: Supplier) => (
 											<Tr key={item.name}>
-												<Td w={"40%"}>{item.name}</Td>
-												<Td w={"40%"}>{item.phone}</Td>
+												<Td w={"10%"}>{item.name}</Td>
+												<Td w={"30%"}>
+													{item.address.street}{" "}
+													{item.address.streetNumber},{" "}
+													{item.address.zipCode}{" "}
+													{item.address.city},{" "}
+													{item.address.country}
+												</Td>
+												<Td w={"10%"}>{item.phone}</Td>
+												<Td w={"10%"}>{item.penals}</Td>
 												<Td>
 													<Flex gap={"4"}>
 														<Button
-															flexGrow={"1"}
+															w={"50%"}
+															rounded={"32px"}
+															overflow={"hidden"}
+															bg={
+																colorPallete.button
+															}
+															color={"white"}
+															onClick={() =>
+																handleShowBrands(
+																	item.brands,
+																	item.name
+																)
+															}
+															_hover={{
+																bg: colorPallete.buttonHover,
+																transform:
+																	"scale(1.05,1.05)",
+																transition:
+																	"0.2s",
+															}}
+														>
+															Show brands
+														</Button>
+														<Button
+															w={"50%"}
 															rounded={"32px"}
 															overflow={"hidden"}
 															bg={
@@ -146,6 +193,12 @@ export const SupplierView = () => {
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
 				fetchSuppliers={getSuppliersPage}
+			/>
+			<DataArrayModal
+				header={"Brands for " + chosenSupplierName}
+				isOpen={isOpenModal}
+				onClose={onCloseModal}
+				data={brandNames}
 			/>
 		</Box>
 	);

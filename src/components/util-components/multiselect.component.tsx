@@ -22,17 +22,20 @@ export const Multiselect = (props: MultiselectProps) => {
 		setChosenItems(chosenItems.filter((val) => val !== value));
 		props.onChange(
 			"brands",
-			chosenItems.filter((val) => val !== value)
+			chosenItems
+				.filter((val) => val !== value)
+				.map((value) => value.value)
 		);
 	}
 	function addValue(value: MultiselectOption) {
-		if (chosenItems.filter((val) => val === value).length !== 0) return;
 		setChosenItems((chosenItems) => [value, ...chosenItems]);
-		props.onChange("brands", [value, ...chosenItems]);
+		props.onChange(
+			"brands",
+			[value, ...chosenItems].map((value) => value.value)
+		);
 	}
 	function handleChange(value: MultiselectOption) {
-		if (chosenItems.filter((val) => val === value).length !== 0)
-			removeValue(value);
+		if (isPresent(value)) removeValue(value);
 		else addValue(value);
 	}
 	function isPresent(value: MultiselectOption): boolean {
