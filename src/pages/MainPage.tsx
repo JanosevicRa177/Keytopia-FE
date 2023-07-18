@@ -77,7 +77,7 @@ export const MainPage = () => {
 							<Button
 								w={"280px"}
 								h={"45px"}
-								rounded={"32px"}
+								rounded={"4px"}
 								overflow={"hidden"}
 								onClick={() => {
 									navigate("/shop-parts");
@@ -130,7 +130,7 @@ export const MainPage = () => {
 							<Button
 								w={"280px"}
 								h={"45px"}
-								rounded={"32px"}
+								rounded={"4px"}
 								overflow={"hidden"}
 								bg={colorPallete.button}
 								onClick={() => {
@@ -184,7 +184,7 @@ export const MainPage = () => {
 							<Button
 								w={"250px"}
 								h={"45px"}
-								rounded={"32px"}
+								rounded={"4px"}
 								overflow={"hidden"}
 								bg={colorPallete.button}
 								onClick={() => {
@@ -237,7 +237,7 @@ export const MainPage = () => {
 							<Button
 								w={"250px"}
 								h={"45px"}
-								rounded={"32px"}
+								rounded={"4px"}
 								overflow={"hidden"}
 								bg={colorPallete.button}
 								onClick={() => {

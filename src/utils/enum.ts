@@ -9,8 +9,24 @@ export enum PinType {
 	PIN5 = "PIN5",
 }
 
-export enum PriceWight {
+export enum PriceWeight {
 	LIGHT = "LIGHT",
 	MEDIUM = "MEDIUM",
 	HEAVY = "HEAVY",
+}
+
+export enum CableConnector {
+	USB_C = "USB_C",
+	USB = "USB",
+}
+
+export enum PartType {
+	CABLE = "CABLE",
+	KEYCAP = "KEYCAP",
+	KEYCAP_SET = "KEYCAP_SET",
+	PCB = "PCB",
+	PLATE = "PLATE",
+	STABILIZER = "STABILIZER",
+	SWITCH_SET = "SWITCH_SET",
+	CASE = "CASE",
 }

@@ -59,12 +59,13 @@ export const SupplierView = () => {
 		<Box w={"100%"}>
 			<Flex
 				color={"#343434"}
-				bgColor={"rgba(255,255,255,0.6)"}
+				bg={"rgba(255,255,255,0.9)"}
 				mx={"auto"}
 				mb={"32px"}
 				px={"32px"}
 				py={"32px"}
-				rounded={"16px"}
+				boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
+				rounded={"4px"}
 				position={"relative"}
 				fontWeight={"bold"}
 				flexDirection={"column"}
@@ -76,7 +77,7 @@ export const SupplierView = () => {
 					<Text fontSize={"2xl"}>Supplier</Text>
 					<Button
 						w={"90px"}
-						rounded={"32px"}
+						rounded={"4px"}
 						overflow={"hidden"}
 						bg={colorPallete.button}
 						onClick={() => {
@@ -126,12 +127,12 @@ export const SupplierView = () => {
 													<Flex gap={"4"}>
 														<Button
 															w={"50%"}
-															rounded={"32px"}
+															rounded={"4px"}
 															overflow={"hidden"}
+															color={"#343434"}
 															bg={
 																colorPallete.button
 															}
-															color={"white"}
 															onClick={() =>
 																handleShowBrands(
 																	item.brands,
@@ -150,7 +151,7 @@ export const SupplierView = () => {
 														</Button>
 														<Button
 															w={"50%"}
-															rounded={"32px"}
+															rounded={"4px"}
 															overflow={"hidden"}
 															bg={
 																colorPallete.deleteButton

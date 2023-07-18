@@ -22,7 +22,7 @@ import {
 } from "../../../../utils/constants/part-data.constatns";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { PinType, PriceWight, SwitchType } from "../../../../utils/enum";
+import { PinType, PriceWeight, SwitchType } from "../../../../utils/enum";
 import { useCreateSwitch } from "../../../../hooks/part-data-hooks/create/switch.create.hook";
 import { Switch } from "../../../../model/part-data.model";
 import { ApiResponse } from "../../../../store/auth-store/types/response.type";
@@ -74,7 +74,6 @@ export const SwitchForm = ({
 				<ModalBody>
 					<Flex
 						color={"#343434"}
-						bgColor={"rgba(255,255,255,0.6)"}
 						mx={"auto"}
 						mb={"32px"}
 						px={"32px"}
@@ -89,7 +88,7 @@ export const SwitchForm = ({
 							<FormLabel fontWeight={"semibold"}>Name</FormLabel>
 							<Input
 								type="text"
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"45px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("name")}
@@ -114,7 +113,7 @@ export const SwitchForm = ({
 								</FormLabel>
 								<Input
 									type="number"
-									rounded={"30px"}
+									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("actuationForce")}
@@ -139,7 +138,7 @@ export const SwitchForm = ({
 								</FormLabel>
 								<Input
 									type="number"
-									rounded={"30px"}
+									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("actuationPoint")}
@@ -163,7 +162,7 @@ export const SwitchForm = ({
 									Switch type
 								</FormLabel>
 								<Select
-									rounded={"30px"}
+									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("switchType")}
@@ -195,7 +194,7 @@ export const SwitchForm = ({
 									Pin type
 								</FormLabel>
 								<Select
-									rounded={"30px"}
+									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("pinType")}
@@ -223,7 +222,7 @@ export const SwitchForm = ({
 								Price weight
 							</FormLabel>
 							<Select
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"45px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("priceWeight")}
@@ -231,13 +230,13 @@ export const SwitchForm = ({
 									borderColor: colorPallete.inputBorderHover,
 								}}
 							>
-								<option value={PriceWight.LIGHT} selected>
+								<option value={PriceWeight.LIGHT} selected>
 									Light
 								</option>
-								<option value={PriceWight.MEDIUM}>
+								<option value={PriceWeight.MEDIUM}>
 									Medium
 								</option>
-								<option value={PriceWight.HEAVY}>Heavy</option>
+								<option value={PriceWeight.HEAVY}>Heavy</option>
 							</Select>
 							{errors.priceWeight ? (
 								<FormErrorMessage ml={"8px"}>
@@ -251,7 +250,7 @@ export const SwitchForm = ({
 							<Button
 								w={"calc(100% - 64px)"}
 								h={"45px"}
-								rounded={"32px"}
+								rounded={"4px"}
 								onClick={handleSubmit(handleCreateSwitch)}
 								overflow={"hidden"}
 								bg={colorPallete.button}

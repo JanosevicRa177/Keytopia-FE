@@ -79,7 +79,7 @@ export const LoginForm = () => {
 					<FormLabel fontWeight={"semibold"}>Email address</FormLabel>
 					<Input
 						type="text"
-						rounded={"30px"}
+						rounded={"4px"}
 						h={"45px"}
 						borderColor={colorPallete.inputBorder}
 						{...register("email")}
@@ -99,7 +99,7 @@ export const LoginForm = () => {
 					</FormLabel>
 					<Input
 						type="password"
-						rounded={"30px"}
+						rounded={"4px"}
 						h={"45px"}
 						{...register("password")}
 						borderColor={colorPallete.inputBorder}
@@ -117,7 +117,7 @@ export const LoginForm = () => {
 					<Button
 						w={"calc(100% - 64px)"}
 						h={"45px"}
-						rounded={"32px"}
+						rounded={"4px"}
 						onClick={handleSubmit(handleLogin)}
 						overflow={"hidden"}
 						bg={colorPallete.button}

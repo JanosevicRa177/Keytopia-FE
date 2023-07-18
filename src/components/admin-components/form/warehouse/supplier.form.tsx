@@ -58,7 +58,7 @@ export const SupplierForm = ({
 	useEffect(() => {
 		getBrands().then((res: ApiResponse<Brand[] | null>) => {
 			if (res.data == null) {
-				toast.error("Something wrong with retching brands!");
+				toast.error("Something wrong with fetching brands!");
 				return;
 			}
 			const brandNames: MultiselectOption[] = res.data.map((brand) => ({
@@ -112,7 +112,7 @@ export const SupplierForm = ({
 								</FormLabel>
 								<Input
 									type="text"
-									rounded={"30px"}
+									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("name")}
@@ -135,7 +135,7 @@ export const SupplierForm = ({
 								</FormLabel>
 								<Input
 									type="text"
-									rounded={"30px"}
+									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("phone")}
@@ -162,7 +162,7 @@ export const SupplierForm = ({
 										Street
 									</FormLabel>
 									<Input
-										rounded={"30px"}
+										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("address.street")}
@@ -193,7 +193,7 @@ export const SupplierForm = ({
 										Street Number
 									</FormLabel>
 									<Input
-										rounded={"30px"}
+										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("address.streetNumber")}
@@ -221,7 +221,7 @@ export const SupplierForm = ({
 										City
 									</FormLabel>
 									<Input
-										rounded={"30px"}
+										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("address.city")}
@@ -246,7 +246,7 @@ export const SupplierForm = ({
 									Zip code
 								</FormLabel>
 								<Input
-									rounded={"30px"}
+									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("address.zipCode")}
@@ -272,7 +272,7 @@ export const SupplierForm = ({
 								</FormLabel>
 								<Input
 									type="country"
-									rounded={"30px"}
+									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("address.country")}
@@ -315,7 +315,7 @@ export const SupplierForm = ({
 							<Button
 								w={"calc(100% - 64px)"}
 								h={"45px"}
-								rounded={"32px"}
+								rounded={"4px"}
 								onClick={handleSubmit(handleCreateSupplier)}
 								overflow={"hidden"}
 								bg={colorPallete.button}

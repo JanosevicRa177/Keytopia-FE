@@ -68,7 +68,6 @@ export const SizeForm = ({ isOpen, onClose, fetchSizes }: SizeFormProps) => {
 				<ModalBody>
 					<Flex
 						color={"#343434"}
-						bgColor={"rgba(255,255,255,0.6)"}
 						mx={"auto"}
 						mb={"32px"}
 						px={"32px"}
@@ -83,7 +82,7 @@ export const SizeForm = ({ isOpen, onClose, fetchSizes }: SizeFormProps) => {
 							<FormLabel fontWeight={"semibold"}>Name</FormLabel>
 							<Input
 								type="text"
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"45px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("name")}
@@ -107,7 +106,7 @@ export const SizeForm = ({ isOpen, onClose, fetchSizes }: SizeFormProps) => {
 							</FormLabel>
 							<Input
 								type="number"
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"45px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("neededNumberOfKeys")}
@@ -128,7 +127,7 @@ export const SizeForm = ({ isOpen, onClose, fetchSizes }: SizeFormProps) => {
 							<Button
 								w={"calc(100% - 64px)"}
 								h={"45px"}
-								rounded={"32px"}
+								rounded={"4px"}
 								onClick={handleSubmit(handleCreateSize)}
 								overflow={"hidden"}
 								bg={colorPallete.button}

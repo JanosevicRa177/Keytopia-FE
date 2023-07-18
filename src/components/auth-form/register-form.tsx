@@ -86,7 +86,7 @@ export const RegisterForm = () => {
 						Email address
 					</FormLabel>
 					<Input
-						rounded={"30px"}
+						rounded={"4px"}
 						h={"35px"}
 						borderColor={colorPallete.inputBorder}
 						{...register("email")}
@@ -110,7 +110,7 @@ export const RegisterForm = () => {
 								Name
 							</FormLabel>
 							<Input
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"35px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("name")}
@@ -136,7 +136,7 @@ export const RegisterForm = () => {
 								Surname
 							</FormLabel>
 							<Input
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"35px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("surname")}
@@ -164,7 +164,7 @@ export const RegisterForm = () => {
 								Phone
 							</FormLabel>
 							<Input
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"35px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("phone")}
@@ -190,7 +190,7 @@ export const RegisterForm = () => {
 								Street
 							</FormLabel>
 							<Input
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"35px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("address.street")}
@@ -219,7 +219,7 @@ export const RegisterForm = () => {
 								Street Number
 							</FormLabel>
 							<Input
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"35px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("address.streetNumber")}
@@ -247,7 +247,7 @@ export const RegisterForm = () => {
 								City
 							</FormLabel>
 							<Input
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"35px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("address.city")}
@@ -275,7 +275,7 @@ export const RegisterForm = () => {
 								Zip code
 							</FormLabel>
 							<Input
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"35px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("address.zipCode")}
@@ -304,7 +304,7 @@ export const RegisterForm = () => {
 							</FormLabel>
 							<Input
 								type="country"
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"35px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("address.country")}
@@ -333,7 +333,7 @@ export const RegisterForm = () => {
 							</FormLabel>
 							<Input
 								type="password"
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"35px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("password")}
@@ -360,7 +360,7 @@ export const RegisterForm = () => {
 							</FormLabel>
 							<Input
 								type="password"
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"35px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("confirmPassword")}
@@ -382,7 +382,7 @@ export const RegisterForm = () => {
 					<Button
 						w={"calc(100% - 64px)"}
 						h={"45px"}
-						rounded={"32px"}
+						rounded={"4px"}
 						onClick={handleSubmit(handleRegister)}
 						overflow={"hidden"}
 						bg={colorPallete.button}

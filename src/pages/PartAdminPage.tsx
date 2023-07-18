@@ -26,19 +26,19 @@ export const PartAdminPage = () => {
 					chosen={chosenView}
 					setChosen={setChosenView}
 					names={parts}
-				></ControlLinkContainer>
+				/>
 				<ControlLinkContainer
 					header="Part data"
 					chosen={chosenView}
 					setChosen={setChosenView}
 					names={partDatas}
-				></ControlLinkContainer>
+				/>
 				<ControlLinkContainer
 					header="Warehouse"
 					chosen={chosenView}
 					setChosen={setChosenView}
 					names={warehouse}
-				></ControlLinkContainer>
+				/>
 			</ControlContainer>
 			<AdminViewContainer chosenView={chosenView} />
 		</MainContrainer>

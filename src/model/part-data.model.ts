@@ -1,4 +1,4 @@
-import { PinType, PriceWight, SwitchType } from "../utils/enum";
+import { PinType, PriceWeight, SwitchType } from "../utils/enum";
 
 export type KeycapProfile = {
 	name: string;
@@ -19,5 +19,5 @@ export type Switch = {
 	actuationPoint: number;
 	switchType: SwitchType;
 	pinType: PinType;
-	priceWeight: PriceWight;
+	priceWeight: PriceWeight;
 };

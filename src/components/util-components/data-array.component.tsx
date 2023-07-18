@@ -1,4 +1,5 @@
 import {
+	Flex,
 	Modal,
 	ModalBody,
 	ModalCloseButton,
@@ -40,29 +41,41 @@ export const DataArrayModal = ({
 				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
-					<TableContainer
-						flex={1}
-						mx={"auto"}
-						mb={"32px"}
-						px={"32px"}
-					>
-						<Table
-							variant="striped"
-							colorScheme={"purple"}
-							fontSize={"small"}
+					<Flex position={"relative"} w={"100%"} h={"350px"}>
+						<Flex
+							flexDir={"column"}
+							cursor={"pointer"}
+							w={"100%"}
+							h={"350px"}
+							position={"absolute"}
 						>
-							<Thead>
-								<Tr></Tr>
-							</Thead>
-							<Tbody>
-								{data.map((item: string) => (
-									<Tr key={item}>
-										<Td w={"10%"}>{item}</Td>
-									</Tr>
-								))}
-							</Tbody>
-						</Table>
-					</TableContainer>
+							<TableContainer
+								flex={1}
+								mx={"auto"}
+								mb={"32px"}
+								w={"calc(100% - 30px)"}
+								h={"350px"}
+								overflowY={"auto"}
+							>
+								<Table
+									variant="striped"
+									colorScheme={"purple"}
+									fontSize={"small"}
+								>
+									<Thead>
+										<Tr></Tr>
+									</Thead>
+									<Tbody>
+										{data.map((item: string) => (
+											<Tr key={item}>
+												<Td w={"10%"}>{item}</Td>
+											</Tr>
+										))}
+									</Tbody>
+								</Table>
+							</TableContainer>
+						</Flex>
+					</Flex>
 				</ModalBody>
 			</ModalContent>
 		</Modal>

@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { PinType, PriceWight, SwitchType } from "./../enum";
+import { PinType, PriceWeight, SwitchType } from "./../enum";
 
 export const KEYCAP_PROFILE_VALIDATION_SCHEMA = yup.object({
 	name: yup.string().required(),
@@ -39,8 +39,8 @@ export const SWTICH_VALIDATION_SCHEMA = yup.object({
 		.required(),
 	pinType: yup.mixed<PinType>().oneOf(Object.values(PinType)).required(),
 	priceWeight: yup
-		.mixed<PriceWight>()
-		.oneOf(Object.values(PriceWight))
+		.mixed<PriceWeight>()
+		.oneOf(Object.values(PriceWeight))
 		.required(),
 });
 
@@ -50,5 +50,5 @@ export const SWTICH_DEFAULT_VALUES = {
 	actuationPoint: 0,
 	switchType: SwitchType.TACTILE,
 	pinType: PinType.PIN5,
-	priceWeight: PriceWight.LIGHT,
+	priceWeight: PriceWeight.LIGHT,
 };

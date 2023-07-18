@@ -72,7 +72,6 @@ export const KeycapProfileForm = ({
 				<ModalBody>
 					<Flex
 						color={"#343434"}
-						bgColor={"rgba(255,255,255,0.6)"}
 						mx={"auto"}
 						mb={"32px"}
 						px={"32px"}
@@ -87,7 +86,7 @@ export const KeycapProfileForm = ({
 							<FormLabel fontWeight={"semibold"}>Name</FormLabel>
 							<Input
 								type="text"
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"45px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("name")}
@@ -107,7 +106,7 @@ export const KeycapProfileForm = ({
 							<Button
 								w={"calc(100% - 64px)"}
 								h={"45px"}
-								rounded={"32px"}
+								rounded={"4px"}
 								onClick={handleSubmit(
 									handleCreateKeycapProfile
 								)}

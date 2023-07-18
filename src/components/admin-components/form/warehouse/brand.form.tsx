@@ -83,7 +83,7 @@ export const BrandForm = ({ isOpen, onClose, fetchBrands }: BrandFormProps) => {
 							<FormLabel fontWeight={"semibold"}>Name</FormLabel>
 							<Input
 								type="text"
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"45px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("name")}
@@ -105,7 +105,7 @@ export const BrandForm = ({ isOpen, onClose, fetchBrands }: BrandFormProps) => {
 							</FormLabel>
 							<Input
 								type="text"
-								rounded={"30px"}
+								rounded={"4px"}
 								h={"45px"}
 								borderColor={colorPallete.inputBorder}
 								{...register("slogan")}
@@ -125,7 +125,7 @@ export const BrandForm = ({ isOpen, onClose, fetchBrands }: BrandFormProps) => {
 							<Button
 								w={"calc(100% - 64px)"}
 								h={"45px"}
-								rounded={"32px"}
+								rounded={"4px"}
 								onClick={handleSubmit(handleCreateBrand)}
 								overflow={"hidden"}
 								bg={colorPallete.button}

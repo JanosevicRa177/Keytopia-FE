@@ -45,8 +45,7 @@ export const Multiselect = (props: MultiselectProps) => {
 		<Flex w={"100%"} h={"45px"} position={"relative"}>
 			<Flex
 				bg={"white"}
-				roundedTop={"22.5px"}
-				roundedBottom={isOpen ? "8px" : "22.5px"}
+				rounded={"4px"}
 				w={"100%"}
 				border={props.isError ? "2px" : "2px"}
 				h={isOpen ? "225px" : "45px"}
@@ -60,9 +59,8 @@ export const Multiselect = (props: MultiselectProps) => {
 				<Flex flexDirection={"column"} h={"225px"} w={"100%"}>
 					<Flex
 						zIndex={"20"}
-						roundedTop={"22.5px"}
+						rounded={"4px"}
 						overflow={"hidden"}
-						roundedBottom={"22.5px"}
 						columnGap={"4px"}
 					>
 						<Flex
@@ -115,28 +113,38 @@ export const Multiselect = (props: MultiselectProps) => {
 						h={"1px"}
 						mx={"4px"}
 					></Box>
-					<Flex flexDir={"column"} mx={"16px"} cursor={"pointer"}>
-						{props.values.map((value) => (
-							<Flex>
-								<Text
-									w={"calc(100% - 45px)"}
-									onClick={(e) => {
-										handleChange(value);
-									}}
-								>
-									{value.text}
-								</Text>
-								{isPresent(value) && (
-									<Center h={"100%"}>
-										<Img
-											src={checkmark}
-											w={"10px"}
-											h={"10px"}
-										/>
-									</Center>
-								)}
-							</Flex>
-						))}
+					<Flex position={"relative"} w={"100%"}>
+						<Flex
+							flexDir={"column"}
+							mx={"16px"}
+							cursor={"pointer"}
+							h={"175px"}
+							overflowY={"scroll"}
+							w={"100%"}
+							position={"absolute"}
+						>
+							{props.values.map((value) => (
+								<Flex>
+									<Text
+										w={"calc(100% - 20px)"}
+										onClick={(e) => {
+											handleChange(value);
+										}}
+									>
+										{value.text}
+									</Text>
+									{isPresent(value) && (
+										<Center h={"100%"}>
+											<Img
+												src={checkmark}
+												w={"10px"}
+												h={"10px"}
+											/>
+										</Center>
+									)}
+								</Flex>
+							))}
+						</Flex>
 					</Flex>
 				</Flex>
 			</Flex>

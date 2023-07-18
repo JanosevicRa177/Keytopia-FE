@@ -46,12 +46,13 @@ export const SwitchView = () => {
 		<Box w={"100%"}>
 			<Flex
 				color={"#343434"}
-				bgColor={"rgba(255,255,255,0.6)"}
+				bg={"rgba(255,255,255,0.9)"}
 				mx={"auto"}
 				mb={"32px"}
 				px={"32px"}
 				py={"32px"}
-				rounded={"16px"}
+				boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
+				rounded={"4px"}
 				position={"relative"}
 				fontWeight={"bold"}
 				flexDirection={"column"}
@@ -63,7 +64,7 @@ export const SwitchView = () => {
 					<Text fontSize={"2xl"}>Switch</Text>
 					<Button
 						w={"90px"}
-						rounded={"32px"}
+						rounded={"4px"}
 						overflow={"hidden"}
 						bg={colorPallete.button}
 						onClick={() => {
@@ -102,16 +103,26 @@ export const SwitchView = () => {
 										(item: Switch) => (
 											<Tr key={item.name}>
 												<Td>{item.name}</Td>
-												<Td>{item.actuationForce}</Td>
-												<Td>{item.actuationPoint}</Td>
-												<Td>{item.pinType}</Td>
-												<Td>{item.switchType}</Td>
-												<Td>{item.priceWeight}</Td>
+												<Td w={"10%"}>
+													{item.actuationForce}
+												</Td>
+												<Td w={"10%"}>
+													{item.actuationPoint}
+												</Td>
+												<Td w={"10%"}>
+													{item.pinType}
+												</Td>
+												<Td w={"10%"}>
+													{item.switchType}
+												</Td>
+												<Td w={"10%"}>
+													{item.priceWeight}
+												</Td>
 												<Td>
 													<Flex gap={"4"}>
 														<Button
 															flexGrow={"1"}
-															rounded={"32px"}
+															rounded={"4px"}
 															overflow={"hidden"}
 															bg={
 																colorPallete.deleteButton

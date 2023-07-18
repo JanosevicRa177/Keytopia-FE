@@ -7,12 +7,10 @@ export const ControlContainer: React.FC<{
 		<Flex
 			color={"#343434"}
 			w={"calc(100% - 32px)"}
-			my={"32px"}
+			my={"8px"}
 			mx={"16px"}
 			px={"16px"}
 			py={"16px"}
-			rounded={"16px"}
-			position={"relative"}
 			fontWeight={"bold"}
 			columnGap={"12px"}
 			rowGap={"12px"}
