@@ -5,9 +5,9 @@ import { Footer } from "./components/footer/footer";
 import { routes } from "./routes/routes";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import "react-toastify/dist/ReactToastify.css";
-import { ImgComponent } from "./components/img-component";
 import { Header } from "./components/header/header";
 import { colors } from "./styles/color";
+import { ImgComponent } from "./components/util-components/img-component";
 
 function App() {
 	return (

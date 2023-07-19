@@ -35,6 +35,7 @@ export const SizeView = () => {
 		getSizesPage(0).then(() => setCurrentPage(1));
 	}, []);
 	async function handleDeleteSize(name: String) {
+		console.log(name);
 		deleteSize(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
 				getSizesPage(0).then(() => setCurrentPage(1));

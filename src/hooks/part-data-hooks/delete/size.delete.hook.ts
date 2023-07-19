@@ -6,8 +6,10 @@ export const useDeleteSize = () => {
 	const { axios } = useAxios();
 	const deleteSize = async (name: String): Promise<ApiResponse<null>> => {
 		try {
-			await axios.delete(`/part-data/size/${name}`);
-			toast.success("Keycap profile successfuly deleted!");
+			await axios.delete(
+				`/part-data/size/${encodeURIComponent(name.toString())}`
+			);
+			toast.success("Size successfuly deleted!");
 			return {
 				data: null,
 				error: null,

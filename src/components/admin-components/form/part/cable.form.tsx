@@ -16,6 +16,7 @@ import {
 	ModalBody,
 	Select,
 	Checkbox,
+	Text,
 } from "@chakra-ui/react";
 import { colorPallete } from "../../../../styles/color";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,11 +29,12 @@ import {
 } from "../../../../utils/constants/part.constants";
 import { useEffect, useState } from "react";
 import { useFetchBrands } from "../../../../hooks/warehouse-hooks/get-all/brand.get-all.hook";
-import { Brand } from "../../../../model/warehouse.model";
+import { Brand, Supplier } from "../../../../model/warehouse.model";
 import { toast } from "react-toastify";
 import { CableConnector, PartType, PriceWeight } from "../../../../utils/enum";
 import { useCreateCable } from "../../../../hooks/part-hooks/create/cable.create.hook";
-interface KeycapProfileFormProps {
+import { useFetchSupplier } from "../../../../hooks/warehouse-hooks/get-all/supplier.get-all.hook";
+interface CableFormProps {
 	isOpen: boolean;
 	onClose: () => void;
 	fetchCables: (pageNumber: number, partType: PartType) => Promise<void>;
@@ -40,17 +42,15 @@ interface KeycapProfileFormProps {
 
 const partType = PartType.CABLE;
 
-export const CableForm = ({
-	isOpen,
-	onClose,
-	fetchCables,
-}: KeycapProfileFormProps) => {
+export const CableForm = ({ isOpen, onClose, fetchCables }: CableFormProps) => {
 	const { getBrands } = useFetchBrands();
+	const { getSuppliers } = useFetchSupplier();
 	const { createCable } = useCreateCable();
 	const {
 		register,
 		handleSubmit,
 		reset,
+		setValue,
 		formState: { errors },
 	} = useForm<Cable>({
 		defaultValues: CABLE_DEFAULT_VALUES,
@@ -58,16 +58,35 @@ export const CableForm = ({
 	});
 	const [image, setImage] = useState<File | null>();
 	const [brandNames, setBrandNames] = useState<string[]>([]);
+	const [supplierNames, setSupplierNames] = useState<string[]>([]);
+	const [showBrand, setShowBrand] = useState<boolean>(true);
+	const [init, setInit] = useState<boolean>(true);
 	useEffect(() => {
-		getBrands().then((res: ApiResponse<Brand[] | null>) => {
-			if (res.data == null) {
-				toast.error("Something wrong with fetching brands!");
-				return;
-			}
-			const brandNames: string[] = res.data.map((brand) => brand.name);
-			setBrandNames(brandNames);
-		});
-	}, []);
+		if (init) {
+			getBrands().then((res: ApiResponse<Brand[] | null>) => {
+				if (res.data == null) {
+					toast.error("Something wrong with fetching brands!");
+					return;
+				}
+				const brandNames: string[] = res.data.map(
+					(brand) => brand.name
+				);
+				setBrandNames(brandNames);
+				setValue("brand", brandNames[0]);
+			});
+			getSuppliers().then((res: ApiResponse<Supplier[] | null>) => {
+				if (res.data == null) {
+					toast.error("Something wrong with fetching brands!");
+					return;
+				}
+				const supplierNames: string[] = res.data.map(
+					(supplier) => supplier.name
+				);
+				setSupplierNames(supplierNames);
+			});
+			setInit(false);
+		}
+	}, [init]);
 	async function handleCreateCable(values: Cable) {
 		if (image === undefined || image === null) {
 			toast.error("You did not choose image for cable!");
@@ -77,20 +96,36 @@ export const CableForm = ({
 			if (response.status === "SUCCESS") {
 				fetchCables(0, partType);
 				reset();
+				setImage(null);
+				setShowBrand(true);
+				setInit(true);
 				onClose();
 			}
 		});
+	}
+	function handleHasBrandChange() {
+		if (showBrand) {
+			setValue("brand", "");
+			setValue("supplier", supplierNames[0]);
+		} else {
+			setValue("brand", brandNames[0]);
+			setValue("supplier", "");
+		}
+		setShowBrand(!showBrand);
 	}
 	return (
 		<Modal
 			isOpen={isOpen}
 			onClose={() => {
 				reset();
+				setInit(true);
+				setImage(null);
+				setShowBrand(true);
 				onClose();
 			}}
 		>
 			<ModalOverlay />
-			<ModalContent margin={"auto"}>
+			<ModalContent margin={"auto"} maxW="760px">
 				<ModalHeader textAlign={"center"} mt={4}>
 					Add Cable
 				</ModalHeader>
@@ -155,8 +190,6 @@ export const CableForm = ({
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
 							</FormControl>
-						</Flex>
-						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.priceWeight != null}>
 								<FormLabel fontWeight={"semibold"}>
 									Price weight
@@ -190,37 +223,235 @@ export const CableForm = ({
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
 							</FormControl>
-							<FormControl isInvalid={errors.brand != null}>
+						</Flex>
+						<Flex gap={"16px"} mb={"25px"}>
+							{showBrand ? (
+								<Flex
+									flexDirection={"column"}
+									minW={"calc(33% - 8px)"}
+								>
+									<FormLabel fontWeight={"semibold"}>
+										Brand
+									</FormLabel>
+									<Select
+										rounded={"4px"}
+										h={"45px"}
+										borderColor={colorPallete.inputBorder}
+										{...register("brand")}
+										_hover={{
+											borderColor:
+												colorPallete.inputBorderHover,
+										}}
+										defaultValue={brandNames[0]}
+									>
+										{brandNames.map((brand, index) => (
+											<option value={brand} key={index}>
+												{brand}
+											</option>
+										))}
+									</Select>
+								</Flex>
+							) : (
+								<Flex
+									flexDirection={"column"}
+									minW={"calc(33% - 8px)"}
+								>
+									<FormLabel fontWeight={"semibold"}>
+										Supplier
+									</FormLabel>
+									<Select
+										rounded={"4px"}
+										h={"45px"}
+										borderColor={colorPallete.inputBorder}
+										{...register("supplier")}
+										_hover={{
+											borderColor:
+												colorPallete.inputBorderHover,
+										}}
+										defaultValue={brandNames[0]}
+									>
+										{supplierNames.map(
+											(supplier, index) => (
+												<option
+													value={supplier}
+													key={index}
+												>
+													{supplier}
+												</option>
+											)
+										)}
+									</Select>
+								</Flex>
+							)}
+							<Flex
+								justifyContent={"center"}
+								minH={"100%"}
+								mt={"25px"}
+								minW={"calc(33% - 8px)"}
+							>
+								<FormLabel
+									fontWeight={"semibold"}
+									h={"25px"}
+									textAlign={"center"}
+									my={"auto"}
+								>
+									Has brand
+								</FormLabel>
+								<Checkbox
+									rounded={"4px"}
+									h={"45px"}
+									colorScheme={"purple"}
+									my={"auto"}
+									borderColor={colorPallete.inputBorder}
+									onChange={handleHasBrandChange}
+									_hover={{
+										borderColor: colorPallete.buttonHover,
+									}}
+									defaultChecked
+								/>
+							</Flex>
+							<Flex
+								minW={"calc(33% - 8px)"}
+								flexDirection={"column"}
+							>
+								<Text mb={"8px"}>Image</Text>
+								<Input
+									id="image"
+									minW={"100%"}
+									rounded={"4px"}
+									h={"45px"}
+									borderColor={colorPallete.inputBorder}
+									onChange={(e) => {
+										if (e.target.files) {
+											setImage(e.target.files[0]);
+										}
+									}}
+									_hover={{
+										borderColor:
+											colorPallete.inputBorderHover,
+									}}
+									type="file"
+									width={"80%"}
+								/>
+							</Flex>
+						</Flex>
+						<Flex gap={"16px"}>
+							<FormControl
+								isInvalid={errors.computerConnector != null}
+							>
 								<FormLabel fontWeight={"semibold"}>
-									Brand
+									Computer connector
 								</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
-									{...register("brand")}
+									{...register("computerConnector")}
 									_hover={{
 										borderColor:
 											colorPallete.inputBorderHover,
 									}}
-									defaultValue={brandNames[0]}
+									defaultValue={CableConnector.USB}
 								>
-									{brandNames.map((brand, index) => (
-										<option value={brand} key={index}>
-											{brand}
-										</option>
-									))}
+									<option value={CableConnector.USB}>
+										USB
+									</option>
+									<option value={CableConnector.USB_C}>
+										USB C
+									</option>
 								</Select>
-								{errors.brand ? (
+								{errors.computerConnector ? (
 									<FormErrorMessage ml={"8px"}>
-										Brand name is required field
+										{errors.computerConnector.message}
 									</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
 							</FormControl>
+							<FormControl
+								isInvalid={errors.keyboardConnector != null}
+							>
+								<FormLabel fontWeight={"semibold"}>
+									Keyboard connector
+								</FormLabel>
+								<Select
+									rounded={"4px"}
+									h={"45px"}
+									borderColor={colorPallete.inputBorder}
+									{...register("keyboardConnector")}
+									_hover={{
+										borderColor:
+											colorPallete.inputBorderHover,
+									}}
+									defaultValue={CableConnector.USB}
+								>
+									<option value={CableConnector.USB}>
+										USB
+									</option>
+									<option value={CableConnector.USB_C}>
+										USB C
+									</option>
+								</Select>
+								{errors.keyboardConnector ? (
+									<FormErrorMessage ml={"8px"}>
+										{errors.keyboardConnector.message}
+									</FormErrorMessage>
+								) : (
+									<Box h={"25px"} w="100%" ml={"8px"}></Box>
+								)}
+							</FormControl>
+							<FormControl isInvalid={errors.isCoiled != null}>
+								<Flex justifyContent={"center"} h={"100%"}>
+									<FormLabel
+										fontWeight={"semibold"}
+										h={"25px"}
+										textAlign={"center"}
+										my={"auto"}
+									>
+										Is coiled
+									</FormLabel>
+									<Checkbox
+										rounded={"4px"}
+										colorScheme={"purple"}
+										my={"auto"}
+										h={"45px"}
+										borderColor={colorPallete.inputBorder}
+										{...register("isCoiled")}
+										_hover={{
+											borderColor:
+												colorPallete.buttonHover,
+										}}
+									/>
+								</Flex>
+							</FormControl>
+							<FormControl
+								isInvalid={errors.isQuickRelease != null}
+							>
+								<Flex justifyContent={"center"} h={"100%"}>
+									<FormLabel
+										fontWeight={"semibold"}
+										h={"25px"}
+										textAlign={"center"}
+										my={"auto"}
+									>
+										Is quick release
+									</FormLabel>
+									<Checkbox
+										rounded={"4px"}
+										h={"45px"}
+										colorScheme={"purple"}
+										my={"auto"}
+										borderColor={colorPallete.inputBorder}
+										{...register("isQuickRelease")}
+										_hover={{
+											borderColor:
+												colorPallete.buttonHover,
+										}}
+									/>
+								</Flex>
+							</FormControl>
 						</Flex>
-						<Flex gap={"16px"}>
+						<Flex mb={"8px"} gap={"16px"}>
 							<FormControl isInvalid={errors.material != null}>
 								<FormLabel fontWeight={"semibold"}>
 									Material
@@ -291,153 +522,9 @@ export const CableForm = ({
 								)}
 							</FormControl>
 						</Flex>
-						<Flex gap={"16px"}>
-							<FormControl
-								isInvalid={errors.computerConnector != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Computer connector
-								</FormLabel>
-								<Select
-									rounded={"4px"}
-									h={"45px"}
-									borderColor={colorPallete.inputBorder}
-									{...register("computerConnector")}
-									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
-									}}
-									defaultValue={CableConnector.USB}
-								>
-									<option value={CableConnector.USB}>
-										USB
-									</option>
-									<option value={CableConnector.USB_C}>
-										USB C
-									</option>
-								</Select>
-								{errors.computerConnector ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.computerConnector.message}
-									</FormErrorMessage>
-								) : (
-									<Box h={"25px"} w="100%" ml={"8px"}></Box>
-								)}
-							</FormControl>
-							<FormControl
-								isInvalid={errors.keyboardConnector != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Keyboard connector
-								</FormLabel>
-								<Select
-									rounded={"4px"}
-									h={"45px"}
-									borderColor={colorPallete.inputBorder}
-									{...register("keyboardConnector")}
-									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
-									}}
-									defaultValue={CableConnector.USB}
-								>
-									<option value={CableConnector.USB}>
-										USB
-									</option>
-									<option value={CableConnector.USB_C}>
-										USB C
-									</option>
-								</Select>
-								{errors.keyboardConnector ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.keyboardConnector.message}
-									</FormErrorMessage>
-								) : (
-									<Box h={"25px"} w="100%" ml={"8px"}></Box>
-								)}
-							</FormControl>
-						</Flex>
-						<Flex mb={"8px"}>
-							<Input
-								flexGrow={"1"}
-								id="image"
-								borderColor={colorPallete.inputBorder}
-								onChange={(e) => {
-									if (e.target.files) {
-										setImage(e.target.files[0]);
-									}
-								}}
-								type="file"
-								width={"80%"}
-							/>
-						</Flex>
-						<Flex gap={"16px"}>
-							<FormControl isInvalid={errors.isCoiled != null}>
-								<Flex>
-									<FormLabel
-										fontWeight={"semibold"}
-										h={"25px"}
-										textAlign={"center"}
-										my={"auto"}
-									>
-										Is coiled
-									</FormLabel>
-									<Checkbox
-										rounded={"4px"}
-										colorScheme={"purple"}
-										h={"45px"}
-										borderColor={colorPallete.inputBorder}
-										{...register("isCoiled")}
-										_hover={{
-											borderColor:
-												colorPallete.buttonHover,
-										}}
-									/>
-								</Flex>
-								{errors.isCoiled ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.isCoiled.message}
-									</FormErrorMessage>
-								) : (
-									<Box h={"25px"} w="100%" ml={"8px"}></Box>
-								)}
-							</FormControl>
-							<FormControl
-								isInvalid={errors.isQuickRelease != null}
-							>
-								<Flex>
-									<FormLabel
-										fontWeight={"semibold"}
-										h={"25px"}
-										textAlign={"center"}
-										my={"auto"}
-									>
-										Is quick release
-									</FormLabel>
-									<Checkbox
-										rounded={"4px"}
-										h={"45px"}
-										colorScheme={"purple"}
-										borderColor={colorPallete.inputBorder}
-										{...register("isQuickRelease")}
-										_hover={{
-											borderColor:
-												colorPallete.buttonHover,
-										}}
-									/>
-								</Flex>
-								{errors.isQuickRelease ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.isQuickRelease.message}
-									</FormErrorMessage>
-								) : (
-									<Box h={"25px"} w="100%" ml={"8px"}></Box>
-								)}
-							</FormControl>
-						</Flex>
 						<Center h={"45px"} mt={"16px"} w={"auto"}>
 							<Button
-								w={"calc(100% - 64px)"}
+								w={"50%"}
 								h={"45px"}
 								rounded={"4px"}
 								onClick={handleSubmit(handleCreateCable)}
@@ -445,7 +532,7 @@ export const CableForm = ({
 								bg={colorPallete.button}
 								_hover={{
 									bg: colorPallete.buttonHover,
-									w: "calc(1.03 * (100% - 64px))",
+									w: "calc(1.03 * 50%)",
 									h: "46.5px",
 									transition: "0.2s",
 								}}

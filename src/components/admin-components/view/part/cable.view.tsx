@@ -42,7 +42,7 @@ export const CableView = () => {
 			setCurrentPage(1);
 		});
 	}, []);
-	async function handleDeleteCable(name: String) {
+	async function handleDeletePart(name: String) {
 		deletePart(name, partType).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
 				getPartPage(0, partType).then(() => setCurrentPage(1));
@@ -62,8 +62,8 @@ export const CableView = () => {
 				if (
 					name === "name" ||
 					name === "imageUrl" ||
-					name === "image" ||
-					name === "priceWeight"
+					name === "priceWeight" ||
+					cableData[name as keyof Cable]?.toString() == null
 				) {
 					normalizedNames.shift();
 					return;
@@ -80,6 +80,7 @@ export const CableView = () => {
 						variable: normalizedNames[0],
 						value: value,
 					});
+					normalizedNames.shift();
 					return;
 				}
 				data.push({
@@ -144,7 +145,7 @@ export const CableView = () => {
 						<PartCard
 							key={part.name}
 							part={part}
-							delete={handleDeleteCable}
+							delete={handleDeletePart}
 							showMore={handleShowMoreCable}
 						/>
 					))}

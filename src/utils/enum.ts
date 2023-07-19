@@ -47,9 +47,3 @@ export enum PCBType {
 	HOT_SWAP = "HOT_SWAP",
 	STANDARD = "STANDARD",
 }
-
-export enum StabilizerSize {
-	U2 = "U2",
-	U7 = "U7",
-	U6_25 = "U6_25",
-}

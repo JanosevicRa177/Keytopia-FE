@@ -14,55 +14,64 @@ import {
 	ModalHeader,
 	ModalCloseButton,
 	ModalBody,
+	Select,
 	Text,
 	Checkbox,
-	Select,
 } from "@chakra-ui/react";
 import { colorPallete } from "../../../../styles/color";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { Case } from "../../../../model/part.model";
+import { KeycapSet } from "../../../../model/part.model";
 import {
-	CASE_DEFAULT_VALUES,
-	CASE_VALIDATION_SCHEMA,
+	KEYCAP_SET_DEFAULT_VALUES,
+	KEYCAP_SET_VALIDATION_SCHEMA,
 } from "../../../../utils/constants/part.constants";
 import { useEffect, useState } from "react";
 import { useFetchBrands } from "../../../../hooks/warehouse-hooks/get-all/brand.get-all.hook";
 import { Brand, Supplier } from "../../../../model/warehouse.model";
 import { toast } from "react-toastify";
-import { PartType, PriceWeight } from "../../../../utils/enum";
-import { useCreateCase } from "../../../../hooks/part-hooks/create/case.create.hook";
-import { useFetchSizes } from "../../../../hooks/part-data-hooks/get-all/size.get-all.hook";
+import { KeycapMaterial, PartType, PriceWeight } from "../../../../utils/enum";
+import { useFetchKeycapProfiles } from "../../../../hooks/part-data-hooks/get-all/keycap-profile.get-all.hook";
 import { useFetchSupplier } from "../../../../hooks/warehouse-hooks/get-all/supplier.get-all.hook";
-
-interface CaseFormProps {
+import { useCreateKeycapSet } from "../../../../hooks/part-hooks/create/keycap-set.create.hook";
+import { useFetchLayouts } from "../../../../hooks/part-data-hooks/get-all/layout.get-all.hook";
+import { Multiselect } from "../../../util-components/multiselect.component";
+import { MultiselectOption } from "../../../../utils/types";
+interface KeycapSetFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchCases: (pageNumber: number, partType: PartType) => Promise<void>;
+	fetchKeycapSets: (pageNumber: number, partType: PartType) => Promise<void>;
 }
 
-const partType = PartType.CASE;
+const partType = PartType.KEYCAP_SET;
 
-export const CaseForm = ({ isOpen, onClose, fetchCases }: CaseFormProps) => {
+export const KeycapSetForm = ({
+	isOpen,
+	onClose,
+	fetchKeycapSets,
+}: KeycapSetFormProps) => {
 	const { getBrands } = useFetchBrands();
-	const { getSizes } = useFetchSizes();
 	const { getSuppliers } = useFetchSupplier();
-	const { createCase } = useCreateCase();
+	const { getLayouts } = useFetchLayouts();
+	const { getKeycapProfiles } = useFetchKeycapProfiles();
+	const { createKeycapSet } = useCreateKeycapSet();
 	const {
 		register,
 		handleSubmit,
 		reset,
 		setValue,
 		formState: { errors },
-	} = useForm<Case>({
-		defaultValues: CASE_DEFAULT_VALUES,
-		resolver: yupResolver(CASE_VALIDATION_SCHEMA),
+	} = useForm<KeycapSet>({
+		defaultValues: KEYCAP_SET_DEFAULT_VALUES,
+		resolver: yupResolver(KEYCAP_SET_VALIDATION_SCHEMA),
 	});
 	const [image, setImage] = useState<File | null>();
 	const [brandNames, setBrandNames] = useState<string[]>([]);
 	const [supplierNames, setSupplierNames] = useState<string[]>([]);
-	const [sizeNames, setSizeNames] = useState<string[]>([]);
+	const [keycapProfileNames, setKeycapProfileNames] = useState<string[]>([]);
+	const [layoutNames, setLayoutNames] = useState<MultiselectOption[]>([]);
+
 	const [showBrand, setShowBrand] = useState<boolean>(true);
 	const [init, setInit] = useState<boolean>(true);
 	useEffect(() => {
@@ -88,24 +97,41 @@ export const CaseForm = ({ isOpen, onClose, fetchCases }: CaseFormProps) => {
 				);
 				setSupplierNames(supplierNames);
 			});
-			getSizes().then((res: ApiResponse<string[] | null>) => {
+			getKeycapProfiles().then((res: ApiResponse<string[] | null>) => {
 				if (res.data == null) {
-					toast.error("Something wrong with fetching sizes!");
+					toast.error(
+						"Something wrong with fetching keycap profiles!"
+					);
 					return;
 				}
-				setSizeNames(res.data);
+				setKeycapProfileNames(res.data);
+			});
+			getLayouts().then((res: ApiResponse<string[] | null>) => {
+				if (res.data == null) {
+					toast.error(
+						"Something wrong with fetching keycap profiles!"
+					);
+					return;
+				}
+				const layoutNames: MultiselectOption[] = res.data.map(
+					(layout) => ({
+						text: layout,
+						value: layout,
+					})
+				);
+				setLayoutNames(layoutNames);
 			});
 			setInit(false);
 		}
 	}, [init]);
-	async function handleCreateCase(values: Case) {
+	async function handleCreateKeycapSet(values: KeycapSet) {
 		if (image === undefined || image === null) {
-			toast.error("You did not choose image for case!");
+			toast.error("You did not choose image for keycap set!");
 			return;
 		}
-		createCase(values, image).then((response: ApiResponse<null>) => {
+		createKeycapSet(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchCases(0, partType);
+				fetchKeycapSets(0, partType);
 				reset();
 				setImage(null);
 				setShowBrand(true);
@@ -138,7 +164,7 @@ export const CaseForm = ({ isOpen, onClose, fetchCases }: CaseFormProps) => {
 			<ModalOverlay />
 			<ModalContent margin={"auto"} maxW="760px">
 				<ModalHeader textAlign={"center"} mt={4}>
-					Add case
+					Add keycap set
 				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
@@ -346,14 +372,12 @@ export const CaseForm = ({ isOpen, onClose, fetchCases }: CaseFormProps) => {
 								/>
 							</Flex>
 						</Flex>
-
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.material != null}>
 								<FormLabel fontWeight={"semibold"}>
 									Material
 								</FormLabel>
-								<Input
-									type="text"
+								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
@@ -362,7 +386,25 @@ export const CaseForm = ({ isOpen, onClose, fetchCases }: CaseFormProps) => {
 										borderColor:
 											colorPallete.inputBorderHover,
 									}}
-								/>
+									defaultValue={KeycapMaterial.ABS}
+								>
+									<option value={KeycapMaterial.ABS}>
+										ABS
+									</option>
+									<option
+										value={KeycapMaterial.DOUBLESHOT_ABS}
+									>
+										Doubleshot ABS
+									</option>
+									<option
+										value={KeycapMaterial.DOUBLESHOT_PBT}
+									>
+										Doubleshot PBT
+									</option>
+									<option value={KeycapMaterial.PBT}>
+										PBT
+									</option>
+								</Select>
 								{errors.material ? (
 									<FormErrorMessage ml={"8px"}>
 										{errors.material.message}
@@ -371,56 +413,118 @@ export const CaseForm = ({ isOpen, onClose, fetchCases }: CaseFormProps) => {
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
 							</FormControl>
-							<FormControl isInvalid={errors.color != null}>
+							<FormControl
+								isInvalid={errors.keycapProfile != null}
+							>
 								<FormLabel fontWeight={"semibold"}>
-									Color
-								</FormLabel>
-								<Input
-									type="text"
-									rounded={"4px"}
-									h={"45px"}
-									borderColor={colorPallete.inputBorder}
-									{...register("color")}
-									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
-									}}
-								/>
-								{errors.color ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.color.message}
-									</FormErrorMessage>
-								) : (
-									<Box h={"25px"} w="100%" ml={"8px"}></Box>
-								)}
-							</FormControl>
-							<FormControl isInvalid={errors.size != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Size
+									Keycap profile
 								</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
-									{...register("size")}
+									{...register("keycapProfile")}
 									_hover={{
 										borderColor:
 											colorPallete.inputBorderHover,
 									}}
-									defaultValue={sizeNames[0]}
+									defaultValue={keycapProfileNames[0]}
 								>
-									{sizeNames.map((size, index) => (
-										<option value={size} key={index}>
-											{size}
-										</option>
-									))}
+									{keycapProfileNames.map(
+										(keycapProfile, index) => (
+											<option
+												value={keycapProfile}
+												key={index}
+											>
+												{keycapProfile}
+											</option>
+										)
+									)}
 								</Select>
-								{errors.size ? (
+								{errors.keycapProfile ? (
 									<FormErrorMessage ml={"8px"}>
-										{errors.size.message}
+										{errors.keycapProfile.message}
 									</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
+								)}
+							</FormControl>
+							<FormControl
+								isInvalid={errors.keycapQuantity != null}
+							>
+								<FormLabel fontWeight={"semibold"}>
+									Keycap quantity
+								</FormLabel>
+								<Input
+									type="number"
+									rounded={"4px"}
+									h={"45px"}
+									borderColor={colorPallete.inputBorder}
+									{...register("keycapQuantity")}
+									_hover={{
+										borderColor:
+											colorPallete.inputBorderHover,
+									}}
+								/>
+								{errors.keycapQuantity ? (
+									<FormErrorMessage ml={"8px"}>
+										Keycap quantity should be a positive
+										number
+									</FormErrorMessage>
+								) : (
+									<Box h={"25px"} w="100%" ml={"8px"}></Box>
+								)}
+							</FormControl>
+						</Flex>
+						<Flex gap={"16px"}>
+							<Flex minW={"50%"}>
+								<FormControl
+									isInvalid={errors.language != null}
+								>
+									<FormLabel fontWeight={"semibold"}>
+										Language
+									</FormLabel>
+									<Input
+										type="text"
+										rounded={"4px"}
+										h={"45px"}
+										borderColor={colorPallete.inputBorder}
+										{...register("language")}
+										_hover={{
+											borderColor:
+												colorPallete.inputBorderHover,
+										}}
+									/>
+									{errors.language ? (
+										<FormErrorMessage ml={"8px"}>
+											{errors.language.message}
+										</FormErrorMessage>
+									) : (
+										<Box
+											h={"25px"}
+											w="100%"
+											ml={"8px"}
+										></Box>
+									)}
+								</FormControl>
+							</Flex>
+							<FormControl isInvalid={errors.layouts != null}>
+								<FormLabel fontWeight={"semibold"}>
+									Layouts
+								</FormLabel>
+								<Multiselect
+									values={layoutNames}
+									multiselectName="layouts"
+									onChange={setValue}
+									w={"250px"}
+									isError={errors.layouts ? true : false}
+								/>
+								{errors.layouts ? (
+									<FormErrorMessage>
+										You should choose at least one layout
+									</FormErrorMessage>
+								) : (
+									<Box h={"25px"} w="100%"></Box>
 								)}
 							</FormControl>
 						</Flex>
@@ -429,7 +533,7 @@ export const CaseForm = ({ isOpen, onClose, fetchCases }: CaseFormProps) => {
 								w={"50%"}
 								h={"45px"}
 								rounded={"4px"}
-								onClick={handleSubmit(handleCreateCase)}
+								onClick={handleSubmit(handleCreateKeycapSet)}
 								overflow={"hidden"}
 								bg={colorPallete.button}
 								_hover={{
@@ -441,7 +545,7 @@ export const CaseForm = ({ isOpen, onClose, fetchCases }: CaseFormProps) => {
 								fontSize={"xl"}
 								position={"absolute"}
 							>
-								Add case
+								Add keycap set
 							</Button>
 						</Center>
 					</Flex>

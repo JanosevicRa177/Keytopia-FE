@@ -301,6 +301,7 @@ export const SupplierForm = ({
 								values={brandNames}
 								multiselectName="brands"
 								onChange={setValue}
+								w={"290px"}
 								isError={errors.brands ? true : false}
 							/>
 							{errors.brands ? (

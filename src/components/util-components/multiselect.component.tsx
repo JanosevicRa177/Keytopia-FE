@@ -13,6 +13,7 @@ interface MultiselectProps {
 	onChange: Function;
 	multiselectName: string;
 	isError: boolean;
+	w: string;
 }
 
 export const Multiselect = (props: MultiselectProps) => {
@@ -21,7 +22,7 @@ export const Multiselect = (props: MultiselectProps) => {
 	function removeValue(value: MultiselectOption) {
 		setChosenItems(chosenItems.filter((val) => val !== value));
 		props.onChange(
-			"brands",
+			props.multiselectName,
 			chosenItems
 				.filter((val) => val !== value)
 				.map((value) => value.value)
@@ -30,7 +31,7 @@ export const Multiselect = (props: MultiselectProps) => {
 	function addValue(value: MultiselectOption) {
 		setChosenItems((chosenItems) => [value, ...chosenItems]);
 		props.onChange(
-			"brands",
+			props.multiselectName,
 			[value, ...chosenItems].map((value) => value.value)
 		);
 	}
@@ -68,10 +69,16 @@ export const Multiselect = (props: MultiselectProps) => {
 							h={"45px"}
 							minHeight={"45px"}
 							px={"4px"}
-							w={"290px"}
+							w={props.w}
 							overflow={"hidden"}
 						>
-							<Center gap={"8px"} color={"white"}>
+							<Flex
+								gap={"8px"}
+								color={"white"}
+								w={props.w}
+								overflow={"hidden"}
+								py={"8px"}
+							>
 								{chosenItems.map((value) => (
 									<Flex
 										key={value.value}
@@ -97,11 +104,11 @@ export const Multiselect = (props: MultiselectProps) => {
 										/>
 									</Flex>
 								))}
-							</Center>
+							</Flex>
 						</Flex>
 						<Center
-							w={"45px"}
-							h={"45px"}
+							minW={"45px"}
+							minH={"45px"}
 							onClick={() => setIsOpen(!isOpen)}
 						>
 							<Img src={downArrow} w={"15px"} h={"15px"} />
@@ -123,8 +130,8 @@ export const Multiselect = (props: MultiselectProps) => {
 							w={"100%"}
 							position={"absolute"}
 						>
-							{props.values.map((value) => (
-								<Flex>
+							{props.values.map((value, index) => (
+								<Flex key={index}>
 									<Text
 										w={"calc(100% - 20px)"}
 										onClick={(e) => {

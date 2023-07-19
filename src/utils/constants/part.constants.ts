@@ -5,7 +5,6 @@ import {
 	PCBType,
 	PinType,
 	PriceWeight,
-	StabilizerSize,
 	StabilizerType,
 } from "../enum";
 
@@ -16,7 +15,6 @@ export const CABLE_VALIDATION_SCHEMA = yup.object({
 		.mixed<PriceWeight>()
 		.oneOf(Object.values(PriceWeight))
 		.required(),
-	brand: yup.string().required(),
 	material: yup.string().required(),
 	color: yup.string().required(),
 	length: yup.string().required(),
@@ -36,6 +34,7 @@ export const CABLE_DEFAULT_VALUES = {
 	name: "",
 	price: 0,
 	priceWeight: PriceWeight.LIGHT,
+	supplier: "",
 	material: "",
 	color: "",
 	length: "",
@@ -52,7 +51,6 @@ export const CASE_VALIDATION_SCHEMA = yup.object({
 		.mixed<PriceWeight>()
 		.oneOf(Object.values(PriceWeight))
 		.required(),
-	brand: yup.string().required(),
 	material: yup.string().required(),
 	color: yup.string().required(),
 	size: yup.string().required(),
@@ -62,6 +60,7 @@ export const CASE_DEFAULT_VALUES = {
 	name: "",
 	price: 0,
 	priceWeight: PriceWeight.LIGHT,
+	supplier: "",
 	material: "",
 	color: "",
 };
@@ -73,7 +72,6 @@ export const KEYCAP_VALIDATION_SCHEMA = yup.object({
 		.mixed<PriceWeight>()
 		.oneOf(Object.values(PriceWeight))
 		.required(),
-	brand: yup.string().required(),
 	material: yup
 		.mixed<KeycapMaterial>()
 		.oneOf(Object.values(KeycapMaterial))
@@ -85,6 +83,7 @@ export const KEYCAP_DEFAULT_VALUES = {
 	name: "",
 	price: 0,
 	priceWeight: PriceWeight.LIGHT,
+	supplier: "",
 	material: KeycapMaterial.ABS,
 };
 
@@ -95,7 +94,6 @@ export const KEYCAP_SET_VALIDATION_SCHEMA = yup.object({
 		.mixed<PriceWeight>()
 		.oneOf(Object.values(PriceWeight))
 		.required(),
-	brand: yup.string().required(),
 	keycapQuantity: yup.number().min(1).required(),
 	material: yup
 		.mixed<KeycapMaterial>()
@@ -110,9 +108,9 @@ export const KEYCAP_SET_DEFAULT_VALUES = {
 	name: "",
 	price: 0,
 	priceWeight: PriceWeight.LIGHT,
+	supplier: "",
 	keycapQuantity: 0,
 	material: KeycapMaterial.ABS,
-	keycapProfile: "",
 	language: "",
 	layouts: [],
 };
@@ -124,7 +122,6 @@ export const PCB_VALIDATION_SCHEMA = yup.object({
 		.mixed<PriceWeight>()
 		.oneOf(Object.values(PriceWeight))
 		.required(),
-	brand: yup.string().required(),
 	type: yup.mixed<PCBType>().oneOf(Object.values(PCBType)).required(),
 	btConnect: yup.boolean().required(),
 	size: yup.string().required(),
@@ -140,6 +137,7 @@ export const PCB_DEFAULT_VALUES = {
 	name: "",
 	price: 0,
 	priceWeight: PriceWeight.LIGHT,
+	supplier: "",
 	type: PCBType.HOT_SWAP,
 	btConnect: false,
 	color: "",
@@ -154,7 +152,6 @@ export const PLATE_VALIDATION_SCHEMA = yup.object({
 		.mixed<PriceWeight>()
 		.oneOf(Object.values(PriceWeight))
 		.required(),
-	brand: yup.string().required(),
 	material: yup.string().required(),
 	color: yup.string().required(),
 	size: yup.string().required(),
@@ -164,6 +161,7 @@ export const PLATE_DEFAULT_VALUES = {
 	name: "",
 	price: 0,
 	priceWeight: PriceWeight.LIGHT,
+	supplier: "",
 	material: "",
 	color: "",
 };
@@ -175,14 +173,9 @@ export const STABILIZER_VALIDATION_SCHEMA = yup.object({
 		.mixed<PriceWeight>()
 		.oneOf(Object.values(PriceWeight))
 		.required(),
-	brand: yup.string().required(),
 	type: yup
 		.mixed<StabilizerType>()
 		.oneOf(Object.values(StabilizerType))
-		.required(),
-	size: yup
-		.mixed<StabilizerSize>()
-		.oneOf(Object.values(StabilizerSize))
 		.required(),
 });
 
@@ -190,8 +183,8 @@ export const STABILIZER_DEFAULT_VALUES = {
 	name: "",
 	price: 0,
 	priceWeight: PriceWeight.LIGHT,
+	supplier: "",
 	type: StabilizerType.CLAMPED,
-	size: StabilizerSize.U6_25,
 };
 
 export const SWITCH_SET_VALIDATION_SCHEMA = yup.object({
@@ -201,7 +194,6 @@ export const SWITCH_SET_VALIDATION_SCHEMA = yup.object({
 		.mixed<PriceWeight>()
 		.oneOf(Object.values(PriceWeight))
 		.required(),
-	brand: yup.string().required(),
 	switchName: yup.string().required(),
 	switchQuantity: yup.number().min(1).required(),
 });
@@ -210,5 +202,6 @@ export const SWITCH_SET_DEFAULT_VALUES = {
 	name: "",
 	price: 0,
 	priceWeight: PriceWeight.LIGHT,
+	supplier: "",
 	switchQuantity: 0,
 };

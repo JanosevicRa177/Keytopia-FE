@@ -6,7 +6,7 @@ export const ControlContainer: React.FC<{
 	return (
 		<Flex
 			color={"#343434"}
-			w={"calc(100% - 32px)"}
+			w={"calc(100% - 16px)"}
 			my={"8px"}
 			mx={"16px"}
 			px={"16px"}

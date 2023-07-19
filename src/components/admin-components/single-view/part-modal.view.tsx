@@ -23,7 +23,6 @@ export const PartModalView = ({
 	onClose,
 	part,
 }: PartSingleViewProps) => {
-	console.log(part);
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -41,9 +40,19 @@ export const PartModalView = ({
 							gap={"16px"}
 							boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
 							rounded={"8px"}
-							py={"8px"}
+							py={"16px"}
 						>
-							<Img src={part.imageUrl} h={"400px"} w={"400px"} />
+							<Flex
+								rounded={"8px"}
+								overflow={"hidden"}
+								mx={"16px"}
+							>
+								<Img
+									src={part.imageUrl}
+									h={"400px"}
+									w={"400px"}
+								/>
+							</Flex>
 							<Text
 								textAlign={"center"}
 								fontWeight={"bold"}
@@ -64,8 +73,13 @@ export const PartModalView = ({
 							rounded={"8px"}
 							justify={"center"}
 						>
-							{part.variables.map((variable) => (
-								<Flex w={"100%"} gap={"4px"} px={"16px"}>
+							{part.variables.map((variable, index) => (
+								<Flex
+									w={"100%"}
+									gap={"4px"}
+									px={"16px"}
+									key={index}
+								>
 									<Text
 										fontWeight={"bold"}
 										w={"40%"}

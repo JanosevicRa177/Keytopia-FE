@@ -1,4 +1,4 @@
-import { StabilizerSize, StabilizerType } from "./../utils/enum";
+import { StabilizerType } from "./../utils/enum";
 import {
 	CableConnector,
 	KeycapMaterial,
@@ -58,9 +58,8 @@ export type PlatePart = {
 	image?: File;
 };
 
-export type StabilizerPart = {
+export type StabilizersPart = {
 	type: StabilizerType;
-	size: StabilizerSize;
 	image?: File;
 };
 
@@ -74,7 +73,8 @@ export type Part = {
 	name: string;
 	price: number;
 	priceWeight: PriceWeight;
-	brand: string;
+	brand?: string;
+	supplier?: string;
 	quantity?: number;
 	imageUrl?: string;
 };
@@ -85,7 +85,7 @@ export type Keycap = Part & KeycapPart;
 export type KeycapSet = Part & KeycapSetPart;
 export type PCB = Part & PCBPart;
 export type Plate = Part & PlatePart;
-export type Stabilizer = Part & StabilizerPart;
+export type Stabilizers = Part & StabilizersPart;
 export type SwitchSet = Part & SwitchSetPart;
 
 export type PartWithData = {

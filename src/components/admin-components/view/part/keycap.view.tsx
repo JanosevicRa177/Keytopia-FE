@@ -5,19 +5,19 @@ import { useEffect, useState } from "react";
 import { Pagination } from "../../../paging/pagination/pagination";
 import { ApiResponse } from "../../../../store/auth-store/types/response.type";
 import { PartCard } from "../../../page-component/part-card";
-import { Case, Part, PartWithData } from "../../../../model/part.model";
+import { Keycap, Part, PartWithData } from "../../../../model/part.model";
 import { PartType } from "../../../../utils/enum";
 import { normalizeNames } from "../../../../utils/string.converter";
 import { VariableWithValue } from "../../../../utils/types";
 import { PartModalView } from "../../single-view/part-modal.view";
 import { useFetchPartPage } from "../../../../hooks/part-hooks/get-all/part.get-all-page.hook";
 import { useDeletePart } from "../../../../hooks/part-hooks/delete/part.delete.hook";
-import { useGetOneCase } from "../../../../hooks/part-hooks/get-one/case.get-one.hook";
-import { CaseForm } from "../../form/part/case.form";
+import { useGetOneKeycap } from "../../../../hooks/part-hooks/get-one/keycap.get-one.hook";
+import { KeycapForm } from "../../form/part/keycap.form";
 
-const partType = PartType.CASE;
+const partType = PartType.KEYCAP;
 
-export const CaseView = () => {
+export const KeycapView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [part, setPart] = useState<PartWithData>({
 		name: "",
@@ -25,7 +25,7 @@ export const CaseView = () => {
 		variables: [],
 	});
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
-	const { getCase } = useGetOneCase();
+	const { getKeycap } = useGetOneKeycap();
 	const { deletePart } = useDeletePart();
 	const {
 		isOpen: isOpenForm,
@@ -49,13 +49,13 @@ export const CaseView = () => {
 			}
 		});
 	}
-	async function handleShowMoreCase(name: String) {
-		getCase(name).then((aCase: ApiResponse<Case | null>) => {
-			if (aCase.data === null) {
+	async function handleShowMoreKeycap(name: String) {
+		getKeycap(name).then((keycap: ApiResponse<Keycap | null>) => {
+			if (keycap.data === null) {
 				return;
 			}
-			const caseData: Case = aCase.data;
-			const variableNames: string[] = Object.keys(aCase.data as Case);
+			const keycapData: Keycap = keycap.data;
+			const variableNames: string[] = Object.keys(keycap.data as Keycap);
 			let normalizedNames: string[] = normalizeNames(variableNames);
 			const data: VariableWithValue[] = [];
 			variableNames.forEach((name: string) => {
@@ -63,21 +63,23 @@ export const CaseView = () => {
 					name === "name" ||
 					name === "imageUrl" ||
 					name === "priceWeight" ||
-					caseData[name as keyof Case]?.toString() == null
+					keycapData[name as keyof Keycap]?.toString() == null
 				) {
 					normalizedNames.shift();
 					return;
 				}
 				data.push({
 					variable: normalizedNames[0],
-					value: caseData[name as keyof Case]?.toString() as string,
+					value: keycapData[
+						name as keyof Keycap
+					]?.toString() as string,
 				});
 				normalizedNames.shift();
 			});
 			setPart({
-				imageUrl: caseData.imageUrl ?? "",
+				imageUrl: keycapData.imageUrl ?? "",
 				variables: data,
-				name: caseData.name,
+				name: keycapData.name,
 			});
 			onOpenModal();
 		});
@@ -101,7 +103,7 @@ export const CaseView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Case</Text>
+					<Text fontSize={"2xl"}>Cable</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -131,7 +133,7 @@ export const CaseView = () => {
 							key={part.name}
 							part={part}
 							delete={handleDeletePart}
-							showMore={handleShowMoreCase}
+							showMore={handleShowMoreKeycap}
 						/>
 					))}
 				</Flex>
@@ -145,10 +147,10 @@ export const CaseView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<CaseForm
+			<KeycapForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchCases={getPartPage}
+				fetchKeycaps={getPartPage}
 			/>
 			<PartModalView
 				isOpen={isOpenModal}

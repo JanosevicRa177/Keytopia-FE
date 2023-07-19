@@ -26,3 +26,11 @@ function normalizeString(str: string): string {
 	const translatedStr = capitalizedFirstWord + " " + lowerCaseWords;
 	return translatedStr;
 }
+
+export function normalizeEnum(str: string): string {
+	const words = str.toLowerCase().split("_");
+	const convertedWords = words.map(
+		(word) => word.charAt(0).toUpperCase() + word.slice(1)
+	);
+	return convertedWords.join(" ");
+}

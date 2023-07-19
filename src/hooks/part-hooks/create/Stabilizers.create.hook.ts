@@ -1,18 +1,24 @@
 import { toast } from "react-toastify";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { useAxios } from "../../../utils/axios.hook";
-import { PartType } from "../../../utils/enum";
 import { Stabilizers } from "../../../model/part.model";
 
-export const useGetOneStabilizer = () => {
+export const useCreateStabilizers = () => {
 	const { axios } = useAxios();
-	const getStabilizer = async (
-		name: String
-	): Promise<ApiResponse<Stabilizers | null>> => {
+	const createStabilizers = async (
+		values: Stabilizers,
+		image: File
+	): Promise<ApiResponse<null>> => {
 		try {
-			const res = await axios.get(`/part/${PartType.STABILIZER}/${name}`);
+			values.image = image;
+			await axios.post(`/part/stabilizers`, values, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			});
+			toast.success("Stabilizers successfuly created!");
 			return {
-				data: res.data,
+				data: null,
 				error: null,
 				status: "SUCCESS",
 			};
@@ -27,6 +33,6 @@ export const useGetOneStabilizer = () => {
 	};
 
 	return {
-		getStabilizer,
+		createStabilizers,
 	};
 };

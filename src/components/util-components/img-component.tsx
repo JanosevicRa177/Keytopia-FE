@@ -1,7 +1,7 @@
 import { Box, Img, SlideFade, Flex } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import backgroundImg from "../images/keycapBackground.png";
+import backgroundImg from "../../images/keycapBackground.png";
 
 export const ImgComponent = () => {
 	const [isOpen, setIsOpen] = useState(false);

@@ -4,7 +4,7 @@ import { ApiResponse } from "../../../store/auth-store/types/response.type";
 
 export const useFetchLayouts = () => {
 	const { axios } = useAxios();
-	const getLayouts = async (): Promise<ApiResponse<String[] | null>> => {
+	const getLayouts = async (): Promise<ApiResponse<string[] | null>> => {
 		try {
 			const res = await axios.get(`/part-data/layout`);
 			return {

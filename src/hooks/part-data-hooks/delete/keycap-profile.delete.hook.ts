@@ -8,7 +8,7 @@ export const useDeleteKeycapProfile = () => {
 		name: String
 	): Promise<ApiResponse<null>> => {
 		try {
-			await axios.delete(`/part-data/keycap-profile/${name}`);
+			await axios.delete(`/part-data/keycap-profile/${name.toString()}`);
 			toast.success("Keycap profile successfuly deleted!");
 			return {
 				data: null,

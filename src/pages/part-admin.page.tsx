@@ -13,7 +13,7 @@ export const PartAdminPage = () => {
 		"Keycap set",
 		"Plate",
 		"PCB",
-		"Stabilizer",
+		"Stabilizers",
 		"Switch set",
 	];
 	const partDatas = ["Keycap profile", "Switch", "Size", "Layout"];

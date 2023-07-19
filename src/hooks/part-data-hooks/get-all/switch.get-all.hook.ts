@@ -4,7 +4,7 @@ import { ApiResponse } from "../../../store/auth-store/types/response.type";
 
 export const useFetchSwitches = () => {
 	const { axios } = useAxios();
-	const getSwitches = async (): Promise<ApiResponse<String[] | null>> => {
+	const getSwitches = async (): Promise<ApiResponse<string[] | null>> => {
 		try {
 			const res = await axios.get(`/part-data/switch`);
 			return {

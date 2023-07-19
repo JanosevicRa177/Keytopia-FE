@@ -1,14 +1,13 @@
 import { toast } from "react-toastify";
 import { useAxios } from "../../../utils/axios.hook";
+import { Supplier } from "../../../model/warehouse.model";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 
-export const useFetchKeycapProfiles = () => {
+export const useFetchSupplier = () => {
 	const { axios } = useAxios();
-	const getKeycapProfiles = async (): Promise<
-		ApiResponse<string[] | null>
-	> => {
+	const getSuppliers = async (): Promise<ApiResponse<Supplier[] | null>> => {
 		try {
-			const res = await axios.get(`/part-data/keycap-profile/`);
+			const res = await axios.get(`/supplier`);
 			return {
 				data: res.data,
 				error: null,
@@ -25,6 +24,6 @@ export const useFetchKeycapProfiles = () => {
 	};
 
 	return {
-		getKeycapProfiles,
+		getSuppliers,
 	};
 };

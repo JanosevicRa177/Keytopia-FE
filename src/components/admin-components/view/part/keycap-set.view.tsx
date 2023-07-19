@@ -5,19 +5,19 @@ import { useEffect, useState } from "react";
 import { Pagination } from "../../../paging/pagination/pagination";
 import { ApiResponse } from "../../../../store/auth-store/types/response.type";
 import { PartCard } from "../../../page-component/part-card";
-import { Case, Part, PartWithData } from "../../../../model/part.model";
+import { KeycapSet, Part, PartWithData } from "../../../../model/part.model";
 import { PartType } from "../../../../utils/enum";
 import { normalizeNames } from "../../../../utils/string.converter";
 import { VariableWithValue } from "../../../../utils/types";
 import { PartModalView } from "../../single-view/part-modal.view";
 import { useFetchPartPage } from "../../../../hooks/part-hooks/get-all/part.get-all-page.hook";
 import { useDeletePart } from "../../../../hooks/part-hooks/delete/part.delete.hook";
-import { useGetOneCase } from "../../../../hooks/part-hooks/get-one/case.get-one.hook";
-import { CaseForm } from "../../form/part/case.form";
+import { useGetOneKeycapSet } from "../../../../hooks/part-hooks/get-one/keycap-set.get-one.hook";
+import { KeycapSetForm } from "../../form/part/keycap-set.form";
 
-const partType = PartType.CASE;
+const partType = PartType.KEYCAP_SET;
 
-export const CaseView = () => {
+export const KeycapSetView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [part, setPart] = useState<PartWithData>({
 		name: "",
@@ -25,7 +25,7 @@ export const CaseView = () => {
 		variables: [],
 	});
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
-	const { getCase } = useGetOneCase();
+	const { getKeycapSet } = useGetOneKeycapSet();
 	const { deletePart } = useDeletePart();
 	const {
 		isOpen: isOpenForm,
@@ -49,13 +49,15 @@ export const CaseView = () => {
 			}
 		});
 	}
-	async function handleShowMoreCase(name: String) {
-		getCase(name).then((aCase: ApiResponse<Case | null>) => {
-			if (aCase.data === null) {
+	async function handleShowMoreKeycap(name: String) {
+		getKeycapSet(name).then((keycap: ApiResponse<KeycapSet | null>) => {
+			if (keycap.data === null) {
 				return;
 			}
-			const caseData: Case = aCase.data;
-			const variableNames: string[] = Object.keys(aCase.data as Case);
+			const keycapSetData: KeycapSet = keycap.data;
+			const variableNames: string[] = Object.keys(
+				keycap.data as KeycapSet
+			);
 			let normalizedNames: string[] = normalizeNames(variableNames);
 			const data: VariableWithValue[] = [];
 			variableNames.forEach((name: string) => {
@@ -63,21 +65,33 @@ export const CaseView = () => {
 					name === "name" ||
 					name === "imageUrl" ||
 					name === "priceWeight" ||
-					caseData[name as keyof Case]?.toString() == null
+					keycapSetData[name as keyof KeycapSet]?.toString() == null
 				) {
 					normalizedNames.shift();
 					return;
 				}
+				if (name === "layouts") {
+					const layouts: string[] = keycapSetData[
+						name as keyof KeycapSet
+					] as string[];
+					data.push({
+						variable: normalizedNames[0],
+						value: layouts.join(" , "),
+					});
+					return;
+				}
 				data.push({
 					variable: normalizedNames[0],
-					value: caseData[name as keyof Case]?.toString() as string,
+					value: keycapSetData[
+						name as keyof KeycapSet
+					]?.toString() as string,
 				});
 				normalizedNames.shift();
 			});
 			setPart({
-				imageUrl: caseData.imageUrl ?? "",
+				imageUrl: keycapSetData.imageUrl ?? "",
 				variables: data,
-				name: caseData.name,
+				name: keycapSetData.name,
 			});
 			onOpenModal();
 		});
@@ -101,7 +115,7 @@ export const CaseView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Case</Text>
+					<Text fontSize={"2xl"}>Keycap set</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -131,7 +145,7 @@ export const CaseView = () => {
 							key={part.name}
 							part={part}
 							delete={handleDeletePart}
-							showMore={handleShowMoreCase}
+							showMore={handleShowMoreKeycap}
 						/>
 					))}
 				</Flex>
@@ -145,10 +159,10 @@ export const CaseView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<CaseForm
+			<KeycapSetForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchCases={getPartPage}
+				fetchKeycapSets={getPartPage}
 			/>
 			<PartModalView
 				isOpen={isOpenModal}
