@@ -7,6 +7,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import "react-toastify/dist/ReactToastify.css";
 import { ImgComponent } from "./components/img-component";
 import { Header } from "./components/header/header";
+import { colors } from "./styles/color";
 
 function App() {
 	return (
@@ -15,7 +16,7 @@ function App() {
 				<Header />
 				<ImgComponent />
 				<Box
-					bg={"#fbd3c7"}
+					bgGradient={colors.background}
 					position={"fixed"}
 					w={"100vw"}
 					h={"100vh"}

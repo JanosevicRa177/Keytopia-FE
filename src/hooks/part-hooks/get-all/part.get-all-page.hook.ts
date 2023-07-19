@@ -5,18 +5,16 @@ import { Part } from "../../../model/part.model";
 import { PartType } from "../../../utils/enum";
 import { Page } from "../../../utils/types";
 
-export const useFetchCablePage = () => {
+export const useFetchPartPage = () => {
 	const { axios } = useAxios();
 	const {
 		setError,
 		setSuccess,
-		state: getCablePageRes,
+		state: getPartPageRes,
 	} = useResponseState<Page<Part>>({ totalPages: 0, content: [] });
-	const getCablePage = async (pageNumber: number) => {
+	const getPartPage = async (pageNumber: number, partType: PartType) => {
 		try {
-			const res = await axios.get(
-				`/part/${PartType.CABLE}/12/${pageNumber}`
-			);
+			const res = await axios.get(`/part/${partType}/12/${pageNumber}`);
 			setSuccess(res.data);
 		} catch (e: any) {
 			toast.error(e.response.data.message);
@@ -25,7 +23,7 @@ export const useFetchCablePage = () => {
 	};
 
 	return {
-		getCablePage,
-		getCablePageRes,
+		getPartPage,
+		getPartPageRes,
 	};
 };

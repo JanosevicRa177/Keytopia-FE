@@ -2,7 +2,6 @@ export const colorPallete = {
 	left: "rgba(168, 192, 255,0.7)",
 	right: "rgba(63, 43, 150,0.7)",
 	header: "#a493c4",
-	background: "#fbd3c7",
 	button: "#8360c3",
 	buttonHover: "#86A8E7",
 	link: "#8E2DE2",
@@ -16,5 +15,5 @@ export const colorPallete = {
 
 export const colors = {
 	component: `linear(to-l, ${colorPallete.left}, ${colorPallete.right})`,
-	background: colorPallete.background,
+	background: `linear(to-r, #f2fcfe, #A8DBFA)`,
 };

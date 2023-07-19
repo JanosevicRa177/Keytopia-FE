@@ -30,3 +30,26 @@ export enum PartType {
 	SWITCH_SET = "SWITCH_SET",
 	CASE = "CASE",
 }
+
+export enum KeycapMaterial {
+	ABS = "ABS",
+	PBT = "PBT",
+	DOUBLESHOT_PBT = "DOUBLESHOT_PBT",
+	DOUBLESHOT_ABS = "DOUBLESHOT_ABS",
+}
+
+export enum StabilizerType {
+	CLAMPED = "CLAMPED",
+	SCREW_IN = "SCREW_IN",
+}
+
+export enum PCBType {
+	HOT_SWAP = "HOT_SWAP",
+	STANDARD = "STANDARD",
+}
+
+export enum StabilizerSize {
+	U2 = "U2",
+	U7 = "U7",
+	U6_25 = "U6_25",
+}

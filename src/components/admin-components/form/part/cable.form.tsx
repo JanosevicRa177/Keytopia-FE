@@ -30,13 +30,15 @@ import { useEffect, useState } from "react";
 import { useFetchBrands } from "../../../../hooks/warehouse-hooks/get-all/brand.get-all.hook";
 import { Brand } from "../../../../model/warehouse.model";
 import { toast } from "react-toastify";
-import { CableConnector, PriceWeight } from "../../../../utils/enum";
+import { CableConnector, PartType, PriceWeight } from "../../../../utils/enum";
 import { useCreateCable } from "../../../../hooks/part-hooks/create/cable.create.hook";
 interface KeycapProfileFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchCables: (pageNumber: number) => Promise<void>;
+	fetchCables: (pageNumber: number, partType: PartType) => Promise<void>;
 }
+
+const partType = PartType.CABLE;
 
 export const CableForm = ({
 	isOpen,
@@ -73,7 +75,7 @@ export const CableForm = ({
 		}
 		createCable(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchCables(0);
+				fetchCables(0, partType);
 				reset();
 				onClose();
 			}

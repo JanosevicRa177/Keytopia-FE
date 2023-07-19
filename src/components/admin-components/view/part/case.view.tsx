@@ -6,14 +6,14 @@ import { Pagination } from "../../../paging/pagination/pagination";
 import { ApiResponse } from "../../../../store/auth-store/types/response.type";
 import { CableForm } from "../../form/part/cable.form";
 import { PartCard } from "../../../page-component/part-card";
-import { Cable, Part, PartWithData } from "../../../../model/part.model";
+import { Cable, Case, Part, PartWithData } from "../../../../model/part.model";
+import { useGetOnePart } from "../../../../hooks/part-hooks/get-one/cable.get-one.hook";
 import { PartType } from "../../../../utils/enum";
 import { normalizeNames } from "../../../../utils/string.converter";
 import { VariableWithValue } from "../../../../utils/types";
 import { PartModalView } from "../../single-view/part-modal.view";
 import { useFetchPartPage } from "../../../../hooks/part-hooks/get-all/part.get-all-page.hook";
 import { useDeletePart } from "../../../../hooks/part-hooks/delete/part.delete.hook";
-import { useGetOneCable } from "../../../../hooks/part-hooks/get-one/cable.get-one.hook";
 
 const partType = PartType.CABLE;
 
@@ -25,7 +25,7 @@ export const CableView = () => {
 		variables: [],
 	});
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
-	const { getCable } = useGetOneCable();
+	const { getPart } = useGetOnePart();
 	const { deletePart } = useDeletePart();
 	const {
 		isOpen: isOpenForm,
@@ -50,51 +50,59 @@ export const CableView = () => {
 		});
 	}
 	async function handleShowMoreCable(name: String) {
-		getCable(name).then((cable: ApiResponse<Cable | null>) => {
-			if (cable.data === null) {
-				return;
-			}
-			const cableData: Cable = cable.data;
-			const variableNames: string[] = Object.keys(cable.data as Cable);
-			let normalizedNames: string[] = normalizeNames(variableNames);
-			const data: VariableWithValue[] = [];
-			variableNames.forEach((name: string) => {
-				if (
-					name === "name" ||
-					name === "imageUrl" ||
-					name === "image" ||
-					name === "priceWeight"
-				) {
-					normalizedNames.shift();
+		getPart(name, PartType.CABLE).then(
+			(case: ApiResponse<Case | null>) => {
+				if (case. === null) {
 					return;
 				}
-				if (
-					name === "keyboardConnector" ||
-					name === "computerConnector"
-				) {
-					let value = "";
-					if (cableData[name as keyof Cable]?.toString() === "USB")
-						value = "USB";
-					else value = "USB-C";
+				const caseData: Case = case.data;
+				const variableNames: string[] = Object.keys(
+					case.data as Case
+				);
+				let normalizedNames: string[] = normalizeNames(variableNames);
+				const data: VariableWithValue[] = [];
+				variableNames.forEach((name: string) => {
+					if (
+						name === "name" ||
+						name === "imageUrl" ||
+						name === "image" ||
+						name === "priceWeight"
+					) {
+						normalizedNames.shift();
+						return;
+					}
+					if (
+						name === "keyboardConnector" ||
+						name === "computerConnector"
+					) {
+						let value = "";
+						if (
+							caseData[name as keyof Case]?.toString() === "USB"
+						)
+							value = "USB";
+						else value = "USB-C";
+						data.push({
+							variable: normalizedNames[0],
+							value: value,
+						});
+						return;
+					}
 					data.push({
 						variable: normalizedNames[0],
-						value: value,
+						value: caseData[
+							name as keyof Case
+						]?.toString() as string,
 					});
-					return;
-				}
-				data.push({
-					variable: normalizedNames[0],
-					value: cableData[name as keyof Cable]?.toString() as string,
+					normalizedNames.shift();
 				});
-				normalizedNames.shift();
-			});
-			setPart({
-				imageUrl: cableData.imageUrl ?? "",
-				variables: data,
-				name: cableData.name,
-			});
-			onOpenModal();
-		});
+				setPart({
+					imageUrl: caseData.imageUrl ?? "",
+					variables: data,
+					name: caseData.name,
+				});
+				onOpenModal();
+			}
+		);
 	}
 	return (
 		<Box w={"100%"}>
@@ -115,7 +123,7 @@ export const CableView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Cable</Text>
+					<Text fontSize={"2xl"}>Case</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}

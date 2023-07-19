@@ -2,15 +2,13 @@ import { toast } from "react-toastify";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { useAxios } from "../../../utils/axios.hook";
 import { PartType } from "../../../utils/enum";
-import { Cable } from "../../../model/part.model";
+import { PCB } from "../../../model/part.model";
 
-export const useGetOneCable = () => {
+export const useGetOnePCB = () => {
 	const { axios } = useAxios();
-	const getCable = async (
-		name: String
-	): Promise<ApiResponse<Cable | null>> => {
+	const getPCB = async (name: String): Promise<ApiResponse<PCB | null>> => {
 		try {
-			const res = await axios.get(`/part/${PartType.CABLE}/${name}`);
+			const res = await axios.get(`/part/${PartType.PCB}/${name}`);
 			return {
 				data: res.data,
 				error: null,
@@ -27,6 +25,6 @@ export const useGetOneCable = () => {
 	};
 
 	return {
-		getCable,
+		getPCB,
 	};
 };

@@ -1,15 +1,16 @@
 import { toast } from "react-toastify";
-import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { useAxios } from "../../../utils/axios.hook";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
 
-export const useDeleteCable = () => {
+export const useFetchKeycapProfiles = () => {
 	const { axios } = useAxios();
-	const deleteCable = async (name: String): Promise<ApiResponse<null>> => {
+	const getKeycapProfiles = async (): Promise<
+		ApiResponse<String[] | null>
+	> => {
 		try {
-			await axios.delete(`/part/cable/${name}`);
-			toast.success("Cable successfuly deleted!");
+			const res = await axios.get(`/part-data/keycap-profile/`);
 			return {
-				data: null,
+				data: res.data,
 				error: null,
 				status: "SUCCESS",
 			};
@@ -24,6 +25,6 @@ export const useDeleteCable = () => {
 	};
 
 	return {
-		deleteCable,
+		getKeycapProfiles,
 	};
 };

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 import { PageLink } from "../page-link/page-link";
+import { PartType } from "../../../utils/enum";
 
 export type PaginationProps = {
 	currentPage: number;
@@ -9,7 +10,13 @@ export type PaginationProps = {
 	maxLength: number;
 	sortBy?: string;
 	sortDirection?: string;
-	getPage: (page: number, sortBy: string, sortDirection: string) => void;
+	getPage: (
+		page: number,
+		partType: PartType,
+		sortBy: string,
+		sortDirection: string
+	) => void;
+	partType?: PartType;
 	setCurrentPage: (page: number) => void;
 };
 export const Pagination: React.FC<PaginationProps> = ({
@@ -18,6 +25,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 	maxLength,
 	setCurrentPage,
 	getPage,
+	partType = PartType.CASE,
 	sortBy = "",
 	sortDirection = "",
 }) => {
@@ -32,7 +40,12 @@ export const Pagination: React.FC<PaginationProps> = ({
 				disabled={currentPage === 1}
 				onClick={() => {
 					setCurrentPage(currentPage - 1);
-					getPage(currentPage - 1 - 1, sortBy, sortDirection);
+					getPage(
+						currentPage - 1 - 1,
+						partType,
+						sortBy,
+						sortDirection
+					);
 				}}
 			>
 				Previous
@@ -45,7 +58,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 					disabled={isNaN(pageNum)}
 					onClick={() => {
 						setCurrentPage(pageNum);
-						getPage(pageNum - 1, sortBy, sortDirection);
+						getPage(pageNum - 1, partType, sortBy, sortDirection);
 					}}
 				>
 					{!isNaN(pageNum) ? pageNum : "..."}
@@ -56,7 +69,12 @@ export const Pagination: React.FC<PaginationProps> = ({
 				disabled={currentPage === lastPage}
 				onClick={() => {
 					setCurrentPage(currentPage + 1);
-					getPage(currentPage - 1 + 1, sortBy, sortDirection);
+					getPage(
+						currentPage - 1 + 1,
+						partType,
+						sortBy,
+						sortDirection
+					);
 				}}
 			>
 				Next

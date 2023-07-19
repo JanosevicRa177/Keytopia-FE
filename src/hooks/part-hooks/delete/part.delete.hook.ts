@@ -2,17 +2,18 @@ import { toast } from "react-toastify";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { useAxios } from "../../../utils/axios.hook";
 import { PartType } from "../../../utils/enum";
-import { Cable } from "../../../model/part.model";
 
-export const useGetOneCable = () => {
+export const useDeletePart = () => {
 	const { axios } = useAxios();
-	const getCable = async (
-		name: String
-	): Promise<ApiResponse<Cable | null>> => {
+	const deletePart = async (
+		name: String,
+		partType: PartType
+	): Promise<ApiResponse<null>> => {
 		try {
-			const res = await axios.get(`/part/${PartType.CABLE}/${name}`);
+			await axios.delete(`/part/${partType}/${name}`);
+			toast.success("Cable successfuly deleted!");
 			return {
-				data: res.data,
+				data: null,
 				error: null,
 				status: "SUCCESS",
 			};
@@ -27,6 +28,6 @@ export const useGetOneCable = () => {
 	};
 
 	return {
-		getCable,
+		deletePart,
 	};
 };
