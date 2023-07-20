@@ -80,6 +80,40 @@ export const KeycapSetView = () => {
 					});
 					return;
 				}
+				if (name === "material") {
+					let value = "";
+					if (
+						keycapSetData[name as keyof KeycapSet]?.toString() ===
+						"DOUBLESHOT_ABS"
+					)
+						value = "Doubleshot ABS";
+					else if (
+						keycapSetData[name as keyof KeycapSet]?.toString() ===
+						"DOUBLESHOT_PBT"
+					)
+						value = "Doubleshot PBT";
+					else
+						value = keycapSetData[
+							name as keyof KeycapSet
+						]?.toString() as string;
+					data.push({
+						variable: normalizedNames[0],
+						value: value,
+					});
+					normalizedNames.shift();
+					return;
+				}
+				if (name === "price") {
+					data.push({
+						variable: normalizedNames[0],
+						value:
+							(keycapSetData[
+								name as keyof KeycapSet
+							]?.toString() as string) + " $",
+					});
+					normalizedNames.shift();
+					return;
+				}
 				data.push({
 					variable: normalizedNames[0],
 					value: keycapSetData[

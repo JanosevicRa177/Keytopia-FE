@@ -68,6 +68,40 @@ export const KeycapView = () => {
 					normalizedNames.shift();
 					return;
 				}
+				if (name === "material") {
+					let value = "";
+					if (
+						keycapData[name as keyof Keycap]?.toString() ===
+						"DOUBLESHOT_ABS"
+					)
+						value = "Doubleshot ABS";
+					else if (
+						keycapData[name as keyof Keycap]?.toString() ===
+						"DOUBLESHOT_PBT"
+					)
+						value = "Doubleshot PBT";
+					else
+						value = keycapData[
+							name as keyof Keycap
+						]?.toString() as string;
+					data.push({
+						variable: normalizedNames[0],
+						value: value,
+					});
+					normalizedNames.shift();
+					return;
+				}
+				if (name === "price") {
+					data.push({
+						variable: normalizedNames[0],
+						value:
+							(keycapData[
+								name as keyof Keycap
+							]?.toString() as string) + " $",
+					});
+					normalizedNames.shift();
+					return;
+				}
 				data.push({
 					variable: normalizedNames[0],
 					value: keycapData[

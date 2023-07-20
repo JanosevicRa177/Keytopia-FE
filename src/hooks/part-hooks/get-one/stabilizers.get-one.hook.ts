@@ -4,9 +4,9 @@ import { useAxios } from "../../../utils/axios.hook";
 import { PartType } from "../../../utils/enum";
 import { Stabilizers } from "../../../model/part.model";
 
-export const useGetOneStabilizer = () => {
+export const useGetOneStabilizers = () => {
 	const { axios } = useAxios();
-	const getStabilizer = async (
+	const getStabilizers = async (
 		name: String
 	): Promise<ApiResponse<Stabilizers | null>> => {
 		try {
@@ -27,6 +27,6 @@ export const useGetOneStabilizer = () => {
 	};
 
 	return {
-		getStabilizer,
+		getStabilizers,
 	};
 };

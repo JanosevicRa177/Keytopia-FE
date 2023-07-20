@@ -4,20 +4,20 @@ import { colorPallete } from "../../../../styles/color";
 import { useEffect, useState } from "react";
 import { Pagination } from "../../../paging/pagination/pagination";
 import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { CableForm } from "../../form/part/cable.form";
 import { PartCard } from "../../../page-component/part-card";
-import { Cable, Part, PartWithData } from "../../../../model/part.model";
+import { PCB, Part, PartWithData } from "../../../../model/part.model";
 import { PartType } from "../../../../utils/enum";
 import { normalizeNames } from "../../../../utils/string.converter";
 import { VariableWithValue } from "../../../../utils/types";
 import { PartModalView } from "../../single-view/part-modal.view";
 import { useFetchPartPage } from "../../../../hooks/part-hooks/get-all/part.get-all-page.hook";
 import { useDeletePart } from "../../../../hooks/part-hooks/delete/part.delete.hook";
-import { useGetOneCable } from "../../../../hooks/part-hooks/get-one/cable.get-one.hook";
+import { useGetOnePCB } from "../../../../hooks/part-hooks/get-one/pcb.get-one.hook";
+import { PCBForm } from "../../form/part/pcb.form";
 
-const partType = PartType.CABLE;
+const partType = PartType.PCB;
 
-export const CableView = () => {
+export const PCBView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [part, setPart] = useState<PartWithData>({
 		name: "",
@@ -25,7 +25,7 @@ export const CableView = () => {
 		variables: [],
 	});
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
-	const { getCable } = useGetOneCable();
+	const { getPCB } = useGetOnePCB();
 	const { deletePart } = useDeletePart();
 	const {
 		isOpen: isOpenForm,
@@ -49,13 +49,13 @@ export const CableView = () => {
 			}
 		});
 	}
-	async function handleShowMoreCable(name: String) {
-		getCable(name).then((cable: ApiResponse<Cable | null>) => {
-			if (cable.data === null) {
+	async function handleShowMorePCB(name: String) {
+		getPCB(name).then((pcb: ApiResponse<PCB | null>) => {
+			if (pcb.data === null) {
 				return;
 			}
-			const cableData: Cable = cable.data;
-			const variableNames: string[] = Object.keys(cable.data as Cable);
+			const pcbData: PCB = pcb.data;
+			const variableNames: string[] = Object.keys(pcb.data as PCB);
 			let normalizedNames: string[] = normalizeNames(variableNames);
 			const data: VariableWithValue[] = [];
 			variableNames.forEach((name: string) => {
@@ -63,19 +63,40 @@ export const CableView = () => {
 					name === "name" ||
 					name === "imageUrl" ||
 					name === "priceWeight" ||
-					cableData[name as keyof Cable]?.toString() == null
+					pcbData[name as keyof PCB]?.toString() == null
 				) {
 					normalizedNames.shift();
 					return;
 				}
-				if (
-					name === "keyboardConnector" ||
-					name === "computerConnector"
-				) {
+				if (name === "type") {
 					let value = "";
-					if (cableData[name as keyof Cable]?.toString() === "USB")
-						value = "USB";
-					else value = "USB-C";
+					if (pcbData[name as keyof PCB]?.toString() === "HOT_SWAP")
+						value = "Hot-swap";
+					else value = "Standard";
+					data.push({
+						variable: normalizedNames[0],
+						value: value,
+					});
+					normalizedNames.shift();
+					return;
+				}
+				if (name === "pinType") {
+					let value = "";
+					if (pcbData[name as keyof PCB]?.toString() === "PIN5")
+						value = "5 pin";
+					else value = "3 pin";
+					data.push({
+						variable: normalizedNames[0],
+						value: value,
+					});
+					normalizedNames.shift();
+					return;
+				}
+				if (name === "stabilizerType") {
+					let value = "";
+					if (pcbData[name as keyof PCB]?.toString() === "SCREW_IN")
+						value = "Screw-in";
+					else value = "Clamped";
 					data.push({
 						variable: normalizedNames[0],
 						value: value,
@@ -87,23 +108,22 @@ export const CableView = () => {
 					data.push({
 						variable: normalizedNames[0],
 						value:
-							(cableData[
-								name as keyof Cable
-							]?.toString() as string) + " $",
+							(pcbData[name as keyof PCB]?.toString() as string) +
+							" $",
 					});
 					normalizedNames.shift();
 					return;
 				}
 				data.push({
 					variable: normalizedNames[0],
-					value: cableData[name as keyof Cable]?.toString() as string,
+					value: pcbData[name as keyof PCB]?.toString() as string,
 				});
 				normalizedNames.shift();
 			});
 			setPart({
-				imageUrl: cableData.imageUrl ?? "",
+				imageUrl: pcbData.imageUrl ?? "",
 				variables: data,
-				name: cableData.name,
+				name: pcbData.name,
 			});
 			onOpenModal();
 		});
@@ -127,7 +147,7 @@ export const CableView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Cable</Text>
+					<Text fontSize={"2xl"}>PCB</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -157,7 +177,7 @@ export const CableView = () => {
 							key={part.name}
 							part={part}
 							delete={handleDeletePart}
-							showMore={handleShowMoreCable}
+							showMore={handleShowMorePCB}
 						/>
 					))}
 				</Flex>
@@ -171,10 +191,10 @@ export const CableView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<CableForm
+			<PCBForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchCables={getPartPage}
+				fetchPCBs={getPartPage}
 			/>
 			<PartModalView
 				isOpen={isOpenModal}

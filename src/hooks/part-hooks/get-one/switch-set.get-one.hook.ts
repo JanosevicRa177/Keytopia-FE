@@ -2,13 +2,13 @@ import { toast } from "react-toastify";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { useAxios } from "../../../utils/axios.hook";
 import { PartType } from "../../../utils/enum";
-import { SwitchSet } from "../../../model/part.model";
+import { SwitchSetShowMore } from "../../../model/part.model";
 
 export const useGetOneSwitchSet = () => {
 	const { axios } = useAxios();
 	const getSwitchSet = async (
 		name: String
-	): Promise<ApiResponse<SwitchSet | null>> => {
+	): Promise<ApiResponse<SwitchSetShowMore | null>> => {
 		try {
 			const res = await axios.get(`/part/${PartType.SWITCH_SET}/${name}`);
 			return {

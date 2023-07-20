@@ -7,6 +7,7 @@ import {
 	PriceWeight,
 } from "../utils/enum";
 import { VariableWithValue } from "../utils/types";
+import { Switch } from "./part-data.model";
 
 export type CablePart = {
 	material: string;
@@ -16,20 +17,17 @@ export type CablePart = {
 	computerConnector: CableConnector;
 	isCoiled: boolean;
 	isQuickRelease: boolean;
-	image?: File;
 };
 
 export type CasePart = {
 	material: string;
 	color: string;
 	size: string;
-	image?: File;
 };
 
 export type KeycapPart = {
 	material: KeycapMaterial;
 	keycapProfile: string;
-	image?: File;
 };
 
 export type KeycapSetPart = {
@@ -38,7 +36,6 @@ export type KeycapSetPart = {
 	keycapProfile: string;
 	language: string;
 	layouts: string[];
-	image?: File;
 };
 
 export type PCBPart = {
@@ -48,25 +45,26 @@ export type PCBPart = {
 	color: string;
 	pinType: PinType;
 	stabilizerType: StabilizerType;
-	image?: File;
 };
 
 export type PlatePart = {
 	material: string;
 	color: string;
 	size: string;
-	image?: File;
 };
 
 export type StabilizersPart = {
 	type: StabilizerType;
-	image?: File;
 };
 
 export type SwitchSetPart = {
 	switchName: string;
 	switchQuantity: number;
-	image?: File;
+};
+
+export type SwitchSetShowMorePart = {
+	aSwitch: Switch;
+	switchQuantity: number;
 };
 
 export type Part = {
@@ -77,6 +75,7 @@ export type Part = {
 	supplier?: string;
 	quantity?: number;
 	imageUrl?: string;
+	image?: File;
 };
 
 export type Cable = Part & CablePart;
@@ -87,6 +86,7 @@ export type PCB = Part & PCBPart;
 export type Plate = Part & PlatePart;
 export type Stabilizers = Part & StabilizersPart;
 export type SwitchSet = Part & SwitchSetPart;
+export type SwitchSetShowMore = Part & SwitchSetShowMorePart;
 
 export type PartWithData = {
 	name: string;

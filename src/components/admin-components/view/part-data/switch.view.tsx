@@ -21,6 +21,7 @@ import { Switch } from "../../../../model/part-data.model";
 import { useDeleteSwitch } from "../../../../hooks/part-data-hooks/delete/switch.delete.hook";
 import { useFetchSwitchesPage } from "../../../../hooks/part-data-hooks/get-all/switch.get-all-page.hook";
 import { SwitchForm } from "../../form/part-data/switch.form";
+import { PinType, SwitchType } from "../../../../utils/enum";
 
 export const SwitchView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
@@ -40,6 +41,19 @@ export const SwitchView = () => {
 				getSwitchesPage(0).then(() => setCurrentPage(1));
 			}
 		});
+	}
+	function mapSwitchType(switchType: SwitchType): string {
+		let value = "";
+		if (switchType === "CLICKY") value = "Clicky";
+		else if (switchType === "TACTILE") value = "Tactile";
+		else value = "Linear";
+		return value;
+	}
+	function mapPinType(pinType: PinType): string {
+		let value = "";
+		if (pinType === "PIN5") value = "5 pin";
+		else value = "3 pin";
+		return value;
 	}
 
 	return (
@@ -110,10 +124,12 @@ export const SwitchView = () => {
 													{item.actuationPoint}
 												</Td>
 												<Td w={"10%"}>
-													{item.pinType}
+													{mapPinType(item.pinType)}
 												</Td>
 												<Td w={"10%"}>
-													{item.switchType}
+													{mapSwitchType(
+														item.switchType
+													)}
 												</Td>
 												<Td w={"10%"}>
 													{item.priceWeight}

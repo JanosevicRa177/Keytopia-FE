@@ -4,20 +4,20 @@ import { colorPallete } from "../../../../styles/color";
 import { useEffect, useState } from "react";
 import { Pagination } from "../../../paging/pagination/pagination";
 import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { CableForm } from "../../form/part/cable.form";
 import { PartCard } from "../../../page-component/part-card";
-import { Cable, Part, PartWithData } from "../../../../model/part.model";
+import { Part, PartWithData, Stabilizers } from "../../../../model/part.model";
 import { PartType } from "../../../../utils/enum";
 import { normalizeNames } from "../../../../utils/string.converter";
 import { VariableWithValue } from "../../../../utils/types";
 import { PartModalView } from "../../single-view/part-modal.view";
 import { useFetchPartPage } from "../../../../hooks/part-hooks/get-all/part.get-all-page.hook";
 import { useDeletePart } from "../../../../hooks/part-hooks/delete/part.delete.hook";
-import { useGetOneCable } from "../../../../hooks/part-hooks/get-one/cable.get-one.hook";
+import { useGetOneStabilizers } from "../../../../hooks/part-hooks/get-one/stabilizers.get-one.hook";
+import { StabilizersForm } from "../../form/part/stabilizers.form";
 
-const partType = PartType.CABLE;
+const partType = PartType.STABILIZER;
 
-export const CableView = () => {
+export const StabilizersView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [part, setPart] = useState<PartWithData>({
 		name: "",
@@ -25,7 +25,7 @@ export const CableView = () => {
 		variables: [],
 	});
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
-	const { getCable } = useGetOneCable();
+	const { getStabilizers } = useGetOneStabilizers();
 	const { deletePart } = useDeletePart();
 	const {
 		isOpen: isOpenForm,
@@ -49,64 +49,73 @@ export const CableView = () => {
 			}
 		});
 	}
-	async function handleShowMoreCable(name: String) {
-		getCable(name).then((cable: ApiResponse<Cable | null>) => {
-			if (cable.data === null) {
-				return;
-			}
-			const cableData: Cable = cable.data;
-			const variableNames: string[] = Object.keys(cable.data as Cable);
-			let normalizedNames: string[] = normalizeNames(variableNames);
-			const data: VariableWithValue[] = [];
-			variableNames.forEach((name: string) => {
-				if (
-					name === "name" ||
-					name === "imageUrl" ||
-					name === "priceWeight" ||
-					cableData[name as keyof Cable]?.toString() == null
-				) {
-					normalizedNames.shift();
+	async function handleShowMoreStabilizers(name: String) {
+		getStabilizers(name).then(
+			(stabilizers: ApiResponse<Stabilizers | null>) => {
+				if (stabilizers.data === null) {
 					return;
 				}
-				if (
-					name === "keyboardConnector" ||
-					name === "computerConnector"
-				) {
-					let value = "";
-					if (cableData[name as keyof Cable]?.toString() === "USB")
-						value = "USB";
-					else value = "USB-C";
+				const stabilizersData: Stabilizers = stabilizers.data;
+				const variableNames: string[] = Object.keys(
+					stabilizers.data as Stabilizers
+				);
+				let normalizedNames: string[] = normalizeNames(variableNames);
+				const data: VariableWithValue[] = [];
+				variableNames.forEach((name: string) => {
+					if (
+						name === "name" ||
+						name === "imageUrl" ||
+						name === "priceWeight" ||
+						stabilizersData[
+							name as keyof Stabilizers
+						]?.toString() == null
+					) {
+						normalizedNames.shift();
+						return;
+					}
+					if (name === "price") {
+						data.push({
+							variable: normalizedNames[0],
+							value:
+								(stabilizersData[
+									name as keyof Stabilizers
+								]?.toString() as string) + " $",
+						});
+						normalizedNames.shift();
+						return;
+					}
+					if (name === "type") {
+						let value = "";
+						if (
+							stabilizersData[
+								name as keyof Stabilizers
+							]?.toString() === "SCREW_IN"
+						)
+							value = "Screw-in";
+						else value = "Clamped";
+						data.push({
+							variable: normalizedNames[0],
+							value: value,
+						});
+						normalizedNames.shift();
+						return;
+					}
 					data.push({
 						variable: normalizedNames[0],
-						value: value,
+						value: stabilizersData[
+							name as keyof Stabilizers
+						]?.toString() as string,
 					});
 					normalizedNames.shift();
-					return;
-				}
-				if (name === "price") {
-					data.push({
-						variable: normalizedNames[0],
-						value:
-							(cableData[
-								name as keyof Cable
-							]?.toString() as string) + " $",
-					});
-					normalizedNames.shift();
-					return;
-				}
-				data.push({
-					variable: normalizedNames[0],
-					value: cableData[name as keyof Cable]?.toString() as string,
 				});
-				normalizedNames.shift();
-			});
-			setPart({
-				imageUrl: cableData.imageUrl ?? "",
-				variables: data,
-				name: cableData.name,
-			});
-			onOpenModal();
-		});
+				setPart({
+					imageUrl: stabilizersData.imageUrl ?? "",
+					variables: data,
+					name: stabilizersData.name,
+				});
+				onOpenModal();
+			}
+		);
 	}
 	return (
 		<Box w={"100%"}>
@@ -127,7 +136,7 @@ export const CableView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Cable</Text>
+					<Text fontSize={"2xl"}>Stabilizers</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -157,7 +166,7 @@ export const CableView = () => {
 							key={part.name}
 							part={part}
 							delete={handleDeletePart}
-							showMore={handleShowMoreCable}
+							showMore={handleShowMoreStabilizers}
 						/>
 					))}
 				</Flex>
@@ -171,10 +180,10 @@ export const CableView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<CableForm
+			<StabilizersForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchCables={getPartPage}
+				fetchStabilizers={getPartPage}
 			/>
 			<PartModalView
 				isOpen={isOpenModal}

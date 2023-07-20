@@ -68,6 +68,17 @@ export const CaseView = () => {
 					normalizedNames.shift();
 					return;
 				}
+				if (name === "price") {
+					data.push({
+						variable: normalizedNames[0],
+						value:
+							(caseData[
+								name as keyof Case
+							]?.toString() as string) + " $",
+					});
+					normalizedNames.shift();
+					return;
+				}
 				data.push({
 					variable: normalizedNames[0],
 					value: caseData[name as keyof Case]?.toString() as string,

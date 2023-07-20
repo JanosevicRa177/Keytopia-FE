@@ -166,7 +166,7 @@ export const PLATE_DEFAULT_VALUES = {
 	color: "",
 };
 
-export const STABILIZER_VALIDATION_SCHEMA = yup.object({
+export const STABILIZERS_VALIDATION_SCHEMA = yup.object({
 	name: yup.string().required(),
 	price: yup.number().min(1).required(),
 	priceWeight: yup
@@ -179,7 +179,7 @@ export const STABILIZER_VALIDATION_SCHEMA = yup.object({
 		.required(),
 });
 
-export const STABILIZER_DEFAULT_VALUES = {
+export const STABILIZERS_DEFAULT_VALUES = {
 	name: "",
 	price: 0,
 	priceWeight: PriceWeight.LIGHT,
