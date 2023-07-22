@@ -1,10 +1,10 @@
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
 import { colorPallete, colors } from "../styles/color";
-import { RegisterForm } from "../components/auth-form/register-form";
-import { KeycapsImages } from "../components/auth-form/keycaps-images";
-import { LoginForm } from "../components/auth-form/login-form";
-import { AuthLogo } from "../components/auth-form/auth-logo";
 import { useApplicationStore } from "../store/store";
+import { AuthLogo } from "../components/image-components/auth-logo";
+import { LoginForm } from "../components/form/auth-form/login.form";
+import { RegisterForm } from "../components/form/auth-form/register-buyer.form";
+import { KeycapsImages } from "../components/image-components/keycaps-images";
 
 export const AuthPage = () => {
 	const formState = useApplicationStore((state) => state.formState);
@@ -108,7 +108,7 @@ export const AuthPage = () => {
 						position={"relative"}
 						transition={"0.3s ease"}
 						h={"100%"}
-						overflowY={"scroll"}
+						overflowY={"auto"}
 						bg={"rgba(255,255,255,1)"}
 					>
 						<RegisterForm />

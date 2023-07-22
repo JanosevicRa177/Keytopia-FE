@@ -2,6 +2,7 @@ import { ActivateRedirectPage } from "../pages/activate-redirect.page";
 import { PartAdminPage } from "../pages/part-admin.page";
 import { AuthPage } from "../pages/auth.page";
 import { MainPage } from "../pages/main.page";
+import { UserPage } from "../pages/user.page";
 
 interface CustomRouteProps {
 	path: string;
@@ -27,9 +28,14 @@ export const routes: CustomRouteProps[] = [
 		needAuth: false,
 	},
 	{
-		path: "/admin/part",
+		path: "/admin/manage/parts",
 		element: <PartAdminPage />,
 		needAuth: true,
 		requiredRole: "ADMIN",
+	},
+	{
+		path: "/user",
+		element: <UserPage />,
+		needAuth: true,
 	},
 ];

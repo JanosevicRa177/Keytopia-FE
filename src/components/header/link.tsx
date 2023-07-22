@@ -13,13 +13,11 @@ export const CustomLink: React.FC<CustomLinkProps> = (props) => {
 		<Link to={props.link}>
 			<Text
 				color={
-					Boolean(location.pathname.match(props.link))
+					location.pathname === props.link
 						? colorPallete.inputBorderHover
 						: "white"
 				}
-				borderBottom={
-					Boolean(location.pathname.match(props.link)) ? "1px" : "0px"
-				}
+				borderBottom={location.pathname === props.link ? "1px" : "0px"}
 				borderColor={colorPallete.inputBorderHover}
 				fontWeight="700"
 				transition={"0.2s ease"}

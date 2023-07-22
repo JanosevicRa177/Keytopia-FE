@@ -13,7 +13,9 @@ export const Footer = () => {
 			backdropFilter="auto"
 			backdropBlur="4px"
 		>
-			<Text fontSize={"xl"}>© 2023 Keytopia</Text>
+			<footer>
+				<Text fontSize={"xl"}>© 2023 Keytopia</Text>
+			</footer>
 		</Flex>
 	);
 };
