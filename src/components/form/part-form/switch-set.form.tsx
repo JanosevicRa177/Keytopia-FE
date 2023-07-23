@@ -39,15 +39,13 @@ import { useForm } from "react-hook-form";
 interface SwitchSetFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchSwitchSets: (pageNumber: number, partType: PartType) => Promise<void>;
+	fetchPage: (pageNumber: number) => Promise<void>;
 }
-
-const partType = PartType.SWITCH_SET;
 
 export const SwitchSetForm = ({
 	isOpen,
 	onClose,
-	fetchSwitchSets,
+	fetchPage,
 }: SwitchSetFormProps) => {
 	const { getBrands } = useFetchBrands();
 	const { getSuppliers } = useFetchSupplier();
@@ -109,7 +107,7 @@ export const SwitchSetForm = ({
 		}
 		createSwitchSet(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchSwitchSets(0, partType);
+				fetchPage(0);
 				reset();
 				setImage(null);
 				setShowBrand(true);

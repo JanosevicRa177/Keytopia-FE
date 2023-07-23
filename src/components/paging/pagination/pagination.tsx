@@ -10,12 +10,7 @@ export type PaginationProps = {
 	maxLength: number;
 	sortBy?: string;
 	sortDirection?: string;
-	getPage: (
-		page: number,
-		partType: PartType,
-		sortBy: string,
-		sortDirection: string
-	) => void;
+	getPage: (page: number) => void;
 	partType?: PartType;
 	setCurrentPage: (page: number) => void;
 };
@@ -25,9 +20,6 @@ export const Pagination: React.FC<PaginationProps> = ({
 	maxLength,
 	setCurrentPage,
 	getPage,
-	partType = PartType.CASE,
-	sortBy = "",
-	sortDirection = "",
 }) => {
 	const [pageNums, setPageNums] = useState<Array<number>>();
 	useEffect(() => {
@@ -40,12 +32,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 				disabled={currentPage === 1}
 				onClick={() => {
 					setCurrentPage(currentPage - 1);
-					getPage(
-						currentPage - 1 - 1,
-						partType,
-						sortBy,
-						sortDirection
-					);
+					getPage(currentPage - 1 - 1);
 				}}
 			>
 				Previous
@@ -58,7 +45,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 					disabled={isNaN(pageNum)}
 					onClick={() => {
 						setCurrentPage(pageNum);
-						getPage(pageNum - 1, partType, sortBy, sortDirection);
+						getPage(pageNum - 1);
 					}}
 				>
 					{!isNaN(pageNum) ? pageNum : "..."}
@@ -69,12 +56,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 				disabled={currentPage === lastPage}
 				onClick={() => {
 					setCurrentPage(currentPage + 1);
-					getPage(
-						currentPage - 1 + 1,
-						partType,
-						sortBy,
-						sortDirection
-					);
+					getPage(currentPage - 1 + 1);
 				}}
 			>
 				Next

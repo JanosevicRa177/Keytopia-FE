@@ -47,3 +47,9 @@ export enum PCBType {
 	HOT_SWAP = "HOT_SWAP",
 	STANDARD = "STANDARD",
 }
+
+export enum SortDirection {
+	ASC = "ASC",
+	DESC = "DESC",
+	UNSORTED = "UNSORTED",
+}

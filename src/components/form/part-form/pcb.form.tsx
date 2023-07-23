@@ -35,7 +35,6 @@ import {
 } from "../../../utils/constants/part.constants";
 import { useForm } from "react-hook-form";
 import {
-	PartType,
 	PriceWeight,
 	PCBType,
 	PinType,
@@ -45,12 +44,10 @@ import {
 interface PCBFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchPCBs: (pageNumber: number, partType: PartType) => Promise<void>;
+	fetchPart: (pageNumber: number) => Promise<void>;
 }
 
-const partType = PartType.PCB;
-
-export const PCBForm = ({ isOpen, onClose, fetchPCBs }: PCBFormProps) => {
+export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 	const { getBrands } = useFetchBrands();
 	const { getSizes } = useFetchSizes();
 	const { getSuppliers } = useFetchSupplier();
@@ -111,7 +108,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPCBs }: PCBFormProps) => {
 		}
 		createPCB(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchPCBs(0, partType);
+				fetchPart(0);
 				reset();
 				setImage(null);
 				setShowBrand(true);

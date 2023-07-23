@@ -13,15 +13,15 @@ import {
 	Th,
 	Thead,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../../styles/color";
-import { useEffect, useState } from "react";
-import { Pagination } from "../../../paging/pagination/pagination";
-import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { useFetchSuppliersPage } from "../../../../hooks/warehouse-hooks/get-all/supplier.get-all-page.hook";
-import { Supplier } from "../../../../model/warehouse.model";
-import { SupplierForm } from "../../../form/warehouse-form/supplier.form";
-import { useDeleteSupplier } from "../../../../hooks/warehouse-hooks/delete/supplier.delete.hook";
-import { DataArrayModal } from "../../../util-components/data-array.component";
+import { useState, useEffect } from "react";
+import { useDeleteSupplier } from "../../../hooks/warehouse-hooks/delete/supplier.delete.hook";
+import { useFetchSuppliersPage } from "../../../hooks/warehouse-hooks/get-all/supplier.get-all-page.hook";
+import { Supplier } from "../../../model/warehouse.model";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { colorPallete } from "../../../styles/color";
+import { SupplierForm } from "../../form/warehouse-form/supplier.form";
+import { Pagination } from "../../paging/pagination/pagination";
+import { DataArrayModal } from "../../util-components/data-array.component";
 
 export const SupplierView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);

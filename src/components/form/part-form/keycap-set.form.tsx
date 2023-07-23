@@ -34,22 +34,20 @@ import {
 	KEYCAP_SET_DEFAULT_VALUES,
 	KEYCAP_SET_VALIDATION_SCHEMA,
 } from "../../../utils/constants/part.constants";
-import { PartType, PriceWeight, KeycapMaterial } from "../../../utils/enum";
+import { PriceWeight, KeycapMaterial } from "../../../utils/enum";
 import { MultiselectOption } from "../../../utils/types";
 import { Multiselect } from "../../util-components/multiselect.component";
 import { useForm } from "react-hook-form";
 interface KeycapSetFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchKeycapSets: (pageNumber: number, partType: PartType) => Promise<void>;
+	fetchPage: (pageNumber: number) => Promise<void>;
 }
-
-const partType = PartType.KEYCAP_SET;
 
 export const KeycapSetForm = ({
 	isOpen,
 	onClose,
-	fetchKeycapSets,
+	fetchPage,
 }: KeycapSetFormProps) => {
 	const { getBrands } = useFetchBrands();
 	const { getSuppliers } = useFetchSupplier();
@@ -131,7 +129,7 @@ export const KeycapSetForm = ({
 		}
 		createKeycapSet(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchKeycapSets(0, partType);
+				fetchPage(0);
 				reset();
 				setImage(null);
 				setShowBrand(true);

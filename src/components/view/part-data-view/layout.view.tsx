@@ -13,14 +13,14 @@ import {
 	Th,
 	Thead,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../../styles/color";
-import { useEffect, useState } from "react";
-import { Pagination } from "../../../paging/pagination/pagination";
-import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { Layout } from "../../../../model/part-data.model";
-import { useFetchLayoutsPage } from "../../../../hooks/part-data-hooks/get-all/layout.get-all-page.hook";
-import { useDeleteLayout } from "../../../../hooks/part-data-hooks/delete/layout.delete.hook";
-import { LayoutForm } from "../../../form/part-data-form/layout.form";
+import { useState, useEffect } from "react";
+import { useDeleteLayout } from "../../../hooks/part-data-hooks/delete/layout.delete.hook";
+import { useFetchLayoutsPage } from "../../../hooks/part-data-hooks/get-all/layout.get-all-page.hook";
+import { Layout } from "../../../model/part-data.model";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { colorPallete } from "../../../styles/color";
+import { LayoutForm } from "../../form/part-data-form/layout.form";
+import { Pagination } from "../../paging/pagination/pagination";
 
 export const LayoutView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);

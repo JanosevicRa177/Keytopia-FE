@@ -33,21 +33,15 @@ import {
 	KEYCAP_DEFAULT_VALUES,
 	KEYCAP_VALIDATION_SCHEMA,
 } from "../../../utils/constants/part.constants";
-import { PartType, PriceWeight, KeycapMaterial } from "../../../utils/enum";
+import { PriceWeight, KeycapMaterial } from "../../../utils/enum";
 import { useForm } from "react-hook-form";
 interface KeycapFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchKeycaps: (pageNumber: number, partType: PartType) => Promise<void>;
+	fetchPage: (pageNumber: number) => Promise<void>;
 }
 
-const partType = PartType.KEYCAP;
-
-export const KeycapForm = ({
-	isOpen,
-	onClose,
-	fetchKeycaps,
-}: KeycapFormProps) => {
+export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 	const { getBrands } = useFetchBrands();
 	const { getSuppliers } = useFetchSupplier();
 	const { getKeycapProfiles } = useFetchKeycapProfiles();
@@ -110,7 +104,7 @@ export const KeycapForm = ({
 		}
 		createKeycap(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchKeycaps(0, partType);
+				fetchPage(0);
 				reset();
 				setImage(null);
 				setShowBrand(true);

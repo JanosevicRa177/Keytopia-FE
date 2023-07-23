@@ -32,21 +32,19 @@ import {
 	STABILIZERS_DEFAULT_VALUES,
 	STABILIZERS_VALIDATION_SCHEMA,
 } from "../../../utils/constants/part.constants";
-import { PartType, PriceWeight, StabilizerType } from "../../../utils/enum";
+import { PriceWeight, StabilizerType } from "../../../utils/enum";
 import { useForm } from "react-hook-form";
 
 interface StabilizersFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchStabilizers: (pageNumber: number, partType: PartType) => Promise<void>;
+	fetchPage: (pageNumber: number) => Promise<void>;
 }
-
-const partType = PartType.STABILIZER;
 
 export const StabilizersForm = ({
 	isOpen,
 	onClose,
-	fetchStabilizers,
+	fetchPage,
 }: StabilizersFormProps) => {
 	const { getBrands } = useFetchBrands();
 	const { getSuppliers } = useFetchSupplier();
@@ -99,7 +97,7 @@ export const StabilizersForm = ({
 		}
 		createStabilizers(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchStabilizers(0, partType);
+				fetchPage(0);
 				reset();
 				setImage(null);
 				setShowBrand(true);

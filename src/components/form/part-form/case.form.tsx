@@ -33,18 +33,16 @@ import {
 	CASE_DEFAULT_VALUES,
 	CASE_VALIDATION_SCHEMA,
 } from "../../../utils/constants/part.constants";
-import { PartType, PriceWeight } from "../../../utils/enum";
+import { PriceWeight } from "../../../utils/enum";
 import { useForm } from "react-hook-form";
 
 interface CaseFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchCases: (pageNumber: number, partType: PartType) => Promise<void>;
+	fetchPage: (pageNumber: number) => Promise<void>;
 }
 
-const partType = PartType.CASE;
-
-export const CaseForm = ({ isOpen, onClose, fetchCases }: CaseFormProps) => {
+export const CaseForm = ({ isOpen, onClose, fetchPage }: CaseFormProps) => {
 	const { getBrands } = useFetchBrands();
 	const { getSizes } = useFetchSizes();
 	const { getSuppliers } = useFetchSupplier();
@@ -105,7 +103,7 @@ export const CaseForm = ({ isOpen, onClose, fetchCases }: CaseFormProps) => {
 		}
 		createCase(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchCases(0, partType);
+				fetchPage(0);
 				reset();
 				setImage(null);
 				setShowBrand(true);

@@ -13,34 +13,47 @@ import {
 	Th,
 	Thead,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../../styles/color";
-import { KeycapProfileForm } from "../../../form/part-data-form/keycap-profile.form";
-import { useEffect, useState } from "react";
-import { useFetchKeycapProfilesPage } from "../../../../hooks/part-data-hooks/get-all/keycap-profile.get-all-page.hook";
-import { Pagination } from "../../../paging/pagination/pagination";
-import { useDeleteKeycapProfile } from "../../../../hooks/part-data-hooks/delete/keycap-profile.delete.hook";
-import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { KeycapProfile } from "../../../../model/part-data.model";
+import { useState, useEffect } from "react";
+import { useDeleteSwitch } from "../../../hooks/part-data-hooks/delete/switch.delete.hook";
+import { useFetchSwitchesPage } from "../../../hooks/part-data-hooks/get-all/switch.get-all-page.hook";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { colorPallete } from "../../../styles/color";
+import { SwitchType, PinType } from "../../../utils/enum";
+import { SwitchForm } from "../../form/part-data-form/switch.form";
+import { Pagination } from "../../paging/pagination/pagination";
+import { Switch } from "../../../model/part-data.model";
 
-export const KeycapProfileView = () => {
+export const SwitchView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getKeycapProfilesPage, getKeycapProfilesPageRes } =
-		useFetchKeycapProfilesPage();
-	const { deleteKeycapProfile } = useDeleteKeycapProfile();
+	const { getSwitchesPage, getSwitchesPageRes } = useFetchSwitchesPage();
+	const { deleteSwitch } = useDeleteSwitch();
 	const {
 		isOpen: isOpenForm,
 		onClose: onCloseForm,
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getKeycapProfilesPage(0).then(() => setCurrentPage(1));
+		getSwitchesPage(0).then(() => setCurrentPage(1));
 	}, []);
-	async function handleDeleteKeycapProfile(name: String) {
-		deleteKeycapProfile(name).then((response: ApiResponse<null>) => {
+	async function handleDeleteSwitch(name: String) {
+		deleteSwitch(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getKeycapProfilesPage(0).then(() => setCurrentPage(1));
+				getSwitchesPage(0).then(() => setCurrentPage(1));
 			}
 		});
+	}
+	function mapSwitchType(switchType: SwitchType): string {
+		let value = "";
+		if (switchType === "CLICKY") value = "Clicky";
+		else if (switchType === "TACTILE") value = "Tactile";
+		else value = "Linear";
+		return value;
+	}
+	function mapPinType(pinType: PinType): string {
+		let value = "";
+		if (pinType === "PIN5") value = "5 pin";
+		else value = "3 pin";
+		return value;
 	}
 
 	return (
@@ -62,7 +75,7 @@ export const KeycapProfileView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Keycap profile</Text>
+					<Text fontSize={"2xl"}>Switch</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -91,14 +104,36 @@ export const KeycapProfileView = () => {
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
+									<Th>Actuation force</Th>
+									<Th>Actuation point</Th>
+									<Th>Pin type</Th>
+									<Th>Switch type</Th>
+									<Th>Price weight</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getKeycapProfilesPageRes.data.content &&
-									getKeycapProfilesPageRes.data.content.map(
-										(item: KeycapProfile) => (
+								{getSwitchesPageRes.data.content &&
+									getSwitchesPageRes.data.content.map(
+										(item: Switch) => (
 											<Tr key={item.name}>
-												<Td w={"80%"}>{item.name}</Td>
+												<Td>{item.name}</Td>
+												<Td w={"10%"}>
+													{item.actuationForce}
+												</Td>
+												<Td w={"10%"}>
+													{item.actuationPoint}
+												</Td>
+												<Td w={"10%"}>
+													{mapPinType(item.pinType)}
+												</Td>
+												<Td w={"10%"}>
+													{mapSwitchType(
+														item.switchType
+													)}
+												</Td>
+												<Td w={"10%"}>
+													{item.priceWeight}
+												</Td>
 												<Td>
 													<Flex gap={"4"}>
 														<Button
@@ -110,7 +145,7 @@ export const KeycapProfileView = () => {
 															}
 															color={"white"}
 															onClick={() =>
-																handleDeleteKeycapProfile(
+																handleDeleteSwitch(
 																	item.name
 																)
 															}
@@ -135,17 +170,17 @@ export const KeycapProfileView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getKeycapProfilesPageRes.data.totalPages}
+					lastPage={getSwitchesPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getKeycapProfilesPage}
+					getPage={getSwitchesPage}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<KeycapProfileForm
+			<SwitchForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchKeycapProfiles={getKeycapProfilesPage}
+				fetchSwitch={getSwitchesPage}
 			/>
 		</Box>
 	);

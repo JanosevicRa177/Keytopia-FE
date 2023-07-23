@@ -1,36 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Flex, Box, Button, Text, useDisclosure } from "@chakra-ui/react";
-import { colorPallete } from "../../../../styles/color";
-import { useEffect, useState } from "react";
-import { Pagination } from "../../../paging/pagination/pagination";
-import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { PartCard } from "../../../page-component/part-card";
-import { PCB, Part, PartWithData } from "../../../../model/part.model";
-import { PartType } from "../../../../utils/enum";
+import { useState, useEffect } from "react";
+import { useDeletePart } from "../../../hooks/part-hooks/delete/part.delete.hook";
+import { useFetchPartPage } from "../../../hooks/part-hooks/get-all/part.get-all-page.hook";
+import { useGetOneKeycap } from "../../../hooks/part-hooks/get-one/keycap.get-one.hook";
+import { PartWithData, Keycap, Part } from "../../../model/part.model";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { colorPallete } from "../../../styles/color";
+import { PartType, SortDirection } from "../../../utils/enum";
 import {
 	normalizeNames,
-	normalizePCBType,
-	normalizePinType,
-	normalizeStabilizerType,
-} from "../../../../utils/string.converter";
-import { VariableWithValue } from "../../../../utils/types";
+	normalizeKeycapMaterialType,
+} from "../../../utils/string.converter";
+import { VariableWithValue } from "../../../utils/types";
+import { KeycapForm } from "../../form/part-form/keycap.form";
+import { PartCard } from "../../part-card-component/part-card";
+import { Pagination } from "../../paging/pagination/pagination";
 import { PartModalView } from "../../single-view/part-modal.view";
-import { useFetchPartPage } from "../../../../hooks/part-hooks/get-all/part.get-all-page.hook";
-import { useDeletePart } from "../../../../hooks/part-hooks/delete/part.delete.hook";
-import { useGetOnePCB } from "../../../../hooks/part-hooks/get-one/pcb.get-one.hook";
-import { PCBForm } from "../../../form/part-form/pcb.form";
+import { PartFilterSort } from "../../filter-sort-components/part.filter-sort";
 
-const partType = PartType.PCB;
+const partType = PartType.KEYCAP;
 
-export const PCBView = () => {
+export const KeycapView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [part, setPart] = useState<PartWithData>({
 		name: "",
 		imageUrl: "",
 		variables: [],
 	});
+	const [searchName, setSearchName] = useState("");
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
+		SortDirection.UNSORTED
+	);
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
-	const { getPCB } = useGetOnePCB();
+	const { getKeycap } = useGetOneKeycap();
 	const { deletePart } = useDeletePart();
 	const {
 		isOpen: isOpenForm,
@@ -43,24 +46,27 @@ export const PCBView = () => {
 		onOpen: onOpenModal,
 	} = useDisclosure();
 	useEffect(() => {
-		getPartPage(0, partType).then(() => {
-			setCurrentPage(1);
-		});
+		fetchPage(0);
 	}, []);
 	async function handleDeletePart(name: String) {
 		deletePart(name, partType).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getPartPage(0, partType).then(() => setCurrentPage(1));
+				fetchPage(0);
 			}
 		});
 	}
-	async function handleShowMorePCB(name: String) {
-		getPCB(name).then((pcb: ApiResponse<PCB | null>) => {
-			if (pcb.data === null) {
+	async function fetchPage(page: number) {
+		getPartPage(page, searchName, sortedDirection, partType).then(() =>
+			setCurrentPage(page + 1)
+		);
+	}
+	async function handleShowMoreKeycap(name: String) {
+		getKeycap(name).then((keycap: ApiResponse<Keycap | null>) => {
+			if (keycap.data === null) {
 				return;
 			}
-			const pcbData: PCB = pcb.data;
-			const variableNames: string[] = Object.keys(pcb.data as PCB);
+			const keycapData: Keycap = keycap.data;
+			const variableNames: string[] = Object.keys(keycap.data as Keycap);
 			let normalizedNames: string[] = normalizeNames(variableNames);
 			const data: VariableWithValue[] = [];
 			variableNames.forEach((name: string) => {
@@ -68,30 +74,14 @@ export const PCBView = () => {
 					name === "name" ||
 					name === "imageUrl" ||
 					name === "priceWeight" ||
-					pcbData[name as keyof PCB]?.toString() == null
+					keycapData[name as keyof Keycap]?.toString() == null
 				) {
 					normalizedNames.shift();
 					return;
 				}
-				if (name === "type") {
-					normalizePCBType(
-						pcbData[name as keyof PCB]?.toString() as string,
-						data,
-						normalizedNames
-					);
-					return;
-				}
-				if (name === "pinType") {
-					normalizePinType(
-						pcbData[name as keyof PCB]?.toString() as string,
-						data,
-						normalizedNames
-					);
-					return;
-				}
-				if (name === "stabilizerType") {
-					normalizeStabilizerType(
-						pcbData[name as keyof PCB]?.toString() as string,
+				if (name === "material") {
+					normalizeKeycapMaterialType(
+						keycapData[name as keyof Keycap]?.toString() as string,
 						data,
 						normalizedNames
 					);
@@ -101,22 +91,25 @@ export const PCBView = () => {
 					data.push({
 						variable: normalizedNames[0],
 						value:
-							(pcbData[name as keyof PCB]?.toString() as string) +
-							" $",
+							(keycapData[
+								name as keyof Keycap
+							]?.toString() as string) + " $",
 					});
 					normalizedNames.shift();
 					return;
 				}
 				data.push({
 					variable: normalizedNames[0],
-					value: pcbData[name as keyof PCB]?.toString() as string,
+					value: keycapData[
+						name as keyof Keycap
+					]?.toString() as string,
 				});
 				normalizedNames.shift();
 			});
 			setPart({
-				imageUrl: pcbData.imageUrl ?? "",
+				imageUrl: keycapData.imageUrl ?? "",
 				variables: data,
-				name: pcbData.name,
+				name: keycapData.name,
 			});
 			onOpenModal();
 		});
@@ -140,7 +133,7 @@ export const PCBView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>PCB</Text>
+					<Text fontSize={"2xl"}>Cable</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -159,6 +152,13 @@ export const PCBView = () => {
 						New
 					</Button>
 				</Flex>
+				<PartFilterSort
+					fetchPart={fetchPage}
+					setSearchName={setSearchName}
+					setSortedDirection={setSortedDirection}
+					sortedDirection={sortedDirection}
+					searchName={searchName}
+				/>
 				<Flex
 					fontSize={"md"}
 					flexWrap={"wrap"}
@@ -170,7 +170,7 @@ export const PCBView = () => {
 							key={part.name}
 							part={part}
 							delete={handleDeletePart}
-							showMore={handleShowMorePCB}
+							showMore={handleShowMoreKeycap}
 						/>
 					))}
 				</Flex>
@@ -179,15 +179,15 @@ export const PCBView = () => {
 					lastPage={getPartPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getPartPage}
+					getPage={fetchPage}
 					partType={partType}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<PCBForm
+			<KeycapForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchPCBs={getPartPage}
+				fetchPage={fetchPage}
 			/>
 			<PartModalView
 				isOpen={isOpenModal}

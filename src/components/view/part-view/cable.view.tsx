@@ -1,23 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Flex, Box, Button, Text, useDisclosure } from "@chakra-ui/react";
-import { colorPallete } from "../../../../styles/color";
-import { useEffect, useState } from "react";
-import { Pagination } from "../../../paging/pagination/pagination";
-import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { PartCard } from "../../../page-component/part-card";
-import { Part, PartWithData, Plate } from "../../../../model/part.model";
-import { PartType } from "../../../../utils/enum";
-import { normalizeNames } from "../../../../utils/string.converter";
-import { VariableWithValue } from "../../../../utils/types";
+import { useState, useEffect } from "react";
+import { useDeletePart } from "../../../hooks/part-hooks/delete/part.delete.hook";
+import { useFetchPartPage } from "../../../hooks/part-hooks/get-all/part.get-all-page.hook";
+import { useGetOneCable } from "../../../hooks/part-hooks/get-one/cable.get-one.hook";
+import { PartWithData, Cable, Part } from "../../../model/part.model";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { colorPallete } from "../../../styles/color";
+import { PartType, SortDirection } from "../../../utils/enum";
+import {
+	normalizeNames,
+	normalizeConnectionType,
+} from "../../../utils/string.converter";
+import { VariableWithValue } from "../../../utils/types";
+import { CableForm } from "../../form/part-form/cable.form";
+import { PartCard } from "../../part-card-component/part-card";
+import { Pagination } from "../../paging/pagination/pagination";
 import { PartModalView } from "../../single-view/part-modal.view";
-import { useFetchPartPage } from "../../../../hooks/part-hooks/get-all/part.get-all-page.hook";
-import { useDeletePart } from "../../../../hooks/part-hooks/delete/part.delete.hook";
-import { useGetOnePlate } from "../../../../hooks/part-hooks/get-one/plate.get-one.hook";
-import { PlateForm } from "../../../form/part-form/plate.form";
+import { PartFilterSort } from "../../filter-sort-components/part.filter-sort";
 
-const partType = PartType.PLATE;
+const partType = PartType.CABLE;
 
-export const PlateView = () => {
+export const CableView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [part, setPart] = useState<PartWithData>({
 		name: "",
@@ -25,7 +29,11 @@ export const PlateView = () => {
 		variables: [],
 	});
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
-	const { getPlate } = useGetOnePlate();
+	const { getCable } = useGetOneCable();
+	const [searchName, setSearchName] = useState("");
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
+		SortDirection.UNSORTED
+	);
 	const { deletePart } = useDeletePart();
 	const {
 		isOpen: isOpenForm,
@@ -38,24 +46,27 @@ export const PlateView = () => {
 		onOpen: onOpenModal,
 	} = useDisclosure();
 	useEffect(() => {
-		getPartPage(0, partType).then(() => {
-			setCurrentPage(1);
-		});
+		fetchPage(0);
 	}, []);
 	async function handleDeletePart(name: String) {
 		deletePart(name, partType).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getPartPage(0, partType).then(() => setCurrentPage(1));
+				fetchPage(0);
 			}
 		});
 	}
-	async function handleShowMorePlate(name: String) {
-		getPlate(name).then((plate: ApiResponse<Plate | null>) => {
-			if (plate.data === null) {
+	async function fetchPage(page: number) {
+		getPartPage(page, searchName, sortedDirection, partType).then(() =>
+			setCurrentPage(page + 1)
+		);
+	}
+	async function handleShowMoreCable(name: String) {
+		getCable(name).then((cable: ApiResponse<Cable | null>) => {
+			if (cable.data === null) {
 				return;
 			}
-			const plateData: Plate = plate.data;
-			const variableNames: string[] = Object.keys(plate.data as Plate);
+			const cableData: Cable = cable.data;
+			const variableNames: string[] = Object.keys(cable.data as Cable);
 			let normalizedNames: string[] = normalizeNames(variableNames);
 			const data: VariableWithValue[] = [];
 			variableNames.forEach((name: string) => {
@@ -63,17 +74,28 @@ export const PlateView = () => {
 					name === "name" ||
 					name === "imageUrl" ||
 					name === "priceWeight" ||
-					plateData[name as keyof Plate]?.toString() == null
+					cableData[name as keyof Cable]?.toString() == null
 				) {
 					normalizedNames.shift();
+					return;
+				}
+				if (
+					name === "keyboardConnector" ||
+					name === "computerConnector"
+				) {
+					normalizeConnectionType(
+						cableData[name as keyof Cable]?.toString() as string,
+						data,
+						normalizedNames
+					);
 					return;
 				}
 				if (name === "price") {
 					data.push({
 						variable: normalizedNames[0],
 						value:
-							(plateData[
-								name as keyof Plate
+							(cableData[
+								name as keyof Cable
 							]?.toString() as string) + " $",
 					});
 					normalizedNames.shift();
@@ -81,14 +103,14 @@ export const PlateView = () => {
 				}
 				data.push({
 					variable: normalizedNames[0],
-					value: plateData[name as keyof Plate]?.toString() as string,
+					value: cableData[name as keyof Cable]?.toString() as string,
 				});
 				normalizedNames.shift();
 			});
 			setPart({
-				imageUrl: plateData.imageUrl ?? "",
+				imageUrl: cableData.imageUrl ?? "",
 				variables: data,
-				name: plateData.name,
+				name: cableData.name,
 			});
 			onOpenModal();
 		});
@@ -112,7 +134,7 @@ export const PlateView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Plate</Text>
+					<Text fontSize={"2xl"}>Cable</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -131,6 +153,13 @@ export const PlateView = () => {
 						New
 					</Button>
 				</Flex>
+				<PartFilterSort
+					fetchPart={fetchPage}
+					setSearchName={setSearchName}
+					setSortedDirection={setSortedDirection}
+					sortedDirection={sortedDirection}
+					searchName={searchName}
+				/>
 				<Flex
 					fontSize={"md"}
 					flexWrap={"wrap"}
@@ -142,7 +171,7 @@ export const PlateView = () => {
 							key={part.name}
 							part={part}
 							delete={handleDeletePart}
-							showMore={handleShowMorePlate}
+							showMore={handleShowMoreCable}
 						/>
 					))}
 				</Flex>
@@ -151,15 +180,15 @@ export const PlateView = () => {
 					lastPage={getPartPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getPartPage}
+					getPage={fetchPage}
 					partType={partType}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<PlateForm
+			<CableForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchPlates={getPartPage}
+				fetchPage={fetchPage}
 			/>
 			<PartModalView
 				isOpen={isOpenModal}

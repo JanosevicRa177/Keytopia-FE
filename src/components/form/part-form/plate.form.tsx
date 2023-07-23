@@ -33,18 +33,16 @@ import {
 	PLATE_DEFAULT_VALUES,
 	PLATE_VALIDATION_SCHEMA,
 } from "../../../utils/constants/part.constants";
-import { PartType, PriceWeight } from "../../../utils/enum";
+import { PriceWeight } from "../../../utils/enum";
 import { useForm } from "react-hook-form";
 
 interface PlateFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchPlates: (pageNumber: number, partType: PartType) => Promise<void>;
+	fetchPage: (pageNumber: number) => Promise<void>;
 }
 
-const partType = PartType.PLATE;
-
-export const PlateForm = ({ isOpen, onClose, fetchPlates }: PlateFormProps) => {
+export const PlateForm = ({ isOpen, onClose, fetchPage }: PlateFormProps) => {
 	const { getBrands } = useFetchBrands();
 	const { getSizes } = useFetchSizes();
 	const { getSuppliers } = useFetchSupplier();
@@ -105,7 +103,7 @@ export const PlateForm = ({ isOpen, onClose, fetchPlates }: PlateFormProps) => {
 		}
 		createPlate(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchPlates(0, partType);
+				fetchPage(0);
 				reset();
 				setImage(null);
 				setShowBrand(true);

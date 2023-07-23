@@ -1,17 +1,17 @@
-import { KeycapProfileView } from "../../admin-components/view/part-data-view/keycap-profile.view";
-import { LayoutView } from "../../admin-components/view/part-data-view/layout.view";
-import { SizeView } from "../../admin-components/view/part-data-view/size.view";
-import { SwitchView } from "../../admin-components/view/part-data-view/switch.view";
-import { CableView } from "../../admin-components/view/part-view/cable.view";
-import { CaseView } from "../../admin-components/view/part-view/case.view";
-import { KeycapSetView } from "../../admin-components/view/part-view/keycap-set.view";
-import { KeycapView } from "../../admin-components/view/part-view/keycap.view";
-import { PCBView } from "../../admin-components/view/part-view/pcb-view";
-import { PlateView } from "../../admin-components/view/part-view/plate.view";
-import { StabilizersView } from "../../admin-components/view/part-view/stabilizers.view";
-import { SwitchSetView } from "../../admin-components/view/part-view/switch-set.view";
-import { BrandView } from "../../admin-components/view/warehouse-view/brand.view";
-import { SupplierView } from "../../admin-components/view/warehouse-view/supplier.view";
+import { KeycapProfileView } from "../../view/part-data-view/keycap-profile.view";
+import { LayoutView } from "../../view/part-data-view/layout.view";
+import { SizeView } from "../../view/part-data-view/size.view";
+import { SwitchView } from "../../view/part-data-view/switch.view";
+import { CableView } from "../../view/part-view/cable.view";
+import { CaseView } from "../../view/part-view/case.view";
+import { KeycapSetView } from "../../view/part-view/keycap-set.view";
+import { KeycapView } from "../../view/part-view/keycap.view";
+import { PCBView } from "../../view/part-view/pcb-view";
+import { PlateView } from "../../view/part-view/plate.view";
+import { StabilizersView } from "../../view/part-view/stabilizers.view";
+import { SwitchSetView } from "../../view/part-view/switch-set.view";
+import { BrandView } from "../../view/warehouse-view/brand.view";
+import { SupplierView } from "../../view/warehouse-view/supplier.view";
 
 interface AdminViewContainerProps {
 	chosenView: string;

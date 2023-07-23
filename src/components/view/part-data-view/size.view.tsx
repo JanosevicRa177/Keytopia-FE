@@ -13,47 +13,34 @@ import {
 	Th,
 	Thead,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../../styles/color";
-import { useEffect, useState } from "react";
-import { Pagination } from "../../../paging/pagination/pagination";
-import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { Switch } from "../../../../model/part-data.model";
-import { useDeleteSwitch } from "../../../../hooks/part-data-hooks/delete/switch.delete.hook";
-import { useFetchSwitchesPage } from "../../../../hooks/part-data-hooks/get-all/switch.get-all-page.hook";
-import { SwitchForm } from "../../../form/part-data-form/switch.form";
-import { PinType, SwitchType } from "../../../../utils/enum";
+import { useState, useEffect } from "react";
+import { useDeleteSize } from "../../../hooks/part-data-hooks/delete/size.delete.hook";
+import { useFetchSizesPage } from "../../../hooks/part-data-hooks/get-all/size.get-all-page.hook";
+import { Size } from "../../../model/part-data.model";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { colorPallete } from "../../../styles/color";
+import { SizeForm } from "../../form/part-data-form/size.form";
+import { Pagination } from "../../paging/pagination/pagination";
 
-export const SwitchView = () => {
+export const SizeView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getSwitchesPage, getSwitchesPageRes } = useFetchSwitchesPage();
-	const { deleteSwitch } = useDeleteSwitch();
+	const { getSizesPage, getSizesPageRes } = useFetchSizesPage();
+	const { deleteSize } = useDeleteSize();
 	const {
 		isOpen: isOpenForm,
 		onClose: onCloseForm,
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getSwitchesPage(0).then(() => setCurrentPage(1));
+		getSizesPage(0).then(() => setCurrentPage(1));
 	}, []);
-	async function handleDeleteSwitch(name: String) {
-		deleteSwitch(name).then((response: ApiResponse<null>) => {
+	async function handleDeleteSize(name: String) {
+		console.log(name);
+		deleteSize(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getSwitchesPage(0).then(() => setCurrentPage(1));
+				getSizesPage(0).then(() => setCurrentPage(1));
 			}
 		});
-	}
-	function mapSwitchType(switchType: SwitchType): string {
-		let value = "";
-		if (switchType === "CLICKY") value = "Clicky";
-		else if (switchType === "TACTILE") value = "Tactile";
-		else value = "Linear";
-		return value;
-	}
-	function mapPinType(pinType: PinType): string {
-		let value = "";
-		if (pinType === "PIN5") value = "5 pin";
-		else value = "3 pin";
-		return value;
 	}
 
 	return (
@@ -75,7 +62,7 @@ export const SwitchView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Switch</Text>
+					<Text fontSize={"2xl"}>Size</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -104,35 +91,17 @@ export const SwitchView = () => {
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
-									<Th>Actuation force</Th>
-									<Th>Actuation point</Th>
-									<Th>Pin type</Th>
-									<Th>Switch type</Th>
-									<Th>Price weight</Th>
+									<Th>Needed number of keys</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getSwitchesPageRes.data.content &&
-									getSwitchesPageRes.data.content.map(
-										(item: Switch) => (
+								{getSizesPageRes.data.content &&
+									getSizesPageRes.data.content.map(
+										(item: Size) => (
 											<Tr key={item.name}>
-												<Td>{item.name}</Td>
-												<Td w={"10%"}>
-													{item.actuationForce}
-												</Td>
-												<Td w={"10%"}>
-													{item.actuationPoint}
-												</Td>
-												<Td w={"10%"}>
-													{mapPinType(item.pinType)}
-												</Td>
-												<Td w={"10%"}>
-													{mapSwitchType(
-														item.switchType
-													)}
-												</Td>
-												<Td w={"10%"}>
-													{item.priceWeight}
+												<Td w={"40%"}>{item.name}</Td>
+												<Td w={"40%"}>
+													{item.neededNumberOfKeys}
 												</Td>
 												<Td>
 													<Flex gap={"4"}>
@@ -145,7 +114,7 @@ export const SwitchView = () => {
 															}
 															color={"white"}
 															onClick={() =>
-																handleDeleteSwitch(
+																handleDeleteSize(
 																	item.name
 																)
 															}
@@ -170,17 +139,17 @@ export const SwitchView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getSwitchesPageRes.data.totalPages}
+					lastPage={getSizesPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getSwitchesPage}
+					getPage={getSizesPage}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<SwitchForm
+			<SizeForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchSwitch={getSwitchesPage}
+				fetchSizes={getSizesPage}
 			/>
 		</Box>
 	);

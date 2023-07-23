@@ -9,8 +9,8 @@ import {
 	Img,
 	Center,
 } from "@chakra-ui/react";
-import { PartWithData } from "../../../model/part.model";
-import checkmark from "../../../images/checkmark.png";
+import checkmark from "../../images/checkmark.png";
+import { PartWithData } from "../../model/part.model";
 
 interface PartSingleViewProps {
 	isOpen: boolean;

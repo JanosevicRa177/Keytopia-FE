@@ -1,26 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Flex, Box, Button, Text, useDisclosure } from "@chakra-ui/react";
-import { colorPallete } from "../../../../styles/color";
-import { useEffect, useState } from "react";
-import { Pagination } from "../../../paging/pagination/pagination";
-import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { PartCard } from "../../../page-component/part-card";
-import { Keycap, Part, PartWithData } from "../../../../model/part.model";
-import { PartType } from "../../../../utils/enum";
-import {
-	normalizeKeycapMaterialType,
-	normalizeNames,
-} from "../../../../utils/string.converter";
-import { VariableWithValue } from "../../../../utils/types";
+import { useState, useEffect } from "react";
+import { useDeletePart } from "../../../hooks/part-hooks/delete/part.delete.hook";
+import { useFetchPartPage } from "../../../hooks/part-hooks/get-all/part.get-all-page.hook";
+import { useGetOnePlate } from "../../../hooks/part-hooks/get-one/plate.get-one.hook";
+import { PartWithData, Plate, Part } from "../../../model/part.model";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { colorPallete } from "../../../styles/color";
+import { PartType, SortDirection } from "../../../utils/enum";
+import { normalizeNames } from "../../../utils/string.converter";
+import { VariableWithValue } from "../../../utils/types";
+import { PlateForm } from "../../form/part-form/plate.form";
+import { PartCard } from "../../part-card-component/part-card";
+import { Pagination } from "../../paging/pagination/pagination";
 import { PartModalView } from "../../single-view/part-modal.view";
-import { useFetchPartPage } from "../../../../hooks/part-hooks/get-all/part.get-all-page.hook";
-import { useDeletePart } from "../../../../hooks/part-hooks/delete/part.delete.hook";
-import { useGetOneKeycap } from "../../../../hooks/part-hooks/get-one/keycap.get-one.hook";
-import { KeycapForm } from "../../../form/part-form/keycap.form";
+import { PartFilterSort } from "../../filter-sort-components/part.filter-sort";
 
-const partType = PartType.KEYCAP;
+const partType = PartType.PLATE;
 
-export const KeycapView = () => {
+export const PlateView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [part, setPart] = useState<PartWithData>({
 		name: "",
@@ -28,7 +26,7 @@ export const KeycapView = () => {
 		variables: [],
 	});
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
-	const { getKeycap } = useGetOneKeycap();
+	const { getPlate } = useGetOnePlate();
 	const { deletePart } = useDeletePart();
 	const {
 		isOpen: isOpenForm,
@@ -40,25 +38,30 @@ export const KeycapView = () => {
 		onClose: onCloseModal,
 		onOpen: onOpenModal,
 	} = useDisclosure();
+	const [searchName, setSearchName] = useState("");
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
+		SortDirection.UNSORTED
+	);
 	useEffect(() => {
-		getPartPage(0, partType).then(() => {
-			setCurrentPage(1);
-		});
+		fetchPage(0);
 	}, []);
 	async function handleDeletePart(name: String) {
 		deletePart(name, partType).then((response: ApiResponse<null>) => {
-			if (response.status === "SUCCESS") {
-				getPartPage(0, partType).then(() => setCurrentPage(1));
-			}
+			fetchPage(0);
 		});
 	}
-	async function handleShowMoreKeycap(name: String) {
-		getKeycap(name).then((keycap: ApiResponse<Keycap | null>) => {
-			if (keycap.data === null) {
+	async function fetchPage(page: number) {
+		getPartPage(page, searchName, sortedDirection, partType).then(() =>
+			setCurrentPage(page + 1)
+		);
+	}
+	async function handleShowMorePlate(name: String) {
+		getPlate(name).then((plate: ApiResponse<Plate | null>) => {
+			if (plate.data === null) {
 				return;
 			}
-			const keycapData: Keycap = keycap.data;
-			const variableNames: string[] = Object.keys(keycap.data as Keycap);
+			const plateData: Plate = plate.data;
+			const variableNames: string[] = Object.keys(plate.data as Plate);
 			let normalizedNames: string[] = normalizeNames(variableNames);
 			const data: VariableWithValue[] = [];
 			variableNames.forEach((name: string) => {
@@ -66,25 +69,17 @@ export const KeycapView = () => {
 					name === "name" ||
 					name === "imageUrl" ||
 					name === "priceWeight" ||
-					keycapData[name as keyof Keycap]?.toString() == null
+					plateData[name as keyof Plate]?.toString() == null
 				) {
 					normalizedNames.shift();
-					return;
-				}
-				if (name === "material") {
-					normalizeKeycapMaterialType(
-						keycapData[name as keyof Keycap]?.toString() as string,
-						data,
-						normalizedNames
-					);
 					return;
 				}
 				if (name === "price") {
 					data.push({
 						variable: normalizedNames[0],
 						value:
-							(keycapData[
-								name as keyof Keycap
+							(plateData[
+								name as keyof Plate
 							]?.toString() as string) + " $",
 					});
 					normalizedNames.shift();
@@ -92,16 +87,14 @@ export const KeycapView = () => {
 				}
 				data.push({
 					variable: normalizedNames[0],
-					value: keycapData[
-						name as keyof Keycap
-					]?.toString() as string,
+					value: plateData[name as keyof Plate]?.toString() as string,
 				});
 				normalizedNames.shift();
 			});
 			setPart({
-				imageUrl: keycapData.imageUrl ?? "",
+				imageUrl: plateData.imageUrl ?? "",
 				variables: data,
-				name: keycapData.name,
+				name: plateData.name,
 			});
 			onOpenModal();
 		});
@@ -125,7 +118,7 @@ export const KeycapView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Cable</Text>
+					<Text fontSize={"2xl"}>Plate</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -144,6 +137,13 @@ export const KeycapView = () => {
 						New
 					</Button>
 				</Flex>
+				<PartFilterSort
+					fetchPart={fetchPage}
+					setSearchName={setSearchName}
+					setSortedDirection={setSortedDirection}
+					sortedDirection={sortedDirection}
+					searchName={searchName}
+				/>
 				<Flex
 					fontSize={"md"}
 					flexWrap={"wrap"}
@@ -155,7 +155,7 @@ export const KeycapView = () => {
 							key={part.name}
 							part={part}
 							delete={handleDeletePart}
-							showMore={handleShowMoreKeycap}
+							showMore={handleShowMorePlate}
 						/>
 					))}
 				</Flex>
@@ -164,15 +164,15 @@ export const KeycapView = () => {
 					lastPage={getPartPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getPartPage}
+					getPage={fetchPage}
 					partType={partType}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<KeycapForm
+			<PlateForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchKeycaps={getPartPage}
+				fetchPage={fetchPage}
 			/>
 			<PartModalView
 				isOpen={isOpenModal}

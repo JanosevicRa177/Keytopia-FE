@@ -1,23 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Flex, Box, Button, Text, useDisclosure } from "@chakra-ui/react";
-import { colorPallete } from "../../../../styles/color";
-import { useEffect, useState } from "react";
-import { Pagination } from "../../../paging/pagination/pagination";
-import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { PartCard } from "../../../page-component/part-card";
-import { Case, Part, PartWithData } from "../../../../model/part.model";
-import { PartType } from "../../../../utils/enum";
-import { normalizeNames } from "../../../../utils/string.converter";
-import { VariableWithValue } from "../../../../utils/types";
+import { useState, useEffect } from "react";
+import { useDeletePart } from "../../../hooks/part-hooks/delete/part.delete.hook";
+import { useFetchPartPage } from "../../../hooks/part-hooks/get-all/part.get-all-page.hook";
+import { useGetOnePCB } from "../../../hooks/part-hooks/get-one/pcb.get-one.hook";
+import { PartWithData, PCB, Part } from "../../../model/part.model";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { colorPallete } from "../../../styles/color";
+import { PartType, SortDirection } from "../../../utils/enum";
+import {
+	normalizeNames,
+	normalizePCBType,
+	normalizePinType,
+	normalizeStabilizerType,
+} from "../../../utils/string.converter";
+import { VariableWithValue } from "../../../utils/types";
+import { PCBForm } from "../../form/part-form/pcb.form";
+import { PartCard } from "../../part-card-component/part-card";
+import { Pagination } from "../../paging/pagination/pagination";
 import { PartModalView } from "../../single-view/part-modal.view";
-import { useFetchPartPage } from "../../../../hooks/part-hooks/get-all/part.get-all-page.hook";
-import { useDeletePart } from "../../../../hooks/part-hooks/delete/part.delete.hook";
-import { useGetOneCase } from "../../../../hooks/part-hooks/get-one/case.get-one.hook";
-import { CaseForm } from "../../../form/part-form/case.form";
+import { PartFilterSort } from "../../filter-sort-components/part.filter-sort";
 
-const partType = PartType.CASE;
+const partType = PartType.PCB;
 
-export const CaseView = () => {
+export const PCBView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [part, setPart] = useState<PartWithData>({
 		name: "",
@@ -25,7 +31,7 @@ export const CaseView = () => {
 		variables: [],
 	});
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
-	const { getCase } = useGetOneCase();
+	const { getPCB } = useGetOnePCB();
 	const { deletePart } = useDeletePart();
 	const {
 		isOpen: isOpenForm,
@@ -37,25 +43,32 @@ export const CaseView = () => {
 		onClose: onCloseModal,
 		onOpen: onOpenModal,
 	} = useDisclosure();
+	const [searchName, setSearchName] = useState("");
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
+		SortDirection.UNSORTED
+	);
 	useEffect(() => {
-		getPartPage(0, partType).then(() => {
-			setCurrentPage(1);
-		});
+		fetchPage(0);
 	}, []);
 	async function handleDeletePart(name: String) {
 		deletePart(name, partType).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getPartPage(0, partType).then(() => setCurrentPage(1));
+				fetchPage(0);
 			}
 		});
 	}
-	async function handleShowMoreCase(name: String) {
-		getCase(name).then((aCase: ApiResponse<Case | null>) => {
-			if (aCase.data === null) {
+	async function fetchPage(page: number) {
+		getPartPage(page, searchName, sortedDirection, partType).then(() =>
+			setCurrentPage(page + 1)
+		);
+	}
+	async function handleShowMorePCB(name: String) {
+		getPCB(name).then((pcb: ApiResponse<PCB | null>) => {
+			if (pcb.data === null) {
 				return;
 			}
-			const caseData: Case = aCase.data;
-			const variableNames: string[] = Object.keys(aCase.data as Case);
+			const pcbData: PCB = pcb.data;
+			const variableNames: string[] = Object.keys(pcb.data as PCB);
 			let normalizedNames: string[] = normalizeNames(variableNames);
 			const data: VariableWithValue[] = [];
 			variableNames.forEach((name: string) => {
@@ -63,32 +76,55 @@ export const CaseView = () => {
 					name === "name" ||
 					name === "imageUrl" ||
 					name === "priceWeight" ||
-					caseData[name as keyof Case]?.toString() == null
+					pcbData[name as keyof PCB]?.toString() == null
 				) {
 					normalizedNames.shift();
+					return;
+				}
+				if (name === "type") {
+					normalizePCBType(
+						pcbData[name as keyof PCB]?.toString() as string,
+						data,
+						normalizedNames
+					);
+					return;
+				}
+				if (name === "pinType") {
+					normalizePinType(
+						pcbData[name as keyof PCB]?.toString() as string,
+						data,
+						normalizedNames
+					);
+					return;
+				}
+				if (name === "stabilizerType") {
+					normalizeStabilizerType(
+						pcbData[name as keyof PCB]?.toString() as string,
+						data,
+						normalizedNames
+					);
 					return;
 				}
 				if (name === "price") {
 					data.push({
 						variable: normalizedNames[0],
 						value:
-							(caseData[
-								name as keyof Case
-							]?.toString() as string) + " $",
+							(pcbData[name as keyof PCB]?.toString() as string) +
+							" $",
 					});
 					normalizedNames.shift();
 					return;
 				}
 				data.push({
 					variable: normalizedNames[0],
-					value: caseData[name as keyof Case]?.toString() as string,
+					value: pcbData[name as keyof PCB]?.toString() as string,
 				});
 				normalizedNames.shift();
 			});
 			setPart({
-				imageUrl: caseData.imageUrl ?? "",
+				imageUrl: pcbData.imageUrl ?? "",
 				variables: data,
-				name: caseData.name,
+				name: pcbData.name,
 			});
 			onOpenModal();
 		});
@@ -112,7 +148,7 @@ export const CaseView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Case</Text>
+					<Text fontSize={"2xl"}>PCB</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -131,6 +167,13 @@ export const CaseView = () => {
 						New
 					</Button>
 				</Flex>
+				<PartFilterSort
+					fetchPart={fetchPage}
+					setSearchName={setSearchName}
+					setSortedDirection={setSortedDirection}
+					sortedDirection={sortedDirection}
+					searchName={searchName}
+				/>
 				<Flex
 					fontSize={"md"}
 					flexWrap={"wrap"}
@@ -142,7 +185,7 @@ export const CaseView = () => {
 							key={part.name}
 							part={part}
 							delete={handleDeletePart}
-							showMore={handleShowMoreCase}
+							showMore={handleShowMorePCB}
 						/>
 					))}
 				</Flex>
@@ -151,15 +194,15 @@ export const CaseView = () => {
 					lastPage={getPartPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getPartPage}
+					getPage={fetchPage}
 					partType={partType}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<CaseForm
+			<PCBForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchCases={getPartPage}
+				fetchPart={fetchPage}
 			/>
 			<PartModalView
 				isOpen={isOpenModal}

@@ -18,7 +18,7 @@ export const PartCard = (props: PartCardProps) => {
 			px={"12px"}
 			py={"16px"}
 			w={"220px"}
-			h={"350px"}
+			h={"400px"}
 			rounded={"8px"}
 			flexDir={"column"}
 			gap={"24px"}
@@ -33,22 +33,22 @@ export const PartCard = (props: PartCardProps) => {
 			<Flex
 				gap={"4px"}
 				justifyContent={"space-between"}
-				h={"32px"}
 				px={"8px"}
+				flexDirection={"column"}
 			>
-				<Text
-					w={"70%"}
-					whiteSpace={"nowrap"}
-					textOverflow={"ellipsis"}
-					h={"32px"}
-					overflow={"hidden"}
-				>
+				<Text h={"50px"} overflow={"hidden"}>
 					{props.part.name}
 				</Text>
-				<Text textAlign={"end"} mr={"12px"} w={"30%"}>
-					{props.part.price} $
-				</Text>
+				<Flex
+					textAlign={"end"}
+					mr={"12px"}
+					justifyContent={"space-between"}
+				>
+					<Text>Price: </Text>
+					<Text>{props.part.price} $ </Text>
+				</Flex>
 			</Flex>
+
 			<Flex gap={"3"}>
 				<Button
 					w={"50%"}

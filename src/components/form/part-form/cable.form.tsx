@@ -32,18 +32,16 @@ import {
 	CABLE_DEFAULT_VALUES,
 	CABLE_VALIDATION_SCHEMA,
 } from "../../../utils/constants/part.constants";
-import { PartType, PriceWeight, CableConnector } from "../../../utils/enum";
+import { PriceWeight, CableConnector } from "../../../utils/enum";
 import { useForm } from "react-hook-form";
 
 interface CableFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchCables: (pageNumber: number, partType: PartType) => Promise<void>;
+	fetchPage: (pageNumber: number) => Promise<void>;
 }
 
-const partType = PartType.CABLE;
-
-export const CableForm = ({ isOpen, onClose, fetchCables }: CableFormProps) => {
+export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 	const { getBrands } = useFetchBrands();
 	const { getSuppliers } = useFetchSupplier();
 	const { createCable } = useCreateCable();
@@ -95,7 +93,7 @@ export const CableForm = ({ isOpen, onClose, fetchCables }: CableFormProps) => {
 		}
 		createCable(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchCables(0, partType);
+				fetchPage(0);
 				reset();
 				setImage(null);
 				setShowBrand(true);

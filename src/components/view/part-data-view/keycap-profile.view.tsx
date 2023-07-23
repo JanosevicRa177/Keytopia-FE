@@ -13,31 +13,32 @@ import {
 	Th,
 	Thead,
 } from "@chakra-ui/react";
-import { colorPallete } from "../../../../styles/color";
-import { useEffect, useState } from "react";
-import { Pagination } from "../../../paging/pagination/pagination";
-import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { useDeleteBrand } from "../../../../hooks/warehouse-hooks/delete/brand.delete.hook";
-import { useFetchBrandsPage } from "../../../../hooks/warehouse-hooks/get-all/brand.get-all-page.hook";
-import { Brand } from "../../../../model/warehouse.model";
-import { BrandForm } from "../../../form/warehouse-form/brand.form";
+import { useState, useEffect } from "react";
+import { useDeleteKeycapProfile } from "../../../hooks/part-data-hooks/delete/keycap-profile.delete.hook";
+import { useFetchKeycapProfilesPage } from "../../../hooks/part-data-hooks/get-all/keycap-profile.get-all-page.hook";
+import { KeycapProfile } from "../../../model/part-data.model";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { colorPallete } from "../../../styles/color";
+import { KeycapProfileForm } from "../../form/part-data-form/keycap-profile.form";
+import { Pagination } from "../../paging/pagination/pagination";
 
-export const BrandView = () => {
+export const KeycapProfileView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getBrandsPage, getBrandsPageRes } = useFetchBrandsPage();
-	const { deleteBrand } = useDeleteBrand();
+	const { getKeycapProfilesPage, getKeycapProfilesPageRes } =
+		useFetchKeycapProfilesPage();
+	const { deleteKeycapProfile } = useDeleteKeycapProfile();
 	const {
 		isOpen: isOpenForm,
 		onClose: onCloseForm,
 		onOpen: onOpenForm,
 	} = useDisclosure();
 	useEffect(() => {
-		getBrandsPage(0).then(() => setCurrentPage(1));
+		getKeycapProfilesPage(0).then(() => setCurrentPage(1));
 	}, []);
-	async function handleDeleteBrand(name: String) {
-		deleteBrand(name).then((response: ApiResponse<null>) => {
+	async function handleDeleteKeycapProfile(name: String) {
+		deleteKeycapProfile(name).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getBrandsPage(0).then(() => setCurrentPage(1));
+				getKeycapProfilesPage(0).then(() => setCurrentPage(1));
 			}
 		});
 	}
@@ -61,7 +62,7 @@ export const BrandView = () => {
 				w={"90%"}
 			>
 				<Flex justifyContent={"space-between"}>
-					<Text fontSize={"2xl"}>Brand</Text>
+					<Text fontSize={"2xl"}>Keycap profile</Text>
 					<Button
 						w={"90px"}
 						rounded={"4px"}
@@ -90,16 +91,14 @@ export const BrandView = () => {
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
-									<Th>Slogan</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
-								{getBrandsPageRes.data.content &&
-									getBrandsPageRes.data.content.map(
-										(item: Brand) => (
+								{getKeycapProfilesPageRes.data.content &&
+									getKeycapProfilesPageRes.data.content.map(
+										(item: KeycapProfile) => (
 											<Tr key={item.name}>
-												<Td w={"40%"}>{item.name}</Td>
-												<Td w={"40%"}>{item.slogan}</Td>
+												<Td w={"80%"}>{item.name}</Td>
 												<Td>
 													<Flex gap={"4"}>
 														<Button
@@ -111,7 +110,7 @@ export const BrandView = () => {
 															}
 															color={"white"}
 															onClick={() =>
-																handleDeleteBrand(
+																handleDeleteKeycapProfile(
 																	item.name
 																)
 															}
@@ -136,17 +135,17 @@ export const BrandView = () => {
 				</Flex>
 				<Pagination
 					currentPage={currentPage}
-					lastPage={getBrandsPageRes.data.totalPages}
+					lastPage={getKeycapProfilesPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getBrandsPage}
+					getPage={getKeycapProfilesPage}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<BrandForm
+			<KeycapProfileForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchBrands={getBrandsPage}
+				fetchKeycapProfiles={getKeycapProfilesPage}
 			/>
 		</Box>
 	);

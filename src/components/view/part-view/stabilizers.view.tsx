@@ -1,22 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Flex, Box, Button, Text, useDisclosure } from "@chakra-ui/react";
-import { colorPallete } from "../../../../styles/color";
-import { useEffect, useState } from "react";
-import { Pagination } from "../../../paging/pagination/pagination";
-import { ApiResponse } from "../../../../store/auth-store/types/response.type";
-import { PartCard } from "../../../page-component/part-card";
-import { Part, PartWithData, Stabilizers } from "../../../../model/part.model";
-import { PartType } from "../../../../utils/enum";
+import { useState, useEffect } from "react";
+import { useDeletePart } from "../../../hooks/part-hooks/delete/part.delete.hook";
+import { useFetchPartPage } from "../../../hooks/part-hooks/get-all/part.get-all-page.hook";
+import { useGetOneStabilizers } from "../../../hooks/part-hooks/get-one/stabilizers.get-one.hook";
+import { PartWithData, Stabilizers, Part } from "../../../model/part.model";
+import { ApiResponse } from "../../../store/auth-store/types/response.type";
+import { colorPallete } from "../../../styles/color";
+import { PartType, SortDirection } from "../../../utils/enum";
 import {
 	normalizeNames,
 	normalizeStabilizerType,
-} from "../../../../utils/string.converter";
-import { VariableWithValue } from "../../../../utils/types";
+} from "../../../utils/string.converter";
+import { VariableWithValue } from "../../../utils/types";
+import { StabilizersForm } from "../../form/part-form/stabilizers.form";
+import { PartCard } from "../../part-card-component/part-card";
+import { Pagination } from "../../paging/pagination/pagination";
 import { PartModalView } from "../../single-view/part-modal.view";
-import { useFetchPartPage } from "../../../../hooks/part-hooks/get-all/part.get-all-page.hook";
-import { useDeletePart } from "../../../../hooks/part-hooks/delete/part.delete.hook";
-import { useGetOneStabilizers } from "../../../../hooks/part-hooks/get-one/stabilizers.get-one.hook";
-import { StabilizersForm } from "../../../form/part-form/stabilizers.form";
+import { PartFilterSort } from "../../filter-sort-components/part.filter-sort";
 
 const partType = PartType.STABILIZER;
 
@@ -40,16 +41,21 @@ export const StabilizersView = () => {
 		onClose: onCloseModal,
 		onOpen: onOpenModal,
 	} = useDisclosure();
+	const [searchName, setSearchName] = useState("");
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
+		SortDirection.UNSORTED
+	);
+	async function fetchPage(page: number) {
+		getPartPage(page, searchName, sortedDirection, partType).then(() =>
+			setCurrentPage(page + 1)
+		);
+	}
 	useEffect(() => {
-		getPartPage(0, partType).then(() => {
-			setCurrentPage(1);
-		});
+		fetchPage(0);
 	}, []);
 	async function handleDeletePart(name: String) {
 		deletePart(name, partType).then((response: ApiResponse<null>) => {
-			if (response.status === "SUCCESS") {
-				getPartPage(0, partType).then(() => setCurrentPage(1));
-			}
+			fetchPage(0);
 		});
 	}
 	async function handleShowMoreStabilizers(name: String) {
@@ -152,6 +158,13 @@ export const StabilizersView = () => {
 						New
 					</Button>
 				</Flex>
+				<PartFilterSort
+					fetchPart={fetchPage}
+					setSearchName={setSearchName}
+					setSortedDirection={setSortedDirection}
+					sortedDirection={sortedDirection}
+					searchName={searchName}
+				/>
 				<Flex
 					fontSize={"md"}
 					flexWrap={"wrap"}
@@ -172,7 +185,7 @@ export const StabilizersView = () => {
 					lastPage={getPartPageRes.data.totalPages}
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
-					getPage={getPartPage}
+					getPage={fetchPage}
 					partType={partType}
 				/>
 			</Flex>
@@ -180,7 +193,7 @@ export const StabilizersView = () => {
 			<StabilizersForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}
-				fetchStabilizers={getPartPage}
+				fetchPage={fetchPage}
 			/>
 			<PartModalView
 				isOpen={isOpenModal}
