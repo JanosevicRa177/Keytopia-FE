@@ -63,7 +63,6 @@ export const PartFilterSort = ({
 					{normalizeEnum(sortedDirection)})
 				</Text>
 				<Flex verticalAlign={"center"} justifyContent={"center"}>
-					{" "}
 					<Img
 						src={unsortedImage}
 						w={"25px"}
@@ -87,7 +86,7 @@ export const PartFilterSort = ({
 						bg={colorPallete.button}
 						_hover={{
 							bg: colorPallete.buttonHover,
-							transform: "scale(1.05,1.05)",
+							transform: "scale(1.03,1.03)",
 							transition: "0.2s",
 						}}
 						fontSize={"xl"}

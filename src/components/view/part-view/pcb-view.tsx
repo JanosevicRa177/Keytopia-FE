@@ -184,7 +184,7 @@ export const PCBView = () => {
 						<PartCard
 							key={part.name}
 							part={part}
-							delete={handleDeletePart}
+							deletePart={handleDeletePart}
 							showMore={handleShowMorePCB}
 						/>
 					))}

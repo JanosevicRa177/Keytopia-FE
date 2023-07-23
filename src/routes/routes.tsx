@@ -3,6 +3,7 @@ import { PartAdminPage } from "../pages/part-admin.page";
 import { AuthPage } from "../pages/auth.page";
 import { MainPage } from "../pages/main.page";
 import { UserPage } from "../pages/user.page";
+import { ProcurementPage } from "../pages/procurement.page";
 
 interface CustomRouteProps {
 	path: string;
@@ -28,8 +29,14 @@ export const routes: CustomRouteProps[] = [
 		needAuth: false,
 	},
 	{
-		path: "/admin/manage/parts",
+		path: "/manage/parts",
 		element: <PartAdminPage />,
+		needAuth: true,
+		requiredRole: "ADMIN",
+	},
+	{
+		path: "/current/procurement",
+		element: <ProcurementPage />,
 		needAuth: true,
 		requiredRole: "ADMIN",
 	},

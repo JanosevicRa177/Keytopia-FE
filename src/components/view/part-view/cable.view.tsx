@@ -170,7 +170,7 @@ export const CableView = () => {
 						<PartCard
 							key={part.name}
 							part={part}
-							delete={handleDeletePart}
+							deletePart={handleDeletePart}
 							showMore={handleShowMoreCable}
 						/>
 					))}

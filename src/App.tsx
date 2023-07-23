@@ -30,7 +30,7 @@ function App() {
 							requiredRole,
 							element: Element,
 						} = route;
-						if (needAuth && requiredRole) {
+						if (needAuth) {
 							return (
 								<Route
 									key={index}
@@ -39,8 +39,8 @@ function App() {
 										<ProtectedRoute
 											key={index}
 											requiredRole={requiredRole}
-											element={Element}
 											needAuthorization={needAuth}
+											element={Element}
 										/>
 									}
 								/>

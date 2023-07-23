@@ -11,6 +11,8 @@ export const colorPallete = {
 	deleteButton: "#93291E",
 	deleteButtonHover: "#ED213A",
 	card: "rgba(232, 227, 255,0.9)",
+	oddTableColor: "rgb(233, 216, 253)",
+	evenTableColor: "white",
 };
 
 export const colors = {

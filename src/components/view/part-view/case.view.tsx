@@ -153,7 +153,7 @@ export const CaseView = () => {
 						<PartCard
 							key={part.name}
 							part={part}
-							delete={handleDeletePart}
+							deletePart={handleDeletePart}
 							showMore={handleShowMoreCase}
 						/>
 					))}

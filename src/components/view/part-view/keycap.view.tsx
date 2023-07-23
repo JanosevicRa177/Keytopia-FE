@@ -169,7 +169,7 @@ export const KeycapView = () => {
 						<PartCard
 							key={part.name}
 							part={part}
-							delete={handleDeletePart}
+							deletePart={handleDeletePart}
 							showMore={handleShowMoreKeycap}
 						/>
 					))}

@@ -96,12 +96,12 @@ export const Header = () => {
 											text={"Parts"}
 										/>
 										<CustomLink
-											link={"/admin/manage/parts"}
+											link={"/manage/parts"}
 											text={"Manage parts"}
 										/>
 										<CustomLink
-											link={"/procurements"}
-											text={"Procurements"}
+											link={"/current/procurement"}
+											text={"Current procurement"}
 										/>
 										<CustomLink
 											link={"/orders"}

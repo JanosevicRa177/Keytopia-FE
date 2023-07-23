@@ -31,7 +31,14 @@ export const UserPage = () => {
 	} = useDisclosure();
 	return (
 		<MainContrainer>
-			<Center h={"calc(100vh - 105px)"} w={"100%"} px={"8px"}>
+			<Center
+				h={"calc(100vh - 105px)"}
+				w={"100%"}
+				px={"8px"}
+				bg={"rgba(255,255,255,0.5)"}
+				backdropFilter="auto"
+				backdropBlur="4px"
+			>
 				<SectionContainer style={SectionStyle.left}>
 					<Flex
 						my={"32px"}

@@ -221,7 +221,7 @@ export const SwitchSetView = () => {
 						<PartCard
 							key={part.name}
 							part={part}
-							delete={handleDeletePart}
+							deletePart={handleDeletePart}
 							showMore={handleShowMoreSwitchSet}
 						/>
 					))}

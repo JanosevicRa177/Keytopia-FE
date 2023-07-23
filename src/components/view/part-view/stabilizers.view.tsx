@@ -175,7 +175,7 @@ export const StabilizersView = () => {
 						<PartCard
 							key={part.name}
 							part={part}
-							delete={handleDeletePart}
+							deletePart={handleDeletePart}
 							showMore={handleShowMoreStabilizers}
 						/>
 					))}

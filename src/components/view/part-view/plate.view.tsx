@@ -154,7 +154,7 @@ export const PlateView = () => {
 						<PartCard
 							key={part.name}
 							part={part}
-							delete={handleDeletePart}
+							deletePart={handleDeletePart}
 							showMore={handleShowMorePlate}
 						/>
 					))}
