@@ -134,3 +134,10 @@ export function normalizeKeycapMaterialType(
 	normalizedNames.shift();
 	return;
 }
+
+export function normalizeRoute(string: string): string {
+	console.log(string);
+	const words = string.toLowerCase().split(" ");
+	const convertedWords = words.map((word) => word.charAt(0).toLowerCase() + word.slice(1));
+	return convertedWords.join("-");
+}

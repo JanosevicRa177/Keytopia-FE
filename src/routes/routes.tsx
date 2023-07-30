@@ -30,7 +30,7 @@ export const routes: CustomRouteProps[] = [
 		needAuth: false,
 	},
 	{
-		path: "/manage/parts",
+		path: "/manage/parts/*",
 		element: <PartAdminPage />,
 		needAuth: true,
 		requiredRole: "ADMIN",

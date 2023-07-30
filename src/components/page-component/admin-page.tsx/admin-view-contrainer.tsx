@@ -1,3 +1,4 @@
+import { Route, Routes } from "react-router-dom";
 import { KeycapProfileView } from "../../view/part-data-view/keycap-profile.view";
 import { LayoutView } from "../../view/part-data-view/layout.view";
 import { SizeView } from "../../view/part-data-view/size.view";
@@ -20,20 +21,22 @@ interface AdminViewContainerProps {
 export const AdminViewContainer = (props: AdminViewContainerProps) => {
 	return (
 		<>
-			{props.chosenView === "Size" && <SizeView />}
-			{props.chosenView === "Layout" && <LayoutView />}
-			{props.chosenView === "Switch" && <SwitchView />}
-			{props.chosenView === "Keycap profile" && <KeycapProfileView />}
-			{props.chosenView === "Brand" && <BrandView />}
-			{props.chosenView === "Supplier" && <SupplierView />}
-			{props.chosenView === "Cable" && <CableView />}
-			{props.chosenView === "Case" && <CaseView />}
-			{props.chosenView === "Keycap" && <KeycapView />}
-			{props.chosenView === "Keycap set" && <KeycapSetView />}
-			{props.chosenView === "Plate" && <PlateView />}
-			{props.chosenView === "PCB" && <PCBView />}
-			{props.chosenView === "Stabilizers" && <StabilizersView />}
-			{props.chosenView === "Switch set" && <SwitchSetView />}
+			<Routes>
+				<Route path="/cable" element={<CaseView />} />
+				<Route path="/case" element={<CableView />} />
+				<Route path="/size" element={<SizeView />} />
+				<Route path="/layout" element={<LayoutView />} />
+				<Route path="/switch" element={<SwitchView />} />
+				<Route path="/brand" element={<BrandView />} />
+				<Route path="/supplier" element={<SupplierView />} />
+				<Route path="/keycap" element={<KeycapView />} />
+				<Route path="/plate" element={<PlateView />} />
+				<Route path="/pcb" element={<PCBView />} />
+				<Route path="/stabilizers" element={<StabilizersView />} />
+				<Route path={"keycap-profile"} element={<KeycapProfileView />} />
+				<Route path={"keycap-set"} element={<KeycapSetView />} />
+				<Route path={"switch-set"} element={<SwitchSetView />} />
+			</Routes>
 		</>
 	);
 };
