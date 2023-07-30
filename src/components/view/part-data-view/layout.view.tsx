@@ -26,11 +26,7 @@ export const LayoutView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const { getLayoutsPage, getLayoutsPageRes } = useFetchLayoutsPage();
 	const { deleteLayout } = useDeleteLayout();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
 	useEffect(() => {
 		getLayoutsPage(0).then(() => setCurrentPage(1));
 	}, []);
@@ -82,11 +78,7 @@ export const LayoutView = () => {
 				</Flex>
 				<Flex h={"408px"} fontSize={"md"}>
 					<TableContainer flex={1}>
-						<Table
-							variant="striped"
-							colorScheme={"purple"}
-							fontSize={"small"}
-						>
+						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
@@ -95,43 +87,31 @@ export const LayoutView = () => {
 							</Thead>
 							<Tbody>
 								{getLayoutsPageRes.data.content &&
-									getLayoutsPageRes.data.content.map(
-										(item: Layout) => (
-											<Tr key={item.name}>
-												<Td w={"40%"}>{item.name}</Td>
-												<Td w={"40%"}>
-													{item.localization}
-												</Td>
-												<Td>
-													<Flex gap={"4"}>
-														<Button
-															flexGrow={"1"}
-															rounded={"4px"}
-															overflow={"hidden"}
-															bg={
-																colorPallete.deleteButton
-															}
-															color={"white"}
-															onClick={() =>
-																handleDeleteSize(
-																	item.name
-																)
-															}
-															_hover={{
-																bg: colorPallete.deleteButtonHover,
-																transform:
-																	"scale(1.05,1.05)",
-																transition:
-																	"0.2s",
-															}}
-														>
-															Delete
-														</Button>
-													</Flex>
-												</Td>
-											</Tr>
-										)
-									)}
+									getLayoutsPageRes.data.content.map((item: Layout) => (
+										<Tr key={item.name}>
+											<Td w={"40%"}>{item.name}</Td>
+											<Td w={"40%"}>{item.localization}</Td>
+											<Td>
+												<Flex gap={"4"}>
+													<Button
+														flexGrow={"1"}
+														rounded={"4px"}
+														overflow={"hidden"}
+														bg={colorPallete.deleteButton}
+														color={"white"}
+														onClick={() => handleDeleteSize(item.name)}
+														_hover={{
+															bg: colorPallete.deleteButtonHover,
+															transform: "scale(1.05,1.05)",
+															transition: "0.2s",
+														}}
+													>
+														Delete
+													</Button>
+												</Flex>
+											</Td>
+										</Tr>
+									))}
 							</Tbody>
 						</Table>
 					</TableContainer>
@@ -145,11 +125,7 @@ export const LayoutView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<LayoutForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchLayouts={getLayoutsPage}
-			/>
+			<LayoutForm isOpen={isOpenForm} onClose={onCloseForm} fetchLayouts={getLayoutsPage} />
 		</Box>
 	);
 };

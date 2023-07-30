@@ -3,18 +3,18 @@ import { Flex, Box, Button, Text, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDeletePart } from "../../../hooks/part-hooks/delete/part.delete.hook";
 import { useFetchPartPage } from "../../../hooks/part-hooks/get-all/part.get-all-page.hook";
-import { useGetOneCase } from "../../../hooks/part-hooks/get-one/case.get-one.hook";
-import { PartWithData, Case, Part } from "../../../model/part.model";
+import { PartWithData, Part, Case } from "../../../model/part.model";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { colorPallete } from "../../../styles/color";
 import { PartType, SortDirection } from "../../../utils/enum";
-import { normalizeNames } from "../../../utils/string.converter";
-import { VariableWithValue } from "../../../utils/types";
 import { CaseForm } from "../../form/part-form/case.form";
 import { PartCard } from "../../part-card-component/part-card";
 import { Pagination } from "../../paging/pagination/pagination";
 import { PartModalView } from "../../single-view/part-modal.view";
 import { PartFilterSort } from "../../filter-sort-components/part.filter-sort";
+import { useGetOneCase } from "../../../hooks/part-hooks/get-one/case.get-one.hook";
+import { normalizeNames } from "../../../utils/string.converter";
+import { VariableWithValue } from "../../../utils/types";
 
 const partType = PartType.CASE;
 
@@ -27,21 +27,11 @@ export const CaseView = () => {
 	});
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
 	const [searchName, setSearchName] = useState("");
-	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
-		SortDirection.UNSORTED
-	);
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(SortDirection.UNSORTED);
 	const { getCase } = useGetOneCase();
 	const { deletePart } = useDeletePart();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
-	const {
-		isOpen: isOpenModal,
-		onClose: onCloseModal,
-		onOpen: onOpenModal,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
+	const { isOpen: isOpenModal, onClose: onCloseModal, onOpen: onOpenModal } = useDisclosure();
 	async function handleDeletePart(name: String) {
 		deletePart(name, partType).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
@@ -55,7 +45,7 @@ export const CaseView = () => {
 		);
 	}
 	async function handleShowMoreCase(name: String) {
-		getCase(name).then((aCase: ApiResponse<Case | null>) => {
+		await getCase(name).then((aCase: ApiResponse<Case | null>) => {
 			if (aCase.data === null) {
 				return;
 			}
@@ -76,10 +66,7 @@ export const CaseView = () => {
 				if (name === "price") {
 					data.push({
 						variable: normalizedNames[0],
-						value:
-							(caseData[
-								name as keyof Case
-							]?.toString() as string) + " $",
+						value: (caseData[name as keyof Case]?.toString() as string) + " $",
 					});
 					normalizedNames.shift();
 					return;
@@ -95,8 +82,8 @@ export const CaseView = () => {
 				variables: data,
 				name: caseData.name,
 			});
-			onOpenModal();
 		});
+		onOpenModal();
 	}
 	return (
 		<Box w={"100%"}>
@@ -143,12 +130,7 @@ export const CaseView = () => {
 					sortedDirection={sortedDirection}
 					searchName={searchName}
 				/>
-				<Flex
-					fontSize={"md"}
-					flexWrap={"wrap"}
-					gap={"27px"}
-					my={"32px"}
-				>
+				<Flex fontSize={"md"} flexWrap={"wrap"} gap={"27px"} my={"32px"}>
 					{getPartPageRes.data.content.map((part: Part) => (
 						<PartCard
 							key={part.name}
@@ -168,16 +150,8 @@ export const CaseView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<CaseForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchPage={fetchPage}
-			/>
-			<PartModalView
-				isOpen={isOpenModal}
-				onClose={onCloseModal}
-				part={part}
-			/>
+			<CaseForm isOpen={isOpenForm} onClose={onCloseForm} fetchPage={fetchPage} />
+			<PartModalView isOpen={isOpenModal} onClose={onCloseModal} part={part} />
 		</Box>
 	);
 };

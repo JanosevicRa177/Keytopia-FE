@@ -5,9 +5,7 @@ import { UpdateAccountFormValues } from "../../components/form/auth-form/update-
 
 export const useUpdateAccount = () => {
 	const { axios } = useAxios();
-	const updateAccount = async (
-		values: UpdateAccountFormValues
-	): Promise<ApiResponse<null>> => {
+	const updateAccount = async (values: UpdateAccountFormValues): Promise<ApiResponse<null>> => {
 		try {
 			await axios.put(`/user/update`, values);
 			toast.success("Your account updated!");

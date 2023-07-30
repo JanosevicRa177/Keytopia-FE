@@ -6,9 +6,7 @@ import { KeycapSet } from "../../../model/part.model";
 
 export const useGetOneKeycapSet = () => {
 	const { axios } = useAxios();
-	const getKeycapSet = async (
-		name: String
-	): Promise<ApiResponse<KeycapSet | null>> => {
+	const getKeycapSet = async (name: String): Promise<ApiResponse<KeycapSet | null>> => {
 		try {
 			const res = await axios.get(`/part/${PartType.KEYCAP_SET}/${name}`);
 			return {

@@ -5,9 +5,7 @@ import { ChangePasswordFormValues } from "../../components/form/auth-form/change
 
 export const useChangePassword = () => {
 	const { axios } = useAxios();
-	const changePassword = async (
-		values: ChangePasswordFormValues
-	): Promise<ApiResponse<null>> => {
+	const changePassword = async (values: ChangePasswordFormValues): Promise<ApiResponse<null>> => {
 		try {
 			await axios.put(`/user/change-password`, values);
 			toast.success("Your password successfuly changed!");

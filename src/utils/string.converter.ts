@@ -17,24 +17,24 @@ function normalizeString(str: string): string {
 		.slice(1)
 		.map((word) => {
 			const lowercasedWord = word.toLowerCase();
-			const formattedWord =
-				lowercasedWord.charAt(0).toLowerCase() +
-				lowercasedWord.slice(1);
+			const formattedWord = lowercasedWord.charAt(0).toLowerCase() + lowercasedWord.slice(1);
 			return formattedWord;
 		})
 		.join(" ");
-	const capitalizedFirstWord =
-		firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
+	const capitalizedFirstWord = firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
 	const translatedStr = capitalizedFirstWord + " " + lowerCaseWords;
 	return translatedStr;
 }
 
 export function normalizeEnum(string: string): string {
 	const words = string.toLowerCase().split("_");
-	const convertedWords = words.map(
-		(word) => word.charAt(0).toUpperCase() + word.slice(1)
-	);
+	const convertedWords = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1));
 	return convertedWords.join(" ");
+}
+
+export function normalizeDate(inputDate: string): string {
+	const [year, month, day] = inputDate.split("-");
+	return `${day}/${month}/${year}`;
 }
 
 export function normalizePCBType(

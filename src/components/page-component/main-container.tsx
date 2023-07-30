@@ -1,8 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 
-export const MainContrainer: React.FC<{ children: React.ReactNode }> = (
-	props
-) => {
+export const MainContrainer: React.FC<{ children: React.ReactNode }> = (props) => {
 	return (
 		<Flex
 			alignItems="center"

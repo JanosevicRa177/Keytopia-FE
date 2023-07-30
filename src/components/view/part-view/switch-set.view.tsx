@@ -4,11 +4,7 @@ import { useState, useEffect } from "react";
 import { useDeletePart } from "../../../hooks/part-hooks/delete/part.delete.hook";
 import { useFetchPartPage } from "../../../hooks/part-hooks/get-all/part.get-all-page.hook";
 import { useGetOneSwitchSet } from "../../../hooks/part-hooks/get-one/switch-set.get-one.hook";
-import {
-	PartWithData,
-	SwitchSetShowMore,
-	Part,
-} from "../../../model/part.model";
+import { PartWithData, SwitchSetShowMore, Part } from "../../../model/part.model";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { colorPallete } from "../../../styles/color";
 import { PartType, SortDirection } from "../../../utils/enum";
@@ -37,20 +33,10 @@ export const SwitchSetView = () => {
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
 	const { getSwitchSet } = useGetOneSwitchSet();
 	const { deletePart } = useDeletePart();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
-	const {
-		isOpen: isOpenModal,
-		onClose: onCloseModal,
-		onOpen: onOpenModal,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
+	const { isOpen: isOpenModal, onClose: onCloseModal, onOpen: onOpenModal } = useDisclosure();
 	const [searchName, setSearchName] = useState("");
-	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
-		SortDirection.UNSORTED
-	);
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(SortDirection.UNSORTED);
 	async function fetchPage(page: number) {
 		getPartPage(page, searchName, sortedDirection, partType).then(() =>
 			setCurrentPage(page + 1)
@@ -65,106 +51,87 @@ export const SwitchSetView = () => {
 		});
 	}
 	async function handleShowMoreSwitchSet(name: String) {
-		getSwitchSet(name).then(
-			(switchSet: ApiResponse<SwitchSetShowMore | null>) => {
-				if (switchSet.data === null) {
+		await getSwitchSet(name).then((switchSet: ApiResponse<SwitchSetShowMore | null>) => {
+			if (switchSet.data === null) {
+				return;
+			}
+			const switchSetData: SwitchSetShowMore = switchSet.data;
+			const variableNames: string[] = Object.keys(switchSet.data as SwitchSetShowMore);
+			let normalizedNames: string[] = normalizeNames(variableNames);
+			const data: VariableWithValue[] = [];
+			variableNames.forEach((name: string) => {
+				if (
+					name === "name" ||
+					name === "imageUrl" ||
+					switchSetData[name as keyof SwitchSetShowMore]?.toString() == null
+				) {
+					normalizedNames.shift();
 					return;
 				}
-				const switchSetData: SwitchSetShowMore = switchSet.data;
-				const variableNames: string[] = Object.keys(
-					switchSet.data as SwitchSetShowMore
-				);
-				let normalizedNames: string[] = normalizeNames(variableNames);
-				const data: VariableWithValue[] = [];
-				variableNames.forEach((name: string) => {
-					if (
-						name === "name" ||
-						name === "imageUrl" ||
-						switchSetData[
-							name as keyof SwitchSetShowMore
-						]?.toString() == null
-					) {
-						normalizedNames.shift();
-						return;
-					}
-					if (name === "price") {
-						data.push({
-							variable: normalizedNames[0],
-							value:
-								(switchSetData[
-									name as keyof SwitchSetShowMore
-								]?.toString() as string) + " $",
-						});
-						normalizedNames.shift();
-						return;
-					}
-					if (name === "aswitch") {
-						const switchData: Switch = switchSetData[
-							name as keyof SwitchSetShowMore
-						] as Switch;
-						const switchVariableNames: string[] = Object.keys(
-							switchSetData[
-								name as keyof SwitchSetShowMore
-							] as Switch
-						);
-						let switchNormalizedNames: string[] =
-							normalizeNames(switchVariableNames);
-						switchVariableNames.forEach((name: string) => {
-							if (
-								name === "priceWeight" ||
-								switchData[name as keyof Switch]?.toString() ==
-									null
-							) {
-								switchNormalizedNames.shift();
-								return;
-							}
-							if (name === "pinType") {
-								normalizePinType(
-									switchData[
-										name as keyof Switch
-									]?.toString() as string,
-									data,
-									switchNormalizedNames
-								);
-								return;
-							}
-							if (name === "switchType") {
-								normalizeSwitchType(
-									switchData[
-										name as keyof Switch
-									]?.toString() as string,
-									data,
-									switchNormalizedNames
-								);
-								return;
-							}
-							data.push({
-								variable: switchNormalizedNames[0],
-								value: switchData[
-									name as keyof Switch
-								]?.toString() as string,
-							});
-							switchNormalizedNames.shift();
-						});
-						normalizedNames.shift();
-						return;
-					}
+				if (name === "price") {
 					data.push({
 						variable: normalizedNames[0],
-						value: switchSetData[
-							name as keyof SwitchSetShowMore
-						]?.toString() as string,
+						value:
+							(switchSetData[name as keyof SwitchSetShowMore]?.toString() as string) +
+							" $",
 					});
 					normalizedNames.shift();
+					return;
+				}
+				if (name === "aswitch") {
+					const switchData: Switch = switchSetData[
+						name as keyof SwitchSetShowMore
+					] as Switch;
+					const switchVariableNames: string[] = Object.keys(
+						switchSetData[name as keyof SwitchSetShowMore] as Switch
+					);
+					let switchNormalizedNames: string[] = normalizeNames(switchVariableNames);
+					switchVariableNames.forEach((name: string) => {
+						if (
+							name === "priceWeight" ||
+							switchData[name as keyof Switch]?.toString() == null
+						) {
+							switchNormalizedNames.shift();
+							return;
+						}
+						if (name === "pinType") {
+							normalizePinType(
+								switchData[name as keyof Switch]?.toString() as string,
+								data,
+								switchNormalizedNames
+							);
+							return;
+						}
+						if (name === "switchType") {
+							normalizeSwitchType(
+								switchData[name as keyof Switch]?.toString() as string,
+								data,
+								switchNormalizedNames
+							);
+							return;
+						}
+						data.push({
+							variable: switchNormalizedNames[0],
+							value: switchData[name as keyof Switch]?.toString() as string,
+						});
+						switchNormalizedNames.shift();
+					});
+					normalizedNames.shift();
+					return;
+				}
+				data.push({
+					variable: normalizedNames[0],
+					value: switchSetData[name as keyof SwitchSetShowMore]?.toString() as string,
 				});
-				setPart({
-					imageUrl: switchSetData.imageUrl ?? "",
-					variables: data,
-					name: switchSetData.name,
-				});
-				onOpenModal();
-			}
-		);
+				normalizedNames.shift();
+			});
+			setPart({
+				imageUrl: switchSetData.imageUrl ?? "",
+				variables: data,
+				name: switchSetData.name,
+			});
+			onOpenModal();
+		});
 	}
 	return (
 		<Box w={"100%"}>
@@ -211,12 +178,7 @@ export const SwitchSetView = () => {
 					sortedDirection={sortedDirection}
 					searchName={searchName}
 				/>
-				<Flex
-					fontSize={"md"}
-					flexWrap={"wrap"}
-					gap={"27px"}
-					my={"32px"}
-				>
+				<Flex fontSize={"md"} flexWrap={"wrap"} gap={"27px"} my={"32px"}>
 					{getPartPageRes.data.content.map((part: Part) => (
 						<PartCard
 							key={part.name}
@@ -236,16 +198,8 @@ export const SwitchSetView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<SwitchSetForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchPage={fetchPage}
-			/>
-			<PartModalView
-				isOpen={isOpenModal}
-				onClose={onCloseModal}
-				part={part}
-			/>
+			<SwitchSetForm isOpen={isOpenForm} onClose={onCloseForm} fetchPage={fetchPage} />
+			<PartModalView isOpen={isOpenModal} onClose={onCloseModal} part={part} />
 		</Box>
 	);
 };

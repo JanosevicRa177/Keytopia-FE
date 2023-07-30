@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
 	Flex,
 	Modal,
@@ -10,23 +11,18 @@ import {
 	TableContainer,
 	Tbody,
 	Td,
-	Thead,
 	Tr,
+	Text,
 } from "@chakra-ui/react";
+import { PartItem } from "../../store/part-store/types/part.type";
 
-interface DataArrayModalProps {
+interface PartItemModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-	data: string[];
-	header: string;
+	partsItems: PartItem[];
 }
 
-export const DataArrayModal = ({
-	isOpen,
-	onClose,
-	data,
-	header,
-}: DataArrayModalProps) => {
+export const PartItemModal = ({ isOpen, onClose, partsItems }: PartItemModalProps) => {
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -37,38 +33,37 @@ export const DataArrayModal = ({
 			<ModalOverlay />
 			<ModalContent margin={"auto"}>
 				<ModalHeader textAlign={"center"} mt={4}>
-					{header}
+					Parts
 				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
-					<Flex position={"relative"} w={"100%"} h={"350px"}>
+					<Flex position={"relative"} w={"100%"} h={"450px"}>
 						<Flex
 							flexDir={"column"}
 							cursor={"pointer"}
 							w={"100%"}
-							h={"350px"}
+							h={"450px"}
 							position={"absolute"}
 						>
 							<TableContainer
 								flex={1}
+								rounded={"4px"}
 								mx={"auto"}
-								mb={"32px"}
+								mb={"8px"}
 								w={"calc(100% - 30px)"}
-								h={"350px"}
+								h={"400px"}
 								overflowY={"auto"}
 							>
-								<Table
-									variant="striped"
-									colorScheme={"purple"}
-									fontSize={"small"}
-								>
-									<Thead>
-										<Tr></Tr>
-									</Thead>
+								<Table fontSize={"small"} variant="striped" colorScheme={"purple"}>
 									<Tbody>
-										{data.map((item: string) => (
-											<Tr key={item}>
-												<Td w={"10%"}>{item}</Td>
+										{partsItems.map((part: PartItem, index) => (
+											<Tr key={index} transition={"0.1s ease"} saturate={"0"}>
+												<Td w={"10%"}>
+													<Flex justifyContent={"space-between"}>
+														<Text>{part.name}</Text>
+														<Text>{part.quantity}</Text>
+													</Flex>
+												</Td>
 											</Tr>
 										))}
 									</Tbody>

@@ -29,17 +29,9 @@ import { PCB } from "../../../model/part.model";
 import { Brand, Supplier } from "../../../model/warehouse.model";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { colorPallete } from "../../../styles/color";
-import {
-	PCB_DEFAULT_VALUES,
-	PCB_VALIDATION_SCHEMA,
-} from "../../../utils/constants/part.constants";
+import { PCB_DEFAULT_VALUES, PCB_VALIDATION_SCHEMA } from "../../../utils/constants/part.constants";
 import { useForm } from "react-hook-form";
-import {
-	PriceWeight,
-	PCBType,
-	PinType,
-	StabilizerType,
-} from "../../../utils/enum";
+import { PriceWeight, PCBType, PinType, StabilizerType } from "../../../utils/enum";
 
 interface PCBFormProps {
 	isOpen: boolean;
@@ -75,9 +67,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 					toast.error("Something wrong with fetching brands!");
 					return;
 				}
-				const brandNames: string[] = res.data.map(
-					(brand) => brand.name
-				);
+				const brandNames: string[] = res.data.map((brand) => brand.name);
 				setBrandNames(brandNames);
 				setValue("brand", brandNames[0]);
 			});
@@ -86,9 +76,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 					toast.error("Something wrong with fetching brands!");
 					return;
 				}
-				const supplierNames: string[] = res.data.map(
-					(supplier) => supplier.name
-				);
+				const supplierNames: string[] = res.data.map((supplier) => supplier.name);
 				setSupplierNames(supplierNames);
 			});
 			getSizes().then((res: ApiResponse<string[] | null>) => {
@@ -159,9 +147,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 					>
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.name != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Name
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Name</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -169,8 +155,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 									borderColor={colorPallete.inputBorder}
 									{...register("name")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.name ? (
@@ -182,9 +167,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.price != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Price
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Price</FormLabel>
 								<Input
 									type="number"
 									rounded={"4px"}
@@ -192,8 +175,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 									borderColor={colorPallete.inputBorder}
 									{...register("price")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.price ? (
@@ -205,29 +187,20 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.priceWeight != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Price weight
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Price weight</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("priceWeight")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={PriceWeight.LIGHT}
 								>
-									<option value={PriceWeight.LIGHT}>
-										Light
-									</option>
-									<option value={PriceWeight.MEDIUM}>
-										Medium
-									</option>
-									<option value={PriceWeight.HEAVY}>
-										Heavy
-									</option>
+									<option value={PriceWeight.LIGHT}>Light</option>
+									<option value={PriceWeight.MEDIUM}>Medium</option>
+									<option value={PriceWeight.HEAVY}>Heavy</option>
 								</Select>
 								{errors.priceWeight ? (
 									<FormErrorMessage ml={"8px"}>
@@ -240,21 +213,15 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 						</Flex>
 						<Flex gap={"16px"} mb={"25px"}>
 							{showBrand ? (
-								<Flex
-									flexDirection={"column"}
-									minW={"calc(33% - 8px)"}
-								>
-									<FormLabel fontWeight={"semibold"}>
-										Brand
-									</FormLabel>
+								<Flex flexDirection={"column"} minW={"calc(33% - 8px)"}>
+									<FormLabel fontWeight={"semibold"}>Brand</FormLabel>
 									<Select
 										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("brand")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 										defaultValue={brandNames[0]}
 									>
@@ -266,34 +233,23 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 									</Select>
 								</Flex>
 							) : (
-								<Flex
-									flexDirection={"column"}
-									minW={"calc(33% - 8px)"}
-								>
-									<FormLabel fontWeight={"semibold"}>
-										Supplier
-									</FormLabel>
+								<Flex flexDirection={"column"} minW={"calc(33% - 8px)"}>
+									<FormLabel fontWeight={"semibold"}>Supplier</FormLabel>
 									<Select
 										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("supplier")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 										defaultValue={brandNames[0]}
 									>
-										{supplierNames.map(
-											(supplier, index) => (
-												<option
-													value={supplier}
-													key={index}
-												>
-													{supplier}
-												</option>
-											)
-										)}
+										{supplierNames.map((supplier, index) => (
+											<option value={supplier} key={index}>
+												{supplier}
+											</option>
+										))}
 									</Select>
 								</Flex>
 							)}
@@ -324,10 +280,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 									defaultChecked
 								/>
 							</Flex>
-							<Flex
-								minW={"calc(33% - 8px)"}
-								flexDirection={"column"}
-							>
+							<Flex minW={"calc(33% - 8px)"} flexDirection={"column"}>
 								<Text mb={"8px"}>Image</Text>
 								<Input
 									id="image"
@@ -341,8 +294,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 										}
 									}}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									type="file"
 									width={"80%"}
@@ -352,26 +304,19 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.type != null}>
-								<FormLabel fontWeight={"semibold"}>
-									PCB type
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>PCB type</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("type")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={PCBType.HOT_SWAP}
 								>
-									<option value={PCBType.HOT_SWAP}>
-										Hot-swap
-									</option>
-									<option value={PCBType.STANDARD}>
-										Standard
-									</option>
+									<option value={PCBType.HOT_SWAP}>Hot-swap</option>
+									<option value={PCBType.STANDARD}>Standard</option>
 								</Select>
 								{errors.type ? (
 									<FormErrorMessage ml={"8px"}>
@@ -382,9 +327,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.color != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Color
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Color</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -392,8 +335,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 									borderColor={colorPallete.inputBorder}
 									{...register("color")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.color ? (
@@ -405,17 +347,14 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.size != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Size
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Size</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("size")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={sizeNames[0]}
 								>
@@ -436,17 +375,14 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 						</Flex>
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.pinType != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Pin type
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Pin type</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("pinType")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={PinType.PIN5}
 								>
@@ -479,35 +415,25 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 										borderColor={colorPallete.inputBorder}
 										{...register("btConnect")}
 										_hover={{
-											borderColor:
-												colorPallete.buttonHover,
+											borderColor: colorPallete.buttonHover,
 										}}
 									/>
 								</Flex>
 							</FormControl>
-							<FormControl
-								isInvalid={errors.stabilizerType != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Stabilizer type
-								</FormLabel>
+							<FormControl isInvalid={errors.stabilizerType != null}>
+								<FormLabel fontWeight={"semibold"}>Stabilizer type</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("stabilizerType")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={StabilizerType.CLAMPED}
 								>
-									<option value={StabilizerType.CLAMPED}>
-										Clamped
-									</option>
-									<option value={StabilizerType.SCREW_IN}>
-										Screw-in
-									</option>
+									<option value={StabilizerType.CLAMPED}>Clamped</option>
+									<option value={StabilizerType.SCREW_IN}>Screw-in</option>
 								</Select>
 								{errors.stabilizerType ? (
 									<FormErrorMessage ml={"8px"}>

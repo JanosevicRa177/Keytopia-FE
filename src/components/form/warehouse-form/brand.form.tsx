@@ -100,9 +100,7 @@ export const BrandForm = ({ isOpen, onClose, fetchBrands }: BrandFormProps) => {
 							)}
 						</FormControl>
 						<FormControl isInvalid={errors.slogan != null}>
-							<FormLabel fontWeight={"semibold"}>
-								Slogan
-							</FormLabel>
+							<FormLabel fontWeight={"semibold"}>Slogan</FormLabel>
 							<Input
 								type="text"
 								rounded={"4px"}

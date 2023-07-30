@@ -26,11 +26,7 @@ export const BrandView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const { getBrandsPage, getBrandsPageRes } = useFetchBrandsPage();
 	const { deleteBrand } = useDeleteBrand();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
 	useEffect(() => {
 		getBrandsPage(0).then(() => setCurrentPage(1));
 	}, []);
@@ -82,11 +78,7 @@ export const BrandView = () => {
 				</Flex>
 				<Flex h={"408px"} fontSize={"md"}>
 					<TableContainer flex={1}>
-						<Table
-							variant="striped"
-							colorScheme={"purple"}
-							fontSize={"small"}
-						>
+						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
@@ -95,41 +87,31 @@ export const BrandView = () => {
 							</Thead>
 							<Tbody>
 								{getBrandsPageRes.data.content &&
-									getBrandsPageRes.data.content.map(
-										(item: Brand) => (
-											<Tr key={item.name}>
-												<Td w={"40%"}>{item.name}</Td>
-												<Td w={"40%"}>{item.slogan}</Td>
-												<Td>
-													<Flex gap={"4"}>
-														<Button
-															flexGrow={"1"}
-															rounded={"4px"}
-															overflow={"hidden"}
-															bg={
-																colorPallete.deleteButton
-															}
-															color={"white"}
-															onClick={() =>
-																handleDeleteBrand(
-																	item.name
-																)
-															}
-															_hover={{
-																bg: colorPallete.deleteButtonHover,
-																transform:
-																	"scale(1.05,1.05)",
-																transition:
-																	"0.2s",
-															}}
-														>
-															Delete
-														</Button>
-													</Flex>
-												</Td>
-											</Tr>
-										)
-									)}
+									getBrandsPageRes.data.content.map((item: Brand) => (
+										<Tr key={item.name}>
+											<Td w={"40%"}>{item.name}</Td>
+											<Td w={"40%"}>{item.slogan}</Td>
+											<Td>
+												<Flex gap={"4"}>
+													<Button
+														flexGrow={"1"}
+														rounded={"4px"}
+														overflow={"hidden"}
+														bg={colorPallete.deleteButton}
+														color={"white"}
+														onClick={() => handleDeleteBrand(item.name)}
+														_hover={{
+															bg: colorPallete.deleteButtonHover,
+															transform: "scale(1.05,1.05)",
+															transition: "0.2s",
+														}}
+													>
+														Delete
+													</Button>
+												</Flex>
+											</Td>
+										</Tr>
+									))}
 							</Tbody>
 						</Table>
 					</TableContainer>
@@ -143,11 +125,7 @@ export const BrandView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<BrandForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchBrands={getBrandsPage}
-			/>
+			<BrandForm isOpen={isOpenForm} onClose={onCloseForm} fetchBrands={getBrandsPage} />
 		</Box>
 	);
 };

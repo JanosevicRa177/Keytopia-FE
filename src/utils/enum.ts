@@ -53,3 +53,9 @@ export enum SortDirection {
 	DESC = "DESC",
 	UNSORTED = "UNSORTED",
 }
+
+export enum ProcurementState {
+	REALIZED = "REALIZED",
+	PENDING = "PENDING",
+	CANCELED = "CANCELED",
+}

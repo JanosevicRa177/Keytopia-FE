@@ -5,10 +5,7 @@ import { Plate } from "../../../model/part.model";
 
 export const useCreatePlate = () => {
 	const { axios } = useAxios();
-	const createPlate = async (
-		values: Plate,
-		image: File
-	): Promise<ApiResponse<null>> => {
+	const createPlate = async (values: Plate, image: File): Promise<ApiResponse<null>> => {
 		try {
 			values.image = image;
 			await axios.post(`/part/plate`, values, {

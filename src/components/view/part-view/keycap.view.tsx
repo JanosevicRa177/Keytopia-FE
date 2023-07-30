@@ -8,10 +8,7 @@ import { PartWithData, Keycap, Part } from "../../../model/part.model";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { colorPallete } from "../../../styles/color";
 import { PartType, SortDirection } from "../../../utils/enum";
-import {
-	normalizeNames,
-	normalizeKeycapMaterialType,
-} from "../../../utils/string.converter";
+import { normalizeNames, normalizeKeycapMaterialType } from "../../../utils/string.converter";
 import { VariableWithValue } from "../../../utils/types";
 import { KeycapForm } from "../../form/part-form/keycap.form";
 import { PartCard } from "../../part-card-component/part-card";
@@ -29,22 +26,12 @@ export const KeycapView = () => {
 		variables: [],
 	});
 	const [searchName, setSearchName] = useState("");
-	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
-		SortDirection.UNSORTED
-	);
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(SortDirection.UNSORTED);
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
 	const { getKeycap } = useGetOneKeycap();
 	const { deletePart } = useDeletePart();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
-	const {
-		isOpen: isOpenModal,
-		onClose: onCloseModal,
-		onOpen: onOpenModal,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
+	const { isOpen: isOpenModal, onClose: onCloseModal, onOpen: onOpenModal } = useDisclosure();
 	useEffect(() => {
 		fetchPage(0);
 	}, []);
@@ -61,7 +48,7 @@ export const KeycapView = () => {
 		);
 	}
 	async function handleShowMoreKeycap(name: String) {
-		getKeycap(name).then((keycap: ApiResponse<Keycap | null>) => {
+		await getKeycap(name).then((keycap: ApiResponse<Keycap | null>) => {
 			if (keycap.data === null) {
 				return;
 			}
@@ -90,19 +77,14 @@ export const KeycapView = () => {
 				if (name === "price") {
 					data.push({
 						variable: normalizedNames[0],
-						value:
-							(keycapData[
-								name as keyof Keycap
-							]?.toString() as string) + " $",
+						value: (keycapData[name as keyof Keycap]?.toString() as string) + " $",
 					});
 					normalizedNames.shift();
 					return;
 				}
 				data.push({
 					variable: normalizedNames[0],
-					value: keycapData[
-						name as keyof Keycap
-					]?.toString() as string,
+					value: keycapData[name as keyof Keycap]?.toString() as string,
 				});
 				normalizedNames.shift();
 			});
@@ -159,12 +141,7 @@ export const KeycapView = () => {
 					sortedDirection={sortedDirection}
 					searchName={searchName}
 				/>
-				<Flex
-					fontSize={"md"}
-					flexWrap={"wrap"}
-					gap={"27px"}
-					my={"32px"}
-				>
+				<Flex fontSize={"md"} flexWrap={"wrap"} gap={"27px"} my={"32px"}>
 					{getPartPageRes.data.content.map((part: Part) => (
 						<PartCard
 							key={part.name}
@@ -184,16 +161,8 @@ export const KeycapView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<KeycapForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchPage={fetchPage}
-			/>
-			<PartModalView
-				isOpen={isOpenModal}
-				onClose={onCloseModal}
-				part={part}
-			/>
+			<KeycapForm isOpen={isOpenForm} onClose={onCloseForm} fetchPage={fetchPage} />
+			<PartModalView isOpen={isOpenModal} onClose={onCloseModal} part={part} />
 		</Box>
 	);
 };

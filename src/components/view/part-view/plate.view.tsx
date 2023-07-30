@@ -28,20 +28,10 @@ export const PlateView = () => {
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
 	const { getPlate } = useGetOnePlate();
 	const { deletePart } = useDeletePart();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
-	const {
-		isOpen: isOpenModal,
-		onClose: onCloseModal,
-		onOpen: onOpenModal,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
+	const { isOpen: isOpenModal, onClose: onCloseModal, onOpen: onOpenModal } = useDisclosure();
 	const [searchName, setSearchName] = useState("");
-	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
-		SortDirection.UNSORTED
-	);
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(SortDirection.UNSORTED);
 	useEffect(() => {
 		fetchPage(0);
 	}, []);
@@ -56,7 +46,7 @@ export const PlateView = () => {
 		);
 	}
 	async function handleShowMorePlate(name: String) {
-		getPlate(name).then((plate: ApiResponse<Plate | null>) => {
+		await getPlate(name).then((plate: ApiResponse<Plate | null>) => {
 			if (plate.data === null) {
 				return;
 			}
@@ -77,10 +67,7 @@ export const PlateView = () => {
 				if (name === "price") {
 					data.push({
 						variable: normalizedNames[0],
-						value:
-							(plateData[
-								name as keyof Plate
-							]?.toString() as string) + " $",
+						value: (plateData[name as keyof Plate]?.toString() as string) + " $",
 					});
 					normalizedNames.shift();
 					return;
@@ -144,12 +131,7 @@ export const PlateView = () => {
 					sortedDirection={sortedDirection}
 					searchName={searchName}
 				/>
-				<Flex
-					fontSize={"md"}
-					flexWrap={"wrap"}
-					gap={"27px"}
-					my={"32px"}
-				>
+				<Flex fontSize={"md"} flexWrap={"wrap"} gap={"27px"} my={"32px"}>
 					{getPartPageRes.data.content.map((part: Part) => (
 						<PartCard
 							key={part.name}
@@ -169,16 +151,8 @@ export const PlateView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<PlateForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchPage={fetchPage}
-			/>
-			<PartModalView
-				isOpen={isOpenModal}
-				onClose={onCloseModal}
-				part={part}
-			/>
+			<PlateForm isOpen={isOpenForm} onClose={onCloseForm} fetchPage={fetchPage} />
+			<PartModalView isOpen={isOpenModal} onClose={onCloseModal} part={part} />
 		</Box>
 	);
 };

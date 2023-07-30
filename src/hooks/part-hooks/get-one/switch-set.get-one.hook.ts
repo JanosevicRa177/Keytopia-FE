@@ -6,9 +6,7 @@ import { SwitchSetShowMore } from "../../../model/part.model";
 
 export const useGetOneSwitchSet = () => {
 	const { axios } = useAxios();
-	const getSwitchSet = async (
-		name: String
-	): Promise<ApiResponse<SwitchSetShowMore | null>> => {
+	const getSwitchSet = async (name: String): Promise<ApiResponse<SwitchSetShowMore | null>> => {
 		try {
 			const res = await axios.get(`/part/${PartType.SWITCH_SET}/${name}`);
 			return {

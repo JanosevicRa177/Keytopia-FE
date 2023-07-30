@@ -13,6 +13,8 @@ export const colorPallete = {
 	card: "rgba(232, 227, 255,0.9)",
 	oddTableColor: "rgb(233, 216, 253)",
 	evenTableColor: "white",
+	logoBackground: "rgba(255,255,255,0.9)",
+	disabledButton: "#606060",
 };
 
 export const colors = {

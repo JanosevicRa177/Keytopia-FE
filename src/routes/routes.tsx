@@ -3,7 +3,8 @@ import { PartAdminPage } from "../pages/part-admin.page";
 import { AuthPage } from "../pages/auth.page";
 import { MainPage } from "../pages/main.page";
 import { UserPage } from "../pages/user.page";
-import { ProcurementPage } from "../pages/procurement.page";
+import { CurrentProcurementPage } from "../pages/current-procurement.page";
+import { ProcurementPage } from "../pages/procurements-page";
 
 interface CustomRouteProps {
 	path: string;
@@ -36,6 +37,12 @@ export const routes: CustomRouteProps[] = [
 	},
 	{
 		path: "/current/procurement",
+		element: <CurrentProcurementPage />,
+		needAuth: true,
+		requiredRole: "ADMIN",
+	},
+	{
+		path: "/procurements",
 		element: <ProcurementPage />,
 		needAuth: true,
 		requiredRole: "ADMIN",

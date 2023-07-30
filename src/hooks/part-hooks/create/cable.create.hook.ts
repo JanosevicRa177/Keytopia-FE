@@ -5,10 +5,7 @@ import { Cable } from "../../../model/part.model";
 
 export const useCreateCable = () => {
 	const { axios } = useAxios();
-	const createCable = async (
-		values: Cable,
-		image: File
-	): Promise<ApiResponse<null>> => {
+	const createCable = async (values: Cable, image: File): Promise<ApiResponse<null>> => {
 		try {
 			values.image = image;
 			await axios.post(`/part/cable`, values, {

@@ -8,10 +8,7 @@ import { PartWithData, Stabilizers, Part } from "../../../model/part.model";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { colorPallete } from "../../../styles/color";
 import { PartType, SortDirection } from "../../../utils/enum";
-import {
-	normalizeNames,
-	normalizeStabilizerType,
-} from "../../../utils/string.converter";
+import { normalizeNames, normalizeStabilizerType } from "../../../utils/string.converter";
 import { VariableWithValue } from "../../../utils/types";
 import { StabilizersForm } from "../../form/part-form/stabilizers.form";
 import { PartCard } from "../../part-card-component/part-card";
@@ -31,20 +28,10 @@ export const StabilizersView = () => {
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
 	const { getStabilizers } = useGetOneStabilizers();
 	const { deletePart } = useDeletePart();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
-	const {
-		isOpen: isOpenModal,
-		onClose: onCloseModal,
-		onOpen: onOpenModal,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
+	const { isOpen: isOpenModal, onClose: onCloseModal, onOpen: onOpenModal } = useDisclosure();
 	const [searchName, setSearchName] = useState("");
-	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
-		SortDirection.UNSORTED
-	);
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(SortDirection.UNSORTED);
 	async function fetchPage(page: number) {
 		getPartPage(page, searchName, sortedDirection, partType).then(() =>
 			setCurrentPage(page + 1)
@@ -59,66 +46,55 @@ export const StabilizersView = () => {
 		});
 	}
 	async function handleShowMoreStabilizers(name: String) {
-		getStabilizers(name).then(
-			(stabilizers: ApiResponse<Stabilizers | null>) => {
-				if (stabilizers.data === null) {
+		await getStabilizers(name).then((stabilizers: ApiResponse<Stabilizers | null>) => {
+			if (stabilizers.data === null) {
+				return;
+			}
+			const stabilizersData: Stabilizers = stabilizers.data;
+			const variableNames: string[] = Object.keys(stabilizers.data as Stabilizers);
+			let normalizedNames: string[] = normalizeNames(variableNames);
+			const data: VariableWithValue[] = [];
+			variableNames.forEach((name: string) => {
+				if (
+					name === "name" ||
+					name === "imageUrl" ||
+					name === "priceWeight" ||
+					stabilizersData[name as keyof Stabilizers]?.toString() == null
+				) {
+					normalizedNames.shift();
 					return;
 				}
-				const stabilizersData: Stabilizers = stabilizers.data;
-				const variableNames: string[] = Object.keys(
-					stabilizers.data as Stabilizers
-				);
-				let normalizedNames: string[] = normalizeNames(variableNames);
-				const data: VariableWithValue[] = [];
-				variableNames.forEach((name: string) => {
-					if (
-						name === "name" ||
-						name === "imageUrl" ||
-						name === "priceWeight" ||
-						stabilizersData[
-							name as keyof Stabilizers
-						]?.toString() == null
-					) {
-						normalizedNames.shift();
-						return;
-					}
-					if (name === "price") {
-						data.push({
-							variable: normalizedNames[0],
-							value:
-								(stabilizersData[
-									name as keyof Stabilizers
-								]?.toString() as string) + " $",
-						});
-						normalizedNames.shift();
-						return;
-					}
-					if (name === "type") {
-						normalizeStabilizerType(
-							stabilizersData[
-								name as keyof Stabilizers
-							]?.toString() as string,
-							data,
-							normalizedNames
-						);
-						return;
-					}
+				if (name === "price") {
 					data.push({
 						variable: normalizedNames[0],
-						value: stabilizersData[
-							name as keyof Stabilizers
-						]?.toString() as string,
+						value:
+							(stabilizersData[name as keyof Stabilizers]?.toString() as string) +
+							" $",
 					});
 					normalizedNames.shift();
+					return;
+				}
+				if (name === "type") {
+					normalizeStabilizerType(
+						stabilizersData[name as keyof Stabilizers]?.toString() as string,
+						data,
+						normalizedNames
+					);
+					return;
+				}
+				data.push({
+					variable: normalizedNames[0],
+					value: stabilizersData[name as keyof Stabilizers]?.toString() as string,
 				});
-				setPart({
-					imageUrl: stabilizersData.imageUrl ?? "",
-					variables: data,
-					name: stabilizersData.name,
-				});
-				onOpenModal();
-			}
-		);
+				normalizedNames.shift();
+			});
+			setPart({
+				imageUrl: stabilizersData.imageUrl ?? "",
+				variables: data,
+				name: stabilizersData.name,
+			});
+			onOpenModal();
+		});
 	}
 	return (
 		<Box w={"100%"}>
@@ -165,12 +141,7 @@ export const StabilizersView = () => {
 					sortedDirection={sortedDirection}
 					searchName={searchName}
 				/>
-				<Flex
-					fontSize={"md"}
-					flexWrap={"wrap"}
-					gap={"27px"}
-					my={"32px"}
-				>
+				<Flex fontSize={"md"} flexWrap={"wrap"} gap={"27px"} my={"32px"}>
 					{getPartPageRes.data.content.map((part: Part) => (
 						<PartCard
 							key={part.name}
@@ -190,16 +161,8 @@ export const StabilizersView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<StabilizersForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchPage={fetchPage}
-			/>
-			<PartModalView
-				isOpen={isOpenModal}
-				onClose={onCloseModal}
-				part={part}
-			/>
+			<StabilizersForm isOpen={isOpenForm} onClose={onCloseForm} fetchPage={fetchPage} />
+			<PartModalView isOpen={isOpenModal} onClose={onCloseModal} part={part} />
 		</Box>
 	);
 };

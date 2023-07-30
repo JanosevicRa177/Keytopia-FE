@@ -74,11 +74,7 @@ export const RegisterForm = () => {
 			h={"100%"}
 		>
 			<Flex mx="32px" flexDirection={"column"} my="auto" py="70px">
-				<Text
-					fontWeight={"semibold"}
-					textAlign={"center"}
-					fontSize={"5xl"}
-				>
+				<Text fontWeight={"semibold"} textAlign={"center"} fontSize={"5xl"}>
 					Register
 				</Text>
 				<FormControl isInvalid={errors.email != null}>
@@ -93,9 +89,7 @@ export const RegisterForm = () => {
 						_hover={{ borderColor: colorPallete.inputBorderHover }}
 					/>
 					{errors.email ? (
-						<FormErrorMessage>
-							{errors.email.message}
-						</FormErrorMessage>
+						<FormErrorMessage>{errors.email.message}</FormErrorMessage>
 					) : (
 						<Box h={"25px"} w="100%"></Box>
 					)}
@@ -103,10 +97,7 @@ export const RegisterForm = () => {
 				<Flex gap={"16px"}>
 					<Box flexGrow={"1"}>
 						<FormControl isInvalid={errors.name != null}>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								Name
 							</FormLabel>
 							<Input
@@ -119,9 +110,7 @@ export const RegisterForm = () => {
 								}}
 							/>
 							{errors.name ? (
-								<FormErrorMessage>
-									{errors.name.message}
-								</FormErrorMessage>
+								<FormErrorMessage>{errors.name.message}</FormErrorMessage>
 							) : (
 								<Box h={"25px"} w="100%"></Box>
 							)}
@@ -129,10 +118,7 @@ export const RegisterForm = () => {
 					</Box>
 					<Box flexGrow={"1"}>
 						<FormControl isInvalid={errors.surname != null}>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								Surname
 							</FormLabel>
 							<Input
@@ -145,9 +131,7 @@ export const RegisterForm = () => {
 								}}
 							/>
 							{errors.surname ? (
-								<FormErrorMessage>
-									{errors.surname.message}
-								</FormErrorMessage>
+								<FormErrorMessage>{errors.surname.message}</FormErrorMessage>
 							) : (
 								<Box h={"25px"} w="100%"></Box>
 							)}
@@ -157,10 +141,7 @@ export const RegisterForm = () => {
 				<Flex gap={"16px"}>
 					<Box w="160px">
 						<FormControl isInvalid={errors.phone != null}>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								Phone
 							</FormLabel>
 							<Input
@@ -173,9 +154,7 @@ export const RegisterForm = () => {
 								}}
 							/>
 							{errors.phone ? (
-								<FormErrorMessage>
-									{errors.phone?.message}
-								</FormErrorMessage>
+								<FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
 							) : (
 								<Box h={"25px"} w="100%"></Box>
 							)}
@@ -183,10 +162,7 @@ export const RegisterForm = () => {
 					</Box>
 					<Box flexGrow={"1"}>
 						<FormControl isInvalid={errors.address?.street != null}>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								Street
 							</FormLabel>
 							<Input
@@ -199,18 +175,14 @@ export const RegisterForm = () => {
 								}}
 							/>
 							{errors.address?.street ? (
-								<FormErrorMessage>
-									Street is a required field
-								</FormErrorMessage>
+								<FormErrorMessage>Street is a required field</FormErrorMessage>
 							) : (
 								<Box h={"25px"} w="100%"></Box>
 							)}
 						</FormControl>
 					</Box>
 					<Box w="70px">
-						<FormControl
-							isInvalid={errors.address?.streetNumber != null}
-						>
+						<FormControl isInvalid={errors.address?.streetNumber != null}>
 							<FormLabel
 								fontWeight={"semibold"}
 								fontSize={"small"}
@@ -240,10 +212,7 @@ export const RegisterForm = () => {
 				<Flex gap={"16px"}>
 					<Box flexGrow={"1"}>
 						<FormControl isInvalid={errors.address?.city != null}>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								City
 							</FormLabel>
 							<Input
@@ -256,22 +225,15 @@ export const RegisterForm = () => {
 								}}
 							/>
 							{errors.address?.city ? (
-								<FormErrorMessage>
-									City is a required field
-								</FormErrorMessage>
+								<FormErrorMessage>City is a required field</FormErrorMessage>
 							) : (
 								<Box h={"25px"} w="100%"></Box>
 							)}
 						</FormControl>
 					</Box>
 					<Box flexGrow={"1"}>
-						<FormControl
-							isInvalid={errors.address?.zipCode != null}
-						>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+						<FormControl isInvalid={errors.address?.zipCode != null}>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								Zip code
 							</FormLabel>
 							<Input
@@ -284,22 +246,15 @@ export const RegisterForm = () => {
 								}}
 							/>
 							{errors.address?.zipCode ? (
-								<FormErrorMessage>
-									Zip code is a required field
-								</FormErrorMessage>
+								<FormErrorMessage>Zip code is a required field</FormErrorMessage>
 							) : (
 								<Box h={"25px"} w="100%"></Box>
 							)}
 						</FormControl>
 					</Box>
 					<Box flexGrow={"1"}>
-						<FormControl
-							isInvalid={errors.address?.country != null}
-						>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+						<FormControl isInvalid={errors.address?.country != null}>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								Country
 							</FormLabel>
 							<Input
@@ -313,9 +268,7 @@ export const RegisterForm = () => {
 								}}
 							/>
 							{errors.address?.country ? (
-								<FormErrorMessage>
-									Country is a required field
-								</FormErrorMessage>
+								<FormErrorMessage>Country is a required field</FormErrorMessage>
 							) : (
 								<Box h={"25px"} w="100%"></Box>
 							)}
@@ -325,10 +278,7 @@ export const RegisterForm = () => {
 				<Flex gap={"16px"} mb={"16px"}>
 					<Box flexGrow={"1"}>
 						<FormControl isInvalid={errors.password != null}>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								Password
 							</FormLabel>
 							<Input
@@ -342,9 +292,7 @@ export const RegisterForm = () => {
 								}}
 							/>
 							{errors.password ? (
-								<FormErrorMessage>
-									{errors.password?.message}
-								</FormErrorMessage>
+								<FormErrorMessage>{errors.password?.message}</FormErrorMessage>
 							) : (
 								<Box h={"25px"} w="100%"></Box>
 							)}
@@ -352,10 +300,7 @@ export const RegisterForm = () => {
 					</Box>
 					<Box flexGrow={"1"}>
 						<FormControl isInvalid={errors.confirmPassword != null}>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								Confirm password
 							</FormLabel>
 							<Input

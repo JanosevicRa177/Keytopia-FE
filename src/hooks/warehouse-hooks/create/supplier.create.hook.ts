@@ -5,9 +5,7 @@ import { Supplier } from "../../../model/warehouse.model";
 
 export const useCreateSupplier = () => {
 	const { axios } = useAxios();
-	const createSupplier = async (
-		values: Supplier
-	): Promise<ApiResponse<null>> => {
+	const createSupplier = async (values: Supplier): Promise<ApiResponse<null>> => {
 		try {
 			await axios.post(`/supplier`, values);
 			toast.success("Brand successfuly created!");

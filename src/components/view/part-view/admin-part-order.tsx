@@ -11,16 +11,12 @@ export const PartAdminOrderView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
 	const [searchName, setSearchName] = useState("");
-	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
-		SortDirection.UNSORTED
-	);
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(SortDirection.UNSORTED);
 	useEffect(() => {
 		fetchPage(0);
 	}, []);
 	async function fetchPage(page: number) {
-		getPartPage(page, searchName, sortedDirection).then(() =>
-			setCurrentPage(page + 1)
-		);
+		getPartPage(page, searchName, sortedDirection).then(() => setCurrentPage(page + 1));
 	}
 	return (
 		<Box w={"100%"}>
@@ -50,12 +46,7 @@ export const PartAdminOrderView = () => {
 					sortedDirection={sortedDirection}
 					searchName={searchName}
 				/>
-				<Flex
-					fontSize={"md"}
-					flexWrap={"wrap"}
-					gap={"27px"}
-					my={"32px"}
-				>
+				<Flex fontSize={"md"} flexWrap={"wrap"} gap={"27px"} my={"32px"}>
 					{getPartPageRes.data.content.map((part: Part) => (
 						<></>
 					))}

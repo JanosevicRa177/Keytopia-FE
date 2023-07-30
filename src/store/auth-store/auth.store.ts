@@ -32,10 +32,7 @@ export const state: AuthStoreState = {
 
 export type AuthStore = AuthStoreState & AuthActions;
 
-export const authStoreSlice: StateCreator<Store, [], [], AuthStore> = (
-	set,
-	get
-) => ({
+export const authStoreSlice: StateCreator<Store, [], [], AuthStore> = (set, get) => ({
 	...state,
 	login: async (loginData: Login) => {
 		try {
@@ -53,7 +50,6 @@ export const authStoreSlice: StateCreator<Store, [], [], AuthStore> = (
 			);
 			toast.success("Successfully logged in!");
 		} catch (e: any) {
-			console.log(e);
 			set(
 				produce((state: AuthStoreState) => {
 					state.token = null;

@@ -33,7 +33,7 @@ import {
 	SWITCH_SET_DEFAULT_VALUES,
 	SWITCH_SET_VALIDATION_SCHEMA,
 } from "../../../utils/constants/part.constants";
-import { PartType, PriceWeight } from "../../../utils/enum";
+import { PriceWeight } from "../../../utils/enum";
 import { useForm } from "react-hook-form";
 
 interface SwitchSetFormProps {
@@ -42,11 +42,7 @@ interface SwitchSetFormProps {
 	fetchPage: (pageNumber: number) => Promise<void>;
 }
 
-export const SwitchSetForm = ({
-	isOpen,
-	onClose,
-	fetchPage,
-}: SwitchSetFormProps) => {
+export const SwitchSetForm = ({ isOpen, onClose, fetchPage }: SwitchSetFormProps) => {
 	const { getBrands } = useFetchBrands();
 	const { getSuppliers } = useFetchSupplier();
 	const { getSwitches } = useFetchSwitches();
@@ -74,9 +70,7 @@ export const SwitchSetForm = ({
 					toast.error("Something wrong with fetching brands!");
 					return;
 				}
-				const brandNames: string[] = res.data.map(
-					(brand) => brand.name
-				);
+				const brandNames: string[] = res.data.map((brand) => brand.name);
 				setBrandNames(brandNames);
 				setValue("brand", brandNames[0]);
 			});
@@ -85,9 +79,7 @@ export const SwitchSetForm = ({
 					toast.error("Something wrong with fetching brands!");
 					return;
 				}
-				const supplierNames: string[] = res.data.map(
-					(supplier) => supplier.name
-				);
+				const supplierNames: string[] = res.data.map((supplier) => supplier.name);
 				setSupplierNames(supplierNames);
 			});
 			getSwitches().then((res: ApiResponse<string[] | null>) => {
@@ -158,9 +150,7 @@ export const SwitchSetForm = ({
 					>
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.name != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Name
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Name</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -168,8 +158,7 @@ export const SwitchSetForm = ({
 									borderColor={colorPallete.inputBorder}
 									{...register("name")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.name ? (
@@ -181,9 +170,7 @@ export const SwitchSetForm = ({
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.price != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Price
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Price</FormLabel>
 								<Input
 									type="number"
 									rounded={"4px"}
@@ -191,8 +178,7 @@ export const SwitchSetForm = ({
 									borderColor={colorPallete.inputBorder}
 									{...register("price")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.price ? (
@@ -204,29 +190,20 @@ export const SwitchSetForm = ({
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.priceWeight != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Price weight
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Price weight</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("priceWeight")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={PriceWeight.LIGHT}
 								>
-									<option value={PriceWeight.LIGHT}>
-										Light
-									</option>
-									<option value={PriceWeight.MEDIUM}>
-										Medium
-									</option>
-									<option value={PriceWeight.HEAVY}>
-										Heavy
-									</option>
+									<option value={PriceWeight.LIGHT}>Light</option>
+									<option value={PriceWeight.MEDIUM}>Medium</option>
+									<option value={PriceWeight.HEAVY}>Heavy</option>
 								</Select>
 								{errors.priceWeight ? (
 									<FormErrorMessage ml={"8px"}>
@@ -239,21 +216,15 @@ export const SwitchSetForm = ({
 						</Flex>
 						<Flex gap={"16px"} mb={"25px"}>
 							{showBrand ? (
-								<Flex
-									flexDirection={"column"}
-									minW={"calc(33% - 8px)"}
-								>
-									<FormLabel fontWeight={"semibold"}>
-										Brand
-									</FormLabel>
+								<Flex flexDirection={"column"} minW={"calc(33% - 8px)"}>
+									<FormLabel fontWeight={"semibold"}>Brand</FormLabel>
 									<Select
 										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("brand")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 										defaultValue={brandNames[0]}
 									>
@@ -265,34 +236,23 @@ export const SwitchSetForm = ({
 									</Select>
 								</Flex>
 							) : (
-								<Flex
-									flexDirection={"column"}
-									minW={"calc(33% - 8px)"}
-								>
-									<FormLabel fontWeight={"semibold"}>
-										Supplier
-									</FormLabel>
+								<Flex flexDirection={"column"} minW={"calc(33% - 8px)"}>
+									<FormLabel fontWeight={"semibold"}>Supplier</FormLabel>
 									<Select
 										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("supplier")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 										defaultValue={brandNames[0]}
 									>
-										{supplierNames.map(
-											(supplier, index) => (
-												<option
-													value={supplier}
-													key={index}
-												>
-													{supplier}
-												</option>
-											)
-										)}
+										{supplierNames.map((supplier, index) => (
+											<option value={supplier} key={index}>
+												{supplier}
+											</option>
+										))}
 									</Select>
 								</Flex>
 							)}
@@ -323,10 +283,7 @@ export const SwitchSetForm = ({
 									defaultChecked
 								/>
 							</Flex>
-							<Flex
-								minW={"calc(33% - 8px)"}
-								flexDirection={"column"}
-							>
+							<Flex minW={"calc(33% - 8px)"} flexDirection={"column"}>
 								<Text mb={"8px"}>Image</Text>
 								<Input
 									id="image"
@@ -340,8 +297,7 @@ export const SwitchSetForm = ({
 										}
 									}}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									type="file"
 									width={"80%"}
@@ -350,12 +306,8 @@ export const SwitchSetForm = ({
 						</Flex>
 
 						<Flex gap={"16px"}>
-							<FormControl
-								isInvalid={errors.switchQuantity != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Switch quantity
-								</FormLabel>
+							<FormControl isInvalid={errors.switchQuantity != null}>
+								<FormLabel fontWeight={"semibold"}>Switch quantity</FormLabel>
 								<Input
 									type="number"
 									rounded={"4px"}
@@ -363,31 +315,26 @@ export const SwitchSetForm = ({
 									borderColor={colorPallete.inputBorder}
 									{...register("switchQuantity")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.switchQuantity ? (
 									<FormErrorMessage ml={"8px"}>
-										Switch quantity should be a positive
-										number
+										Switch quantity should be a positive number
 									</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.switchName != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Switch
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Switch</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("switchName")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={switchNames[0]}
 								>

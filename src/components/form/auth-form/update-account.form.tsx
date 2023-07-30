@@ -47,10 +47,7 @@ interface UpdateAccountFormProps {
 	onClose: () => void;
 }
 
-export const UpdateAccountForm = ({
-	isOpen,
-	onClose,
-}: UpdateAccountFormProps) => {
+export const UpdateAccountForm = ({ isOpen, onClose }: UpdateAccountFormProps) => {
 	const {
 		register,
 		reset,
@@ -116,10 +113,7 @@ export const UpdateAccountForm = ({
 						<Flex gap={"16px"}>
 							<Box flexGrow={"1"}>
 								<FormControl isInvalid={errors.name != null}>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Name
 									</FormLabel>
 									<Input
@@ -128,14 +122,11 @@ export const UpdateAccountForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("name")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.name ? (
-										<FormErrorMessage>
-											{errors.name.message}
-										</FormErrorMessage>
+										<FormErrorMessage>{errors.name.message}</FormErrorMessage>
 									) : (
 										<Box h={"25px"} w="100%"></Box>
 									)}
@@ -143,10 +134,7 @@ export const UpdateAccountForm = ({
 							</Box>
 							<Box flexGrow={"1"}>
 								<FormControl isInvalid={errors.surname != null}>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Surname
 									</FormLabel>
 									<Input
@@ -155,8 +143,7 @@ export const UpdateAccountForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("surname")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.surname ? (
@@ -172,10 +159,7 @@ export const UpdateAccountForm = ({
 						<Flex gap={"16px"}>
 							<Box w="160px">
 								<FormControl isInvalid={errors.phone != null}>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Phone
 									</FormLabel>
 									<Input
@@ -184,27 +168,19 @@ export const UpdateAccountForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("phone")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.phone ? (
-										<FormErrorMessage>
-											{errors.phone?.message}
-										</FormErrorMessage>
+										<FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
 									) : (
 										<Box h={"25px"} w="100%"></Box>
 									)}
 								</FormControl>
 							</Box>
 							<Box flexGrow={"1"}>
-								<FormControl
-									isInvalid={errors.address?.street != null}
-								>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+								<FormControl isInvalid={errors.address?.street != null}>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Street
 									</FormLabel>
 									<Input
@@ -213,8 +189,7 @@ export const UpdateAccountForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.street")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.street ? (
@@ -227,11 +202,7 @@ export const UpdateAccountForm = ({
 								</FormControl>
 							</Box>
 							<Box w="70px">
-								<FormControl
-									isInvalid={
-										errors.address?.streetNumber != null
-									}
-								>
+								<FormControl isInvalid={errors.address?.streetNumber != null}>
 									<FormLabel
 										fontWeight={"semibold"}
 										fontSize={"small"}
@@ -245,8 +216,7 @@ export const UpdateAccountForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.streetNumber")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.streetNumber ? (
@@ -261,13 +231,8 @@ export const UpdateAccountForm = ({
 						</Flex>
 						<Flex gap={"16px"}>
 							<Box flexGrow={"1"}>
-								<FormControl
-									isInvalid={errors.address?.city != null}
-								>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+								<FormControl isInvalid={errors.address?.city != null}>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										City
 									</FormLabel>
 									<Input
@@ -276,8 +241,7 @@ export const UpdateAccountForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.city")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.city ? (
@@ -290,13 +254,8 @@ export const UpdateAccountForm = ({
 								</FormControl>
 							</Box>
 							<Box flexGrow={"1"}>
-								<FormControl
-									isInvalid={errors.address?.zipCode != null}
-								>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+								<FormControl isInvalid={errors.address?.zipCode != null}>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Zip code
 									</FormLabel>
 									<Input
@@ -305,8 +264,7 @@ export const UpdateAccountForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.zipCode")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.zipCode ? (
@@ -319,13 +277,8 @@ export const UpdateAccountForm = ({
 								</FormControl>
 							</Box>
 							<Box flexGrow={"1"}>
-								<FormControl
-									isInvalid={errors.address?.country != null}
-								>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+								<FormControl isInvalid={errors.address?.country != null}>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Country
 									</FormLabel>
 									<Input
@@ -335,8 +288,7 @@ export const UpdateAccountForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.country")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.country ? (
@@ -351,13 +303,8 @@ export const UpdateAccountForm = ({
 						</Flex>
 						<Flex gap={"16px"} mb={"16px"}>
 							<Box flexGrow={"1"}>
-								<FormControl
-									isInvalid={errors.password != null}
-								>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+								<FormControl isInvalid={errors.password != null}>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Password
 									</FormLabel>
 									<Input
@@ -367,8 +314,7 @@ export const UpdateAccountForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("password")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.password ? (

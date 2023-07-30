@@ -27,16 +27,8 @@ export const ActivateRedirectPage = () => {
 		});
 	};
 	return (
-		<Flex
-			justifyContent={"center"}
-			alignItems={"center"}
-			h={"calc(100vh - 105px)"}
-		>
-			<Spinner
-				boxSize={36}
-				thickness="10px"
-				color={colorPallete.header}
-			/>
+		<Flex justifyContent={"center"} alignItems={"center"} h={"calc(100vh - 105px)"}>
+			<Spinner boxSize={36} thickness="10px" color={colorPallete.header} />
 		</Flex>
 	);
 };

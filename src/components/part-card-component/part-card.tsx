@@ -11,9 +11,7 @@ interface PartCardProps {
 }
 
 export const PartCard = ({ part, showMore, deletePart }: PartCardProps) => {
-	const addToProcurement = useApplicationStore(
-		(state) => state.addToProcurement
-	);
+	const addToProcurement = useApplicationStore((state) => state.addToProcurement);
 	function handleAddToProcurement() {
 		addToProcurement({
 			name: part.name,
@@ -45,20 +43,11 @@ export const PartCard = ({ part, showMore, deletePart }: PartCardProps) => {
 				w={"100%"}
 				boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
 			/>
-			<Flex
-				gap={"4px"}
-				justifyContent={"space-between"}
-				px={"8px"}
-				flexDirection={"column"}
-			>
+			<Flex gap={"4px"} justifyContent={"space-between"} px={"8px"} flexDirection={"column"}>
 				<Text h={"50px"} overflow={"hidden"}>
 					{part.name}
 				</Text>
-				<Flex
-					textAlign={"end"}
-					mr={"12px"}
-					justifyContent={"space-between"}
-				>
+				<Flex textAlign={"end"} mr={"12px"} justifyContent={"space-between"}>
 					<Text>Price: </Text>
 					<Text>{part.price} $ </Text>
 				</Flex>

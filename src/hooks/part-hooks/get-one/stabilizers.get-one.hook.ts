@@ -6,9 +6,7 @@ import { Stabilizers } from "../../../model/part.model";
 
 export const useGetOneStabilizers = () => {
 	const { axios } = useAxios();
-	const getStabilizers = async (
-		name: String
-	): Promise<ApiResponse<Stabilizers | null>> => {
+	const getStabilizers = async (name: String): Promise<ApiResponse<Stabilizers | null>> => {
 		try {
 			const res = await axios.get(`/part/${PartType.STABILIZER}/${name}`);
 			return {

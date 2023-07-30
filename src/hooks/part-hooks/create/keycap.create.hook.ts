@@ -5,10 +5,7 @@ import { Keycap } from "../../../model/part.model";
 
 export const useCreateKeycap = () => {
 	const { axios } = useAxios();
-	const createKeycap = async (
-		values: Keycap,
-		image: File
-	): Promise<ApiResponse<null>> => {
+	const createKeycap = async (values: Keycap, image: File): Promise<ApiResponse<null>> => {
 		try {
 			values.image = image;
 			await axios.post(`/part/keycap`, values, {

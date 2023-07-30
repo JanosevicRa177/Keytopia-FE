@@ -9,11 +9,7 @@ interface CustomRouteProps {
 	needAuthorization: boolean;
 }
 
-const ProtectedRoute = ({
-	element,
-	requiredRole,
-	needAuthorization,
-}: CustomRouteProps) => {
+const ProtectedRoute = ({ element, requiredRole, needAuthorization }: CustomRouteProps) => {
 	useEffect(() => {}, []);
 
 	const user = useApplicationStore((state) => state.user);

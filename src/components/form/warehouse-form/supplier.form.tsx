@@ -37,11 +37,7 @@ interface SupplierFormProps {
 	fetchSuppliers: (pageNumber: number) => Promise<void>;
 }
 
-export const SupplierForm = ({
-	isOpen,
-	onClose,
-	fetchSuppliers,
-}: SupplierFormProps) => {
+export const SupplierForm = ({ isOpen, onClose, fetchSuppliers }: SupplierFormProps) => {
 	const { createSupplier } = useCreateSupplier();
 	const { getBrands } = useFetchBrands();
 	const {
@@ -107,9 +103,7 @@ export const SupplierForm = ({
 					>
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.name != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Name
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Name</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -117,8 +111,7 @@ export const SupplierForm = ({
 									borderColor={colorPallete.inputBorder}
 									{...register("name")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.name ? (
@@ -130,9 +123,7 @@ export const SupplierForm = ({
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.phone != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Phone
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Phone</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -140,8 +131,7 @@ export const SupplierForm = ({
 									borderColor={colorPallete.inputBorder}
 									{...register("phone")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.phone ? (
@@ -155,20 +145,15 @@ export const SupplierForm = ({
 						</Flex>
 						<Flex gap="16px">
 							<Box flexGrow={"1"}>
-								<FormControl
-									isInvalid={errors.address?.street != null}
-								>
-									<FormLabel fontWeight={"semibold"}>
-										Street
-									</FormLabel>
+								<FormControl isInvalid={errors.address?.street != null}>
+									<FormLabel fontWeight={"semibold"}>Street</FormLabel>
 									<Input
 										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("address.street")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.street ? (
@@ -181,15 +166,8 @@ export const SupplierForm = ({
 								</FormControl>
 							</Box>
 							<Box w="90px">
-								<FormControl
-									isInvalid={
-										errors.address?.streetNumber != null
-									}
-								>
-									<FormLabel
-										fontWeight={"semibold"}
-										whiteSpace={"nowrap"}
-									>
+								<FormControl isInvalid={errors.address?.streetNumber != null}>
+									<FormLabel fontWeight={"semibold"} whiteSpace={"nowrap"}>
 										Street Number
 									</FormLabel>
 									<Input
@@ -198,8 +176,7 @@ export const SupplierForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.streetNumber")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.streetNumber ? (
@@ -214,20 +191,15 @@ export const SupplierForm = ({
 						</Flex>
 						<Flex gap={"16px"}>
 							<Box minW={"130px"}>
-								<FormControl
-									isInvalid={errors.address?.city != null}
-								>
-									<FormLabel fontWeight={"semibold"}>
-										City
-									</FormLabel>
+								<FormControl isInvalid={errors.address?.city != null}>
+									<FormLabel fontWeight={"semibold"}>City</FormLabel>
 									<Input
 										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("address.city")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.city ? (
@@ -239,20 +211,15 @@ export const SupplierForm = ({
 									)}
 								</FormControl>
 							</Box>
-							<FormControl
-								isInvalid={errors.address?.zipCode != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Zip code
-								</FormLabel>
+							<FormControl isInvalid={errors.address?.zipCode != null}>
+								<FormLabel fontWeight={"semibold"}>Zip code</FormLabel>
 								<Input
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("address.zipCode")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.address?.zipCode ? (
@@ -264,12 +231,8 @@ export const SupplierForm = ({
 								)}
 							</FormControl>
 
-							<FormControl
-								isInvalid={errors.address?.country != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Country
-								</FormLabel>
+							<FormControl isInvalid={errors.address?.country != null}>
+								<FormLabel fontWeight={"semibold"}>Country</FormLabel>
 								<Input
 									type="country"
 									rounded={"4px"}
@@ -277,8 +240,7 @@ export const SupplierForm = ({
 									borderColor={colorPallete.inputBorder}
 									{...register("address.country")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.address?.country ? (
@@ -291,10 +253,7 @@ export const SupplierForm = ({
 							</FormControl>
 						</Flex>
 						<FormControl isInvalid={errors.brands != null}>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								Brands
 							</FormLabel>
 							<Multiselect

@@ -44,10 +44,7 @@ export type RegisterAdminFormValues = {
 	};
 };
 
-export const RegisterAdminForm = ({
-	isOpen,
-	onClose,
-}: RegisterAdminFormProps) => {
+export const RegisterAdminForm = ({ isOpen, onClose }: RegisterAdminFormProps) => {
 	const {
 		register,
 		reset,
@@ -92,10 +89,7 @@ export const RegisterAdminForm = ({
 						justifyContent={"center"}
 					>
 						<FormControl isInvalid={errors.email != null}>
-							<FormLabel
-								fontWeight={"semibold"}
-								fontSize={"small"}
-							>
+							<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 								Email address
 							</FormLabel>
 							<Input
@@ -108,9 +102,7 @@ export const RegisterAdminForm = ({
 								}}
 							/>
 							{errors.email ? (
-								<FormErrorMessage>
-									{errors.email.message}
-								</FormErrorMessage>
+								<FormErrorMessage>{errors.email.message}</FormErrorMessage>
 							) : (
 								<Box h={"25px"} w="100%"></Box>
 							)}
@@ -118,10 +110,7 @@ export const RegisterAdminForm = ({
 						<Flex gap={"16px"}>
 							<Box flexGrow={"1"}>
 								<FormControl isInvalid={errors.name != null}>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Name
 									</FormLabel>
 									<Input
@@ -130,14 +119,11 @@ export const RegisterAdminForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("name")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.name ? (
-										<FormErrorMessage>
-											{errors.name.message}
-										</FormErrorMessage>
+										<FormErrorMessage>{errors.name.message}</FormErrorMessage>
 									) : (
 										<Box h={"25px"} w="100%"></Box>
 									)}
@@ -145,10 +131,7 @@ export const RegisterAdminForm = ({
 							</Box>
 							<Box flexGrow={"1"}>
 								<FormControl isInvalid={errors.surname != null}>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Surname
 									</FormLabel>
 									<Input
@@ -157,8 +140,7 @@ export const RegisterAdminForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("surname")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.surname ? (
@@ -174,10 +156,7 @@ export const RegisterAdminForm = ({
 						<Flex gap={"16px"}>
 							<Box w="160px">
 								<FormControl isInvalid={errors.phone != null}>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Phone
 									</FormLabel>
 									<Input
@@ -186,27 +165,19 @@ export const RegisterAdminForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("phone")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.phone ? (
-										<FormErrorMessage>
-											{errors.phone?.message}
-										</FormErrorMessage>
+										<FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
 									) : (
 										<Box h={"25px"} w="100%"></Box>
 									)}
 								</FormControl>
 							</Box>
 							<Box flexGrow={"1"}>
-								<FormControl
-									isInvalid={errors.address?.street != null}
-								>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+								<FormControl isInvalid={errors.address?.street != null}>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Street
 									</FormLabel>
 									<Input
@@ -215,8 +186,7 @@ export const RegisterAdminForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.street")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.street ? (
@@ -229,11 +199,7 @@ export const RegisterAdminForm = ({
 								</FormControl>
 							</Box>
 							<Box w="70px">
-								<FormControl
-									isInvalid={
-										errors.address?.streetNumber != null
-									}
-								>
+								<FormControl isInvalid={errors.address?.streetNumber != null}>
 									<FormLabel
 										fontWeight={"semibold"}
 										fontSize={"small"}
@@ -247,8 +213,7 @@ export const RegisterAdminForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.streetNumber")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.streetNumber ? (
@@ -263,13 +228,8 @@ export const RegisterAdminForm = ({
 						</Flex>
 						<Flex gap={"16px"}>
 							<Box flexGrow={"1"}>
-								<FormControl
-									isInvalid={errors.address?.city != null}
-								>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+								<FormControl isInvalid={errors.address?.city != null}>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										City
 									</FormLabel>
 									<Input
@@ -278,8 +238,7 @@ export const RegisterAdminForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.city")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.city ? (
@@ -292,13 +251,8 @@ export const RegisterAdminForm = ({
 								</FormControl>
 							</Box>
 							<Box flexGrow={"1"}>
-								<FormControl
-									isInvalid={errors.address?.zipCode != null}
-								>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+								<FormControl isInvalid={errors.address?.zipCode != null}>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Zip code
 									</FormLabel>
 									<Input
@@ -307,8 +261,7 @@ export const RegisterAdminForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.zipCode")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.zipCode ? (
@@ -321,13 +274,8 @@ export const RegisterAdminForm = ({
 								</FormControl>
 							</Box>
 							<Box flexGrow={"1"}>
-								<FormControl
-									isInvalid={errors.address?.country != null}
-								>
-									<FormLabel
-										fontWeight={"semibold"}
-										fontSize={"small"}
-									>
+								<FormControl isInvalid={errors.address?.country != null}>
+									<FormLabel fontWeight={"semibold"} fontSize={"small"}>
 										Country
 									</FormLabel>
 									<Input
@@ -337,8 +285,7 @@ export const RegisterAdminForm = ({
 										borderColor={colorPallete.inputBorder}
 										{...register("address.country")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 									/>
 									{errors.address?.country ? (

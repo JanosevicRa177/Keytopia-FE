@@ -6,10 +6,7 @@ import { normalizeEnum } from "../../../utils/string.converter";
 
 export const useDeletePart = () => {
 	const { axios } = useAxios();
-	const deletePart = async (
-		name: String,
-		partType: PartType
-	): Promise<ApiResponse<null>> => {
+	const deletePart = async (name: String, partType: PartType): Promise<ApiResponse<null>> => {
 		try {
 			await axios.delete(`/part/${partType}/${name}`);
 			toast.success(`${normalizeEnum(partType)} successfuly deleted!`);

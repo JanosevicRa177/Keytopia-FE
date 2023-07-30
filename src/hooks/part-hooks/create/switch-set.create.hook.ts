@@ -5,10 +5,7 @@ import { SwitchSet } from "../../../model/part.model";
 
 export const useCreateSwitchSet = () => {
 	const { axios } = useAxios();
-	const createSwitchSet = async (
-		values: SwitchSet,
-		image: File
-	): Promise<ApiResponse<null>> => {
+	const createSwitchSet = async (values: SwitchSet, image: File): Promise<ApiResponse<null>> => {
 		try {
 			values.image = image;
 			await axios.post(`/part/switch-set`, values, {

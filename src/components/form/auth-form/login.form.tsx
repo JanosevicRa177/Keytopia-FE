@@ -68,11 +68,7 @@ export const LoginForm = () => {
 				alignContent={"center"}
 				justifyContent={"center"}
 			>
-				<Text
-					fontWeight={"semibold"}
-					textAlign={"center"}
-					fontSize={"5xl"}
-				>
+				<Text fontWeight={"semibold"} textAlign={"center"} fontSize={"5xl"}>
 					Login
 				</Text>
 				<FormControl isInvalid={errors.email != null}>
@@ -86,9 +82,7 @@ export const LoginForm = () => {
 						_hover={{ borderColor: colorPallete.inputBorderHover }}
 					/>
 					{errors.email ? (
-						<FormErrorMessage ml={"8px"}>
-							{errors.email.message}
-						</FormErrorMessage>
+						<FormErrorMessage ml={"8px"}>{errors.email.message}</FormErrorMessage>
 					) : (
 						<Box h={"25px"} w="100%" ml={"8px"}></Box>
 					)}
@@ -106,9 +100,7 @@ export const LoginForm = () => {
 						_hover={{ borderColor: colorPallete.inputBorderHover }}
 					/>
 					{errors.password ? (
-						<FormErrorMessage ml={"8px"}>
-							{errors.password.message}
-						</FormErrorMessage>
+						<FormErrorMessage ml={"8px"}>{errors.password.message}</FormErrorMessage>
 					) : (
 						<Box h={"25px"} w="100%" ml={"8px"}></Box>
 					)}

@@ -5,10 +5,7 @@ import { Case } from "../../../model/part.model";
 
 export const useCreateCase = () => {
 	const { axios } = useAxios();
-	const createCase = async (
-		values: Case,
-		image: File
-	): Promise<ApiResponse<null>> => {
+	const createCase = async (values: Case, image: File): Promise<ApiResponse<null>> => {
 		try {
 			values.image = image;
 			await axios.post(`/part/case`, values, {

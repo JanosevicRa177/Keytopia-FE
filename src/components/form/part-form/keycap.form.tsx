@@ -69,9 +69,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 					toast.error("Something wrong with fetching brands!");
 					return;
 				}
-				const brandNames: string[] = res.data.map(
-					(brand) => brand.name
-				);
+				const brandNames: string[] = res.data.map((brand) => brand.name);
 				setBrandNames(brandNames);
 				setValue("brand", brandNames[0]);
 			});
@@ -80,16 +78,12 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 					toast.error("Something wrong with fetching brands!");
 					return;
 				}
-				const supplierNames: string[] = res.data.map(
-					(supplier) => supplier.name
-				);
+				const supplierNames: string[] = res.data.map((supplier) => supplier.name);
 				setSupplierNames(supplierNames);
 			});
 			getKeycapProfiles().then((res: ApiResponse<string[] | null>) => {
 				if (res.data == null) {
-					toast.error(
-						"Something wrong with fetching keycap profiles!"
-					);
+					toast.error("Something wrong with fetching keycap profiles!");
 					return;
 				}
 				setKeycapProfileNames(res.data);
@@ -155,9 +149,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 					>
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.name != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Name
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Name</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -165,8 +157,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									borderColor={colorPallete.inputBorder}
 									{...register("name")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.name ? (
@@ -178,9 +169,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.price != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Price
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Price</FormLabel>
 								<Input
 									type="number"
 									rounded={"4px"}
@@ -188,8 +177,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									borderColor={colorPallete.inputBorder}
 									{...register("price")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.price ? (
@@ -201,29 +189,20 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.priceWeight != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Price weight
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Price weight</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("priceWeight")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={PriceWeight.LIGHT}
 								>
-									<option value={PriceWeight.LIGHT}>
-										Light
-									</option>
-									<option value={PriceWeight.MEDIUM}>
-										Medium
-									</option>
-									<option value={PriceWeight.HEAVY}>
-										Heavy
-									</option>
+									<option value={PriceWeight.LIGHT}>Light</option>
+									<option value={PriceWeight.MEDIUM}>Medium</option>
+									<option value={PriceWeight.HEAVY}>Heavy</option>
 								</Select>
 								{errors.priceWeight ? (
 									<FormErrorMessage ml={"8px"}>
@@ -236,21 +215,15 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 						</Flex>
 						<Flex gap={"16px"} mb={"25px"}>
 							{showBrand ? (
-								<Flex
-									flexDirection={"column"}
-									minW={"calc(33% - 8px)"}
-								>
-									<FormLabel fontWeight={"semibold"}>
-										Brand
-									</FormLabel>
+								<Flex flexDirection={"column"} minW={"calc(33% - 8px)"}>
+									<FormLabel fontWeight={"semibold"}>Brand</FormLabel>
 									<Select
 										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("brand")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 										defaultValue={brandNames[0]}
 									>
@@ -262,34 +235,23 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									</Select>
 								</Flex>
 							) : (
-								<Flex
-									flexDirection={"column"}
-									minW={"calc(33% - 8px)"}
-								>
-									<FormLabel fontWeight={"semibold"}>
-										Supplier
-									</FormLabel>
+								<Flex flexDirection={"column"} minW={"calc(33% - 8px)"}>
+									<FormLabel fontWeight={"semibold"}>Supplier</FormLabel>
 									<Select
 										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("supplier")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 										defaultValue={brandNames[0]}
 									>
-										{supplierNames.map(
-											(supplier, index) => (
-												<option
-													value={supplier}
-													key={index}
-												>
-													{supplier}
-												</option>
-											)
-										)}
+										{supplierNames.map((supplier, index) => (
+											<option value={supplier} key={index}>
+												{supplier}
+											</option>
+										))}
 									</Select>
 								</Flex>
 							)}
@@ -320,10 +282,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									defaultChecked
 								/>
 							</Flex>
-							<Flex
-								minW={"calc(33% - 8px)"}
-								flexDirection={"column"}
-							>
+							<Flex minW={"calc(33% - 8px)"} flexDirection={"column"}>
 								<Text mb={"8px"}>Image</Text>
 								<Input
 									id="image"
@@ -337,8 +296,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 										}
 									}}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									type="file"
 									width={"80%"}
@@ -347,36 +305,25 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 						</Flex>
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.material != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Material
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Material</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("material")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={KeycapMaterial.ABS}
 								>
-									<option value={KeycapMaterial.ABS}>
-										ABS
-									</option>
-									<option
-										value={KeycapMaterial.DOUBLESHOT_ABS}
-									>
+									<option value={KeycapMaterial.ABS}>ABS</option>
+									<option value={KeycapMaterial.DOUBLESHOT_ABS}>
 										Doubleshot ABS
 									</option>
-									<option
-										value={KeycapMaterial.DOUBLESHOT_PBT}
-									>
+									<option value={KeycapMaterial.DOUBLESHOT_PBT}>
 										Doubleshot PBT
 									</option>
-									<option value={KeycapMaterial.PBT}>
-										PBT
-									</option>
+									<option value={KeycapMaterial.PBT}>PBT</option>
 								</Select>
 								{errors.material ? (
 									<FormErrorMessage ml={"8px"}>
@@ -386,33 +333,23 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
 							</FormControl>
-							<FormControl
-								isInvalid={errors.keycapProfile != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Keycap profile
-								</FormLabel>
+							<FormControl isInvalid={errors.keycapProfile != null}>
+								<FormLabel fontWeight={"semibold"}>Keycap profile</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("keycapProfile")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={keycapProfileNames[0]}
 								>
-									{keycapProfileNames.map(
-										(keycapProfile, index) => (
-											<option
-												value={keycapProfile}
-												key={index}
-											>
-												{keycapProfile}
-											</option>
-										)
-									)}
+									{keycapProfileNames.map((keycapProfile, index) => (
+										<option value={keycapProfile} key={index}>
+											{keycapProfile}
+										</option>
+									))}
 								</Select>
 								{errors.keycapProfile ? (
 									<FormErrorMessage ml={"8px"}>

@@ -5,10 +5,7 @@ import { PCB } from "../../../model/part.model";
 
 export const useCreatePCB = () => {
 	const { axios } = useAxios();
-	const createPCB = async (
-		values: PCB,
-		image: File
-	): Promise<ApiResponse<null>> => {
+	const createPCB = async (values: PCB, image: File): Promise<ApiResponse<null>> => {
 		try {
 			values.image = image;
 			await axios.post(`/part/pcb`, values, {

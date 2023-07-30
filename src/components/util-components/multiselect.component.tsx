@@ -23,9 +23,7 @@ export const Multiselect = (props: MultiselectProps) => {
 		setChosenItems(chosenItems.filter((val) => val !== value));
 		props.onChange(
 			props.multiselectName,
-			chosenItems
-				.filter((val) => val !== value)
-				.map((value) => value.value)
+			chosenItems.filter((val) => val !== value).map((value) => value.value)
 		);
 	}
 	function addValue(value: MultiselectOption) {
@@ -51,19 +49,12 @@ export const Multiselect = (props: MultiselectProps) => {
 				border={props.isError ? "2px" : "2px"}
 				h={isOpen ? "225px" : "45px"}
 				zIndex={"20"}
-				borderColor={
-					props.isError ? "red.500" : colorPallete.inputBorder
-				}
+				borderColor={props.isError ? "red.500" : colorPallete.inputBorder}
 				transition={"0.3s ease"}
 				overflow={"hidden"}
 			>
 				<Flex flexDirection={"column"} h={"225px"} w={"100%"}>
-					<Flex
-						zIndex={"20"}
-						rounded={"4px"}
-						overflow={"hidden"}
-						columnGap={"4px"}
-					>
+					<Flex zIndex={"20"} rounded={"4px"} overflow={"hidden"} columnGap={"4px"}>
 						<Flex
 							gap={"4px"}
 							h={"45px"}
@@ -106,11 +97,7 @@ export const Multiselect = (props: MultiselectProps) => {
 								))}
 							</Flex>
 						</Flex>
-						<Center
-							minW={"45px"}
-							minH={"45px"}
-							onClick={() => setIsOpen(!isOpen)}
-						>
+						<Center minW={"45px"} minH={"45px"} onClick={() => setIsOpen(!isOpen)}>
 							<Img src={downArrow} w={"15px"} h={"15px"} />
 						</Center>
 					</Flex>
@@ -142,11 +129,7 @@ export const Multiselect = (props: MultiselectProps) => {
 									</Text>
 									{isPresent(value) && (
 										<Center h={"100%"}>
-											<Img
-												src={checkmark}
-												w={"10px"}
-												h={"10px"}
-											/>
+											<Img src={checkmark} w={"10px"} h={"10px"} />
 										</Center>
 									)}
 								</Flex>

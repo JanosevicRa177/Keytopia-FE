@@ -6,9 +6,7 @@ import { Plate } from "../../../model/part.model";
 
 export const useGetOnePlate = () => {
 	const { axios } = useAxios();
-	const getPlate = async (
-		name: String
-	): Promise<ApiResponse<Plate | null>> => {
+	const getPlate = async (name: String): Promise<ApiResponse<Plate | null>> => {
 		try {
 			const res = await axios.get(`/part/${PartType.PLATE}/${name}`);
 			return {

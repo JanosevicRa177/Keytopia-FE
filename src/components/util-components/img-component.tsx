@@ -10,13 +10,7 @@ export const ImgComponent = () => {
 		setIsOpen(!Boolean(location.pathname.match("/authorization")));
 	}, [location]);
 	return (
-		<Box
-			w={"100vw"}
-			minH={"100vh"}
-			h={"100vh"}
-			position={"fixed"}
-			zIndex={"0"}
-		>
+		<Box w={"100vw"} minH={"100vh"} h={"100vh"} position={"fixed"} zIndex={"0"}>
 			<SlideFade in={isOpen} offsetY="20px">
 				<Flex justifyContent={"space-between"} position={"relative"}>
 					<Flex w={"20%"} position={"relative"} h={"100%"}>

@@ -45,21 +45,14 @@ export const AuthPage = () => {
 						fontSize={"large"}
 						color={colorPallete.text}
 					>
-						<Text
-							textAlign={"center"}
-							mb={"8px"}
-							fontSize={"4xl"}
-							fontWeight={"bold"}
-						>
+						<Text textAlign={"center"} mb={"8px"} fontSize={"4xl"} fontWeight={"bold"}>
 							Welcome to Keytopia!
 						</Text>{" "}
-						Your ultimate destination for custom keyboard parts!
-						We're thrilled to have you join our vibrant community of
-						keyboard enthusiasts.
+						Your ultimate destination for custom keyboard parts! We're thrilled to have
+						you join our vibrant community of keyboard enthusiasts.
 						<br /> <br />
-						Whether you're a seasoned mechanical keyboard aficionado
-						or just beginning your journey, Keytopia is here to
-						cater to all your customization needs.
+						Whether you're a seasoned mechanical keyboard aficionado or just beginning
+						your journey, Keytopia is here to cater to all your customization needs.
 					</Flex>
 					<Box
 						position={"relative"}
@@ -85,23 +78,17 @@ export const AuthPage = () => {
 						textAlign={"justify"}
 						fontSize={"large"}
 					>
-						<Text
-							textAlign={"center"}
-							mb={"8px"}
-							fontSize={"4xl"}
-							fontWeight={"bold"}
-						>
+						<Text textAlign={"center"} mb={"8px"} fontSize={"4xl"} fontWeight={"bold"}>
 							Welcome to Keytopia!
 						</Text>{" "}
-						Unlock a world of endless possibilities as you explore
-						our vast collection of high-quality keyboard components.
-						From keycaps to switches, plates to stabilizers, we have
-						everything you need to create a truly unique typing
+						Unlock a world of endless possibilities as you explore our vast collection
+						of high-quality keyboard components. From keycaps to switches, plates to
+						stabilizers, we have everything you need to create a truly unique typing
 						experience that matches your style and preference.
 						<br /> <br />
-						Our carefully curated selection features top brands and
-						exclusive collaborations, ensuring that you'll find the
-						perfect parts to bring your dream keyboard to life.
+						Our carefully curated selection features top brands and exclusive
+						collaborations, ensuring that you'll find the perfect parts to bring your
+						dream keyboard to life.
 					</Flex>
 					<Box
 						left={formState.state === "REGISTER" ? "0px" : "100%"}

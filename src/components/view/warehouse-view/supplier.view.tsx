@@ -21,7 +21,7 @@ import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { colorPallete } from "../../../styles/color";
 import { SupplierForm } from "../../form/warehouse-form/supplier.form";
 import { Pagination } from "../../paging/pagination/pagination";
-import { DataArrayModal } from "../../util-components/data-array.component";
+import { SupplierBrandsModal } from "../../util-components/supplier-brands.modal";
 
 export const SupplierView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
@@ -29,16 +29,8 @@ export const SupplierView = () => {
 	const [brandNames, setBrandNames] = useState<string[]>([]);
 	const [chosenSupplierName, setChosenSupplierName] = useState("");
 	const { deleteSupplier } = useDeleteSupplier();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
-	const {
-		isOpen: isOpenModal,
-		onClose: onCloseModal,
-		onOpen: onOpenModal,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
+	const { isOpen: isOpenModal, onClose: onCloseModal, onOpen: onOpenModal } = useDisclosure();
 	useEffect(() => {
 		getSuppliersPage(0).then(() => setCurrentPage(1));
 	}, []);
@@ -48,6 +40,9 @@ export const SupplierView = () => {
 				getSuppliersPage(0).then(() => setCurrentPage(1));
 			}
 		});
+	}
+	function fetchSuppliresAgain() {
+		getSuppliersPage(currentPage - 1);
 	}
 	async function handleShowBrands(brands: string[], supplierName: string) {
 		setBrandNames(brands);
@@ -95,11 +90,7 @@ export const SupplierView = () => {
 				</Flex>
 				<Flex h={"408px"} fontSize={"md"}>
 					<TableContainer flex={1}>
-						<Table
-							variant="striped"
-							colorScheme={"purple"}
-							fontSize={"small"}
-						>
+						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
@@ -110,73 +101,56 @@ export const SupplierView = () => {
 							</Thead>
 							<Tbody>
 								{getSuppliersPageRes.data.content &&
-									getSuppliersPageRes.data.content.map(
-										(item: Supplier) => (
-											<Tr key={item.name}>
-												<Td w={"10%"}>{item.name}</Td>
-												<Td w={"30%"}>
-													{item.address.street}{" "}
-													{item.address.streetNumber},{" "}
-													{item.address.zipCode}{" "}
-													{item.address.city},{" "}
-													{item.address.country}
-												</Td>
-												<Td w={"10%"}>{item.phone}</Td>
-												<Td w={"10%"}>{item.penals}</Td>
-												<Td>
-													<Flex gap={"4"}>
-														<Button
-															w={"50%"}
-															rounded={"4px"}
-															overflow={"hidden"}
-															color={"#343434"}
-															bg={
-																colorPallete.button
-															}
-															onClick={() =>
-																handleShowBrands(
-																	item.brands,
-																	item.name
-																)
-															}
-															_hover={{
-																bg: colorPallete.buttonHover,
-																transform:
-																	"scale(1.05,1.05)",
-																transition:
-																	"0.2s",
-															}}
-														>
-															Show brands
-														</Button>
-														<Button
-															w={"50%"}
-															rounded={"4px"}
-															overflow={"hidden"}
-															bg={
-																colorPallete.deleteButton
-															}
-															color={"white"}
-															onClick={() =>
-																handleDeleteSupplier(
-																	item.name
-																)
-															}
-															_hover={{
-																bg: colorPallete.deleteButtonHover,
-																transform:
-																	"scale(1.05,1.05)",
-																transition:
-																	"0.2s",
-															}}
-														>
-															Delete
-														</Button>
-													</Flex>
-												</Td>
-											</Tr>
-										)
-									)}
+									getSuppliersPageRes.data.content.map((item: Supplier) => (
+										<Tr key={item.name}>
+											<Td w={"10%"}>{item.name}</Td>
+											<Td w={"30%"}>
+												{item.address.street} {item.address.streetNumber},{" "}
+												{item.address.zipCode} {item.address.city},{" "}
+												{item.address.country}
+											</Td>
+											<Td w={"10%"}>{item.phone}</Td>
+											<Td w={"10%"}>{item.penals}</Td>
+											<Td>
+												<Flex gap={"4"}>
+													<Button
+														w={"50%"}
+														rounded={"4px"}
+														overflow={"hidden"}
+														color={"#343434"}
+														bg={colorPallete.button}
+														onClick={() =>
+															handleShowBrands(item.brands, item.name)
+														}
+														_hover={{
+															bg: colorPallete.buttonHover,
+															transform: "scale(1.05,1.05)",
+															transition: "0.2s",
+														}}
+													>
+														Show/Update brands
+													</Button>
+													<Button
+														w={"50%"}
+														rounded={"4px"}
+														overflow={"hidden"}
+														bg={colorPallete.deleteButton}
+														color={"white"}
+														onClick={() =>
+															handleDeleteSupplier(item.name)
+														}
+														_hover={{
+															bg: colorPallete.deleteButtonHover,
+															transform: "scale(1.05,1.05)",
+															transition: "0.2s",
+														}}
+													>
+														Delete
+													</Button>
+												</Flex>
+											</Td>
+										</Tr>
+									))}
 							</Tbody>
 						</Table>
 					</TableContainer>
@@ -195,11 +169,13 @@ export const SupplierView = () => {
 				onClose={onCloseForm}
 				fetchSuppliers={getSuppliersPage}
 			/>
-			<DataArrayModal
-				header={"Brands for " + chosenSupplierName}
+			<SupplierBrandsModal
+				supplierName={chosenSupplierName}
 				isOpen={isOpenModal}
 				onClose={onCloseModal}
 				data={brandNames}
+				setSupplierName={setChosenSupplierName}
+				fetchSuppliersAgain={fetchSuppliresAgain}
 			/>
 		</Box>
 	);

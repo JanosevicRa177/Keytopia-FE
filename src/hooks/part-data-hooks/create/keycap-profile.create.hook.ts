@@ -5,9 +5,7 @@ import { useAxios } from "../../../utils/axios.hook";
 
 export const useCreateKeycapProfile = () => {
 	const { axios } = useAxios();
-	const createKeycapProfile = async (
-		values: KeycapProfile
-	): Promise<ApiResponse<null>> => {
+	const createKeycapProfile = async (values: KeycapProfile): Promise<ApiResponse<null>> => {
 		try {
 			await axios.post(`/part-data/keycap-profile`, values);
 			toast.success("Keycap profile successfuly created!");

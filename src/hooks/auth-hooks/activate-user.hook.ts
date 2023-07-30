@@ -5,9 +5,7 @@ import { ApiResponse } from "../../store/auth-store/types/response.type";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const useUserActivation = () => {
-	const userActivation = async (
-		token: string
-	): Promise<ApiResponse<null>> => {
+	const userActivation = async (token: string): Promise<ApiResponse<null>> => {
 		try {
 			await axios.patch(`${BASE_URL}/user/activate/${token}`, {});
 			toast.success("Your account is activated!");

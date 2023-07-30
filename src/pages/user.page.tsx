@@ -1,16 +1,6 @@
-import {
-	Center,
-	Flex,
-	Text,
-	Img,
-	Button,
-	useDisclosure,
-} from "@chakra-ui/react";
+import { Center, Flex, Text, Img, Button, useDisclosure } from "@chakra-ui/react";
 import { MainContrainer } from "../components/page-component/main-container";
-import {
-	SectionContainer,
-	SectionStyle,
-} from "../components/page-component/section-container";
+import { SectionContainer, SectionStyle } from "../components/page-component/section-container";
 import { useApplicationStore } from "../store/store";
 import userImg from "../images/user.png";
 import { colorPallete } from "../styles/color";
@@ -60,18 +50,13 @@ export const UserPage = () => {
 							<Text fontWeight={"bold"}>Address:</Text>
 							<Text>
 								{" "}
-								{user?.address.street}{" "}
-								{user?.address.streetNumber},{" "}
+								{user?.address.street} {user?.address.streetNumber},{" "}
 								{user?.address.zipCode} {user?.address.city},{" "}
 								{user?.address.country}
 							</Text>
 						</Flex>
 						<Flex gap={"16px"} mt={"16px"}>
-							<Flex
-								justifyContent={"center"}
-								position={"relative"}
-								flexGrow={"1"}
-							>
+							<Flex justifyContent={"center"} position={"relative"} flexGrow={"1"}>
 								<Button
 									w={"100%"}
 									h={"45px"}
@@ -92,11 +77,7 @@ export const UserPage = () => {
 									Change password
 								</Button>
 							</Flex>
-							<Flex
-								justifyContent={"center"}
-								position={"relative"}
-								flexGrow={"1"}
-							>
+							<Flex justifyContent={"center"} position={"relative"} flexGrow={"1"}>
 								<Button
 									w={"100%"}
 									h={"45px"}

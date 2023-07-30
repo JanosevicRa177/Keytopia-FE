@@ -2,10 +2,12 @@
 import { Button, Flex, Img, Input, Text } from "@chakra-ui/react";
 import { colorPallete } from "../../styles/color";
 import { SortDirection } from "../../utils/enum";
-
-import unsortedImage from "../../images/downArrow.png";
 import { useEffect, useState } from "react";
 import { normalizeEnum } from "../../utils/string.converter";
+
+import unsortedImage from "../../images/unsort.png";
+import ascImage from "../../images/asc.png";
+import descImage from "../../images/desc.png";
 
 interface PartFilterSortProps {
 	setSearchName: React.Dispatch<React.SetStateAction<string>>;
@@ -24,10 +26,8 @@ export const PartFilterSort = ({
 }: PartFilterSortProps) => {
 	const [name, setName] = useState("");
 	async function handleSortDirection() {
-		if (sortedDirection === SortDirection.UNSORTED)
-			setSortedDirection(SortDirection.ASC);
-		else if (sortedDirection === SortDirection.ASC)
-			setSortedDirection(SortDirection.DESC);
+		if (sortedDirection === SortDirection.UNSORTED) setSortedDirection(SortDirection.ASC);
+		else if (sortedDirection === SortDirection.ASC) setSortedDirection(SortDirection.DESC);
 		else {
 			setSortedDirection(SortDirection.UNSORTED);
 		}
@@ -59,25 +59,34 @@ export const PartFilterSort = ({
 			</Flex>
 			<Flex flexDirection={"column"} gap={"8px"} w={"33%"} h={"77px"}>
 				<Text textAlign={"center"}>
-					Sort by quantity (sorted direction:{" "}
-					{normalizeEnum(sortedDirection)})
+					Sort by quantity ( {normalizeEnum(sortedDirection)} )
 				</Text>
-				<Flex verticalAlign={"center"} justifyContent={"center"}>
-					<Img
-						src={unsortedImage}
-						w={"25px"}
-						h={"25px"}
-						onClick={() => handleSortDirection()}
-					/>
+				<Flex
+					verticalAlign={"center"}
+					justifyContent={"center"}
+					onClick={() => handleSortDirection()}
+					cursor={"pointer"}
+					position={"relative"}
+				>
+					{sortedDirection === SortDirection.UNSORTED && (
+						<Img
+							src={unsortedImage}
+							w={"65px"}
+							h={"65px"}
+							position={"relative"}
+							top={"-12px"}
+						/>
+					)}
+					{sortedDirection === SortDirection.ASC && (
+						<Img src={ascImage} w={"25px"} h={"25px"} position={"relative"} />
+					)}
+					{sortedDirection === SortDirection.DESC && (
+						<Img src={descImage} w={"25px"} h={"25px"} position={"relative"} />
+					)}
 				</Flex>
 			</Flex>
 			<Flex w={"33%"} h={"45px"}>
-				<Flex
-					flexDirection={"column"}
-					position={"relative"}
-					w={"100%"}
-					h={"45px"}
-				>
+				<Flex flexDirection={"column"} position={"relative"} w={"100%"} h={"45px"}>
 					<Button
 						w={"100%"}
 						h={"45px"}

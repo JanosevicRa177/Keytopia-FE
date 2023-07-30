@@ -1,11 +1,5 @@
 import { StabilizerType } from "./../utils/enum";
-import {
-	CableConnector,
-	KeycapMaterial,
-	PCBType,
-	PinType,
-	PriceWeight,
-} from "../utils/enum";
+import { CableConnector, KeycapMaterial, PCBType, PinType, PriceWeight } from "../utils/enum";
 import { VariableWithValue } from "../utils/types";
 import { Switch } from "./part-data.model";
 

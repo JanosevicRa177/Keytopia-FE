@@ -8,10 +8,7 @@ import { PartWithData, Cable, Part } from "../../../model/part.model";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { colorPallete } from "../../../styles/color";
 import { PartType, SortDirection } from "../../../utils/enum";
-import {
-	normalizeNames,
-	normalizeConnectionType,
-} from "../../../utils/string.converter";
+import { normalizeNames, normalizeConnectionType } from "../../../utils/string.converter";
 import { VariableWithValue } from "../../../utils/types";
 import { CableForm } from "../../form/part-form/cable.form";
 import { PartCard } from "../../part-card-component/part-card";
@@ -31,20 +28,10 @@ export const CableView = () => {
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
 	const { getCable } = useGetOneCable();
 	const [searchName, setSearchName] = useState("");
-	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
-		SortDirection.UNSORTED
-	);
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(SortDirection.UNSORTED);
 	const { deletePart } = useDeletePart();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
-	const {
-		isOpen: isOpenModal,
-		onClose: onCloseModal,
-		onOpen: onOpenModal,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
+	const { isOpen: isOpenModal, onClose: onCloseModal, onOpen: onOpenModal } = useDisclosure();
 	useEffect(() => {
 		fetchPage(0);
 	}, []);
@@ -61,7 +48,7 @@ export const CableView = () => {
 		);
 	}
 	async function handleShowMoreCable(name: String) {
-		getCable(name).then((cable: ApiResponse<Cable | null>) => {
+		await getCable(name).then((cable: ApiResponse<Cable | null>) => {
 			if (cable.data === null) {
 				return;
 			}
@@ -79,10 +66,7 @@ export const CableView = () => {
 					normalizedNames.shift();
 					return;
 				}
-				if (
-					name === "keyboardConnector" ||
-					name === "computerConnector"
-				) {
+				if (name === "keyboardConnector" || name === "computerConnector") {
 					normalizeConnectionType(
 						cableData[name as keyof Cable]?.toString() as string,
 						data,
@@ -93,10 +77,7 @@ export const CableView = () => {
 				if (name === "price") {
 					data.push({
 						variable: normalizedNames[0],
-						value:
-							(cableData[
-								name as keyof Cable
-							]?.toString() as string) + " $",
+						value: (cableData[name as keyof Cable]?.toString() as string) + " $",
 					});
 					normalizedNames.shift();
 					return;
@@ -160,12 +141,7 @@ export const CableView = () => {
 					sortedDirection={sortedDirection}
 					searchName={searchName}
 				/>
-				<Flex
-					fontSize={"md"}
-					flexWrap={"wrap"}
-					gap={"27px"}
-					my={"32px"}
-				>
+				<Flex fontSize={"md"} flexWrap={"wrap"} gap={"27px"} my={"32px"}>
 					{getPartPageRes.data.content.map((part: Part) => (
 						<PartCard
 							key={part.name}
@@ -185,16 +161,8 @@ export const CableView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<CableForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchPage={fetchPage}
-			/>
-			<PartModalView
-				isOpen={isOpenModal}
-				onClose={onCloseModal}
-				part={part}
-			/>
+			<CableForm isOpen={isOpenForm} onClose={onCloseForm} fetchPage={fetchPage} />
+			<PartModalView isOpen={isOpenModal} onClose={onCloseModal} part={part} />
 		</Box>
 	);
 };

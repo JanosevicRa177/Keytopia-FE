@@ -65,11 +65,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 	);
 };
 
-export function getPaginationItems(
-	currentPage: number,
-	lastPage: number,
-	maxLength: number
-) {
+export function getPaginationItems(currentPage: number, lastPage: number, maxLength: number) {
 	const res: Array<number> = [];
 
 	if (lastPage <= maxLength) {
@@ -82,10 +78,7 @@ export function getPaginationItems(
 		const deductedMaxLength = maxLength - confirmedPagesCount;
 		const sideLength = deductedMaxLength / 2;
 
-		if (
-			currentPage - firstPage < sideLength ||
-			lastPage - currentPage < sideLength
-		) {
+		if (currentPage - firstPage < sideLength || lastPage - currentPage < sideLength) {
 			for (let j = 1; j <= sideLength + firstPage; j++) {
 				res.push(j);
 			}
@@ -113,8 +106,7 @@ export function getPaginationItems(
 			res.push(NaN);
 			res.push(lastPage);
 		} else {
-			const isNearFirstPage =
-				currentPage - firstPage < lastPage - currentPage;
+			const isNearFirstPage = currentPage - firstPage < lastPage - currentPage;
 			let remainingLength = maxLength;
 
 			if (isNearFirstPage) {
@@ -126,11 +118,7 @@ export function getPaginationItems(
 				res.push(NaN);
 				remainingLength -= 1;
 
-				for (
-					let n = lastPage - (remainingLength - 1);
-					n <= lastPage;
-					n++
-				) {
+				for (let n = lastPage - (remainingLength - 1); n <= lastPage; n++) {
 					res.push(n);
 				}
 			} else {

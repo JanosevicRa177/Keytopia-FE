@@ -67,9 +67,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 					toast.error("Something wrong with fetching brands!");
 					return;
 				}
-				const brandNames: string[] = res.data.map(
-					(brand) => brand.name
-				);
+				const brandNames: string[] = res.data.map((brand) => brand.name);
 				setBrandNames(brandNames);
 				setValue("brand", brandNames[0]);
 			});
@@ -78,9 +76,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 					toast.error("Something wrong with fetching brands!");
 					return;
 				}
-				const supplierNames: string[] = res.data.map(
-					(supplier) => supplier.name
-				);
+				const supplierNames: string[] = res.data.map((supplier) => supplier.name);
 				setSupplierNames(supplierNames);
 			});
 			setInit(false);
@@ -144,9 +140,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 					>
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.name != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Name
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Name</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -154,8 +148,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 									borderColor={colorPallete.inputBorder}
 									{...register("name")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.name ? (
@@ -167,9 +160,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.price != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Price
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Price</FormLabel>
 								<Input
 									type="number"
 									rounded={"4px"}
@@ -177,8 +168,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 									borderColor={colorPallete.inputBorder}
 									{...register("price")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.price ? (
@@ -190,29 +180,20 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.priceWeight != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Price weight
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Price weight</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("priceWeight")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={PriceWeight.LIGHT}
 								>
-									<option value={PriceWeight.LIGHT}>
-										Light
-									</option>
-									<option value={PriceWeight.MEDIUM}>
-										Medium
-									</option>
-									<option value={PriceWeight.HEAVY}>
-										Heavy
-									</option>
+									<option value={PriceWeight.LIGHT}>Light</option>
+									<option value={PriceWeight.MEDIUM}>Medium</option>
+									<option value={PriceWeight.HEAVY}>Heavy</option>
 								</Select>
 								{errors.priceWeight ? (
 									<FormErrorMessage ml={"8px"}>
@@ -225,21 +206,15 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 						</Flex>
 						<Flex gap={"16px"} mb={"25px"}>
 							{showBrand ? (
-								<Flex
-									flexDirection={"column"}
-									minW={"calc(33% - 8px)"}
-								>
-									<FormLabel fontWeight={"semibold"}>
-										Brand
-									</FormLabel>
+								<Flex flexDirection={"column"} minW={"calc(33% - 8px)"}>
+									<FormLabel fontWeight={"semibold"}>Brand</FormLabel>
 									<Select
 										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("brand")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 										defaultValue={brandNames[0]}
 									>
@@ -251,34 +226,23 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 									</Select>
 								</Flex>
 							) : (
-								<Flex
-									flexDirection={"column"}
-									minW={"calc(33% - 8px)"}
-								>
-									<FormLabel fontWeight={"semibold"}>
-										Supplier
-									</FormLabel>
+								<Flex flexDirection={"column"} minW={"calc(33% - 8px)"}>
+									<FormLabel fontWeight={"semibold"}>Supplier</FormLabel>
 									<Select
 										rounded={"4px"}
 										h={"45px"}
 										borderColor={colorPallete.inputBorder}
 										{...register("supplier")}
 										_hover={{
-											borderColor:
-												colorPallete.inputBorderHover,
+											borderColor: colorPallete.inputBorderHover,
 										}}
 										defaultValue={brandNames[0]}
 									>
-										{supplierNames.map(
-											(supplier, index) => (
-												<option
-													value={supplier}
-													key={index}
-												>
-													{supplier}
-												</option>
-											)
-										)}
+										{supplierNames.map((supplier, index) => (
+											<option value={supplier} key={index}>
+												{supplier}
+											</option>
+										))}
 									</Select>
 								</Flex>
 							)}
@@ -309,10 +273,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 									defaultChecked
 								/>
 							</Flex>
-							<Flex
-								minW={"calc(33% - 8px)"}
-								flexDirection={"column"}
-							>
+							<Flex minW={"calc(33% - 8px)"} flexDirection={"column"}>
 								<Text mb={"8px"}>Image</Text>
 								<Input
 									id="image"
@@ -326,8 +287,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 										}
 									}}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									type="file"
 									width={"80%"}
@@ -335,29 +295,20 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 							</Flex>
 						</Flex>
 						<Flex gap={"16px"}>
-							<FormControl
-								isInvalid={errors.computerConnector != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Computer connector
-								</FormLabel>
+							<FormControl isInvalid={errors.computerConnector != null}>
+								<FormLabel fontWeight={"semibold"}>Computer connector</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("computerConnector")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={CableConnector.USB}
 								>
-									<option value={CableConnector.USB}>
-										USB
-									</option>
-									<option value={CableConnector.USB_C}>
-										USB C
-									</option>
+									<option value={CableConnector.USB}>USB</option>
+									<option value={CableConnector.USB_C}>USB C</option>
 								</Select>
 								{errors.computerConnector ? (
 									<FormErrorMessage ml={"8px"}>
@@ -367,29 +318,20 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
 							</FormControl>
-							<FormControl
-								isInvalid={errors.keyboardConnector != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Keyboard connector
-								</FormLabel>
+							<FormControl isInvalid={errors.keyboardConnector != null}>
+								<FormLabel fontWeight={"semibold"}>Keyboard connector</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("keyboardConnector")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 									defaultValue={CableConnector.USB}
 								>
-									<option value={CableConnector.USB}>
-										USB
-									</option>
-									<option value={CableConnector.USB_C}>
-										USB C
-									</option>
+									<option value={CableConnector.USB}>USB</option>
+									<option value={CableConnector.USB_C}>USB C</option>
 								</Select>
 								{errors.keyboardConnector ? (
 									<FormErrorMessage ml={"8px"}>
@@ -417,15 +359,12 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 										borderColor={colorPallete.inputBorder}
 										{...register("isCoiled")}
 										_hover={{
-											borderColor:
-												colorPallete.buttonHover,
+											borderColor: colorPallete.buttonHover,
 										}}
 									/>
 								</Flex>
 							</FormControl>
-							<FormControl
-								isInvalid={errors.isQuickRelease != null}
-							>
+							<FormControl isInvalid={errors.isQuickRelease != null}>
 								<Flex justifyContent={"center"} h={"100%"}>
 									<FormLabel
 										fontWeight={"semibold"}
@@ -443,8 +382,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 										borderColor={colorPallete.inputBorder}
 										{...register("isQuickRelease")}
 										_hover={{
-											borderColor:
-												colorPallete.buttonHover,
+											borderColor: colorPallete.buttonHover,
 										}}
 									/>
 								</Flex>
@@ -452,9 +390,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 						</Flex>
 						<Flex mb={"8px"} gap={"16px"}>
 							<FormControl isInvalid={errors.material != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Material
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Material</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -462,8 +398,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 									borderColor={colorPallete.inputBorder}
 									{...register("material")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.material ? (
@@ -475,9 +410,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.color != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Color
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Color</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -485,8 +418,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 									borderColor={colorPallete.inputBorder}
 									{...register("color")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.color ? (
@@ -498,9 +430,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.length != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Cable length
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Cable length</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -508,8 +438,7 @@ export const CableForm = ({ isOpen, onClose, fetchPage }: CableFormProps) => {
 									borderColor={colorPallete.inputBorder}
 									{...register("length")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.length ? (

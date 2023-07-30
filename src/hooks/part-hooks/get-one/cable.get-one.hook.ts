@@ -6,9 +6,7 @@ import { Cable } from "../../../model/part.model";
 
 export const useGetOneCable = () => {
 	const { axios } = useAxios();
-	const getCable = async (
-		name: String
-	): Promise<ApiResponse<Cable | null>> => {
+	const getCable = async (name: String): Promise<ApiResponse<Cable | null>> => {
 		try {
 			const res = await axios.get(`/part/${PartType.CABLE}/${name}`);
 			return {

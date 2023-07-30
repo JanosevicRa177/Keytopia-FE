@@ -8,8 +8,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Header } from "./components/header/header";
 import { colors } from "./styles/color";
 import { ImgComponent } from "./components/util-components/img-component";
+import { useEffect } from "react";
 
 function App() {
+	useEffect(() => {
+		document.title = "Keytopia";
+	}, []);
 	return (
 		<Router>
 			<Flex w="100%" h="100%" minH="100vh" direction="column">
@@ -24,12 +28,7 @@ function App() {
 				/>
 				<Routes>
 					{routes.map((route, index) => {
-						const {
-							path,
-							needAuth,
-							requiredRole,
-							element: Element,
-						} = route;
+						const { path, needAuth, requiredRole, element: Element } = route;
 						if (needAuth) {
 							return (
 								<Route
@@ -46,13 +45,11 @@ function App() {
 								/>
 							);
 						}
-						return (
-							<Route key={index} path={path} element={Element} />
-						);
+						return <Route key={index} path={path} element={Element} />;
 					})}
 				</Routes>
 				<Footer></Footer>
-				<ToastContainer position={"top-right"} theme={"colored"} />
+				<ToastContainer position={"bottom-right"} theme={"colored"} />
 			</Flex>
 		</Router>
 	);

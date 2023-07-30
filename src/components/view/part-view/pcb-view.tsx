@@ -33,20 +33,10 @@ export const PCBView = () => {
 	const { getPartPage, getPartPageRes } = useFetchPartPage();
 	const { getPCB } = useGetOnePCB();
 	const { deletePart } = useDeletePart();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
-	const {
-		isOpen: isOpenModal,
-		onClose: onCloseModal,
-		onOpen: onOpenModal,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
+	const { isOpen: isOpenModal, onClose: onCloseModal, onOpen: onOpenModal } = useDisclosure();
 	const [searchName, setSearchName] = useState("");
-	const [sortedDirection, setSortedDirection] = useState<SortDirection>(
-		SortDirection.UNSORTED
-	);
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(SortDirection.UNSORTED);
 	useEffect(() => {
 		fetchPage(0);
 	}, []);
@@ -63,7 +53,7 @@ export const PCBView = () => {
 		);
 	}
 	async function handleShowMorePCB(name: String) {
-		getPCB(name).then((pcb: ApiResponse<PCB | null>) => {
+		await getPCB(name).then((pcb: ApiResponse<PCB | null>) => {
 			if (pcb.data === null) {
 				return;
 			}
@@ -108,9 +98,7 @@ export const PCBView = () => {
 				if (name === "price") {
 					data.push({
 						variable: normalizedNames[0],
-						value:
-							(pcbData[name as keyof PCB]?.toString() as string) +
-							" $",
+						value: (pcbData[name as keyof PCB]?.toString() as string) + " $",
 					});
 					normalizedNames.shift();
 					return;
@@ -174,12 +162,7 @@ export const PCBView = () => {
 					sortedDirection={sortedDirection}
 					searchName={searchName}
 				/>
-				<Flex
-					fontSize={"md"}
-					flexWrap={"wrap"}
-					gap={"27px"}
-					my={"32px"}
-				>
+				<Flex fontSize={"md"} flexWrap={"wrap"} gap={"27px"} my={"32px"}>
 					{getPartPageRes.data.content.map((part: Part) => (
 						<PartCard
 							key={part.name}
@@ -199,16 +182,8 @@ export const PCBView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<PCBForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchPart={fetchPage}
-			/>
-			<PartModalView
-				isOpen={isOpenModal}
-				onClose={onCloseModal}
-				part={part}
-			/>
+			<PCBForm isOpen={isOpenForm} onClose={onCloseForm} fetchPart={fetchPage} />
+			<PartModalView isOpen={isOpenModal} onClose={onCloseModal} part={part} />
 		</Box>
 	);
 };

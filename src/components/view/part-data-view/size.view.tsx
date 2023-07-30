@@ -26,11 +26,7 @@ export const SizeView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const { getSizesPage, getSizesPageRes } = useFetchSizesPage();
 	const { deleteSize } = useDeleteSize();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
 	useEffect(() => {
 		getSizesPage(0).then(() => setCurrentPage(1));
 	}, []);
@@ -83,11 +79,7 @@ export const SizeView = () => {
 				</Flex>
 				<Flex h={"408px"} fontSize={"md"}>
 					<TableContainer flex={1}>
-						<Table
-							variant="striped"
-							colorScheme={"purple"}
-							fontSize={"small"}
-						>
+						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
@@ -96,43 +88,31 @@ export const SizeView = () => {
 							</Thead>
 							<Tbody>
 								{getSizesPageRes.data.content &&
-									getSizesPageRes.data.content.map(
-										(item: Size) => (
-											<Tr key={item.name}>
-												<Td w={"40%"}>{item.name}</Td>
-												<Td w={"40%"}>
-													{item.neededNumberOfKeys}
-												</Td>
-												<Td>
-													<Flex gap={"4"}>
-														<Button
-															flexGrow={"1"}
-															rounded={"4px"}
-															overflow={"hidden"}
-															bg={
-																colorPallete.deleteButton
-															}
-															color={"white"}
-															onClick={() =>
-																handleDeleteSize(
-																	item.name
-																)
-															}
-															_hover={{
-																bg: colorPallete.deleteButtonHover,
-																transform:
-																	"scale(1.05,1.05)",
-																transition:
-																	"0.2s",
-															}}
-														>
-															Delete
-														</Button>
-													</Flex>
-												</Td>
-											</Tr>
-										)
-									)}
+									getSizesPageRes.data.content.map((item: Size) => (
+										<Tr key={item.name}>
+											<Td w={"40%"}>{item.name}</Td>
+											<Td w={"40%"}>{item.neededNumberOfKeys}</Td>
+											<Td>
+												<Flex gap={"4"}>
+													<Button
+														flexGrow={"1"}
+														rounded={"4px"}
+														overflow={"hidden"}
+														bg={colorPallete.deleteButton}
+														color={"white"}
+														onClick={() => handleDeleteSize(item.name)}
+														_hover={{
+															bg: colorPallete.deleteButtonHover,
+															transform: "scale(1.05,1.05)",
+															transition: "0.2s",
+														}}
+													>
+														Delete
+													</Button>
+												</Flex>
+											</Td>
+										</Tr>
+									))}
 							</Tbody>
 						</Table>
 					</TableContainer>
@@ -146,11 +126,7 @@ export const SizeView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<SizeForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchSizes={getSizesPage}
-			/>
+			<SizeForm isOpen={isOpenForm} onClose={onCloseForm} fetchSizes={getSizesPage} />
 		</Box>
 	);
 };

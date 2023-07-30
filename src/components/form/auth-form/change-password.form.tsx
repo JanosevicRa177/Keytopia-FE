@@ -37,10 +37,7 @@ interface ChangePasswordFormProps {
 	onClose: () => void;
 }
 
-export const ChangePasswordForm = ({
-	isOpen,
-	onClose,
-}: ChangePasswordFormProps) => {
+export const ChangePasswordForm = ({ isOpen, onClose }: ChangePasswordFormProps) => {
 	const {
 		register,
 		reset,

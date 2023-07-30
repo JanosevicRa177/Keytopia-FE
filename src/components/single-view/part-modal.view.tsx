@@ -18,11 +18,7 @@ interface PartSingleViewProps {
 	part: PartWithData;
 }
 
-export const PartModalView = ({
-	isOpen,
-	onClose,
-	part,
-}: PartSingleViewProps) => {
+export const PartModalView = ({ isOpen, onClose, part }: PartSingleViewProps) => {
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -42,16 +38,8 @@ export const PartModalView = ({
 							rounded={"8px"}
 							py={"16px"}
 						>
-							<Flex
-								rounded={"8px"}
-								overflow={"hidden"}
-								mx={"16px"}
-							>
-								<Img
-									src={part.imageUrl}
-									h={"400px"}
-									w={"400px"}
-								/>
+							<Flex rounded={"8px"} overflow={"hidden"} mx={"16px"}>
+								<Img src={part.imageUrl} h={"400px"} w={"400px"} />
 							</Flex>
 							<Text
 								textAlign={"center"}
@@ -74,28 +62,14 @@ export const PartModalView = ({
 							justify={"center"}
 						>
 							{part.variables.map((variable, index) => (
-								<Flex
-									w={"100%"}
-									gap={"4px"}
-									px={"16px"}
-									key={index}
-								>
-									<Text
-										fontWeight={"bold"}
-										w={"40%"}
-										textAlign={"end"}
-									>
+								<Flex w={"100%"} gap={"4px"} px={"16px"} key={index}>
+									<Text fontWeight={"bold"} w={"40%"} textAlign={"end"}>
 										{variable.variable}:
 									</Text>
-									{variable.value === "true" ||
-									variable.value === "false" ? (
+									{variable.value === "true" || variable.value === "false" ? (
 										variable.value === "true" ? (
 											<Center>
-												<Img
-													src={checkmark}
-													w={"20px"}
-													h={"20px"}
-												/>
+												<Img src={checkmark} w={"20px"} h={"20px"} />
 											</Center>
 										) : (
 											<></>

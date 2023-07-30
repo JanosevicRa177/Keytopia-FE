@@ -27,11 +27,7 @@ export const SwitchView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const { getSwitchesPage, getSwitchesPageRes } = useFetchSwitchesPage();
 	const { deleteSwitch } = useDeleteSwitch();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
 	useEffect(() => {
 		getSwitchesPage(0).then(() => setCurrentPage(1));
 	}, []);
@@ -96,11 +92,7 @@ export const SwitchView = () => {
 				</Flex>
 				<Flex h={"408px"} fontSize={"md"}>
 					<TableContainer flex={1}>
-						<Table
-							variant="striped"
-							colorScheme={"purple"}
-							fontSize={"small"}
-						>
+						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
@@ -113,57 +105,37 @@ export const SwitchView = () => {
 							</Thead>
 							<Tbody>
 								{getSwitchesPageRes.data.content &&
-									getSwitchesPageRes.data.content.map(
-										(item: Switch) => (
-											<Tr key={item.name}>
-												<Td>{item.name}</Td>
-												<Td w={"10%"}>
-													{item.actuationForce}
-												</Td>
-												<Td w={"10%"}>
-													{item.actuationPoint}
-												</Td>
-												<Td w={"10%"}>
-													{mapPinType(item.pinType)}
-												</Td>
-												<Td w={"10%"}>
-													{mapSwitchType(
-														item.switchType
-													)}
-												</Td>
-												<Td w={"10%"}>
-													{item.priceWeight}
-												</Td>
-												<Td>
-													<Flex gap={"4"}>
-														<Button
-															flexGrow={"1"}
-															rounded={"4px"}
-															overflow={"hidden"}
-															bg={
-																colorPallete.deleteButton
-															}
-															color={"white"}
-															onClick={() =>
-																handleDeleteSwitch(
-																	item.name
-																)
-															}
-															_hover={{
-																bg: colorPallete.deleteButtonHover,
-																transform:
-																	"scale(1.05,1.05)",
-																transition:
-																	"0.2s",
-															}}
-														>
-															Delete
-														</Button>
-													</Flex>
-												</Td>
-											</Tr>
-										)
-									)}
+									getSwitchesPageRes.data.content.map((item: Switch) => (
+										<Tr key={item.name}>
+											<Td>{item.name}</Td>
+											<Td w={"10%"}>{item.actuationForce}</Td>
+											<Td w={"10%"}>{item.actuationPoint}</Td>
+											<Td w={"10%"}>{mapPinType(item.pinType)}</Td>
+											<Td w={"10%"}>{mapSwitchType(item.switchType)}</Td>
+											<Td w={"10%"}>{item.priceWeight}</Td>
+											<Td>
+												<Flex gap={"4"}>
+													<Button
+														flexGrow={"1"}
+														rounded={"4px"}
+														overflow={"hidden"}
+														bg={colorPallete.deleteButton}
+														color={"white"}
+														onClick={() =>
+															handleDeleteSwitch(item.name)
+														}
+														_hover={{
+															bg: colorPallete.deleteButtonHover,
+															transform: "scale(1.05,1.05)",
+															transition: "0.2s",
+														}}
+													>
+														Delete
+													</Button>
+												</Flex>
+											</Td>
+										</Tr>
+									))}
 							</Tbody>
 						</Table>
 					</TableContainer>
@@ -177,11 +149,7 @@ export const SwitchView = () => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<SwitchForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchSwitch={getSwitchesPage}
-			/>
+			<SwitchForm isOpen={isOpenForm} onClose={onCloseForm} fetchSwitch={getSwitchesPage} />
 		</Box>
 	);
 };
