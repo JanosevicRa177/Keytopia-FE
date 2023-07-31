@@ -1,30 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Flex, Img, Input, Text } from "@chakra-ui/react";
+import { Flex, Img, Select, Text } from "@chakra-ui/react";
 import { colorPallete } from "../../styles/color";
-import { SortDirection } from "../../utils/enum";
-import { useEffect, useState } from "react";
+import { ProcurementState, SortDirection } from "../../utils/enum";
+import { useEffect } from "react";
 import { normalizeEnum } from "../../utils/string.converter";
 
 import unsortedImage from "../../images/unsort.png";
 import ascImage from "../../images/asc.png";
 import descImage from "../../images/desc.png";
 
-interface PartFilterSortProps {
-	setSearchName: React.Dispatch<React.SetStateAction<string>>;
+interface ProcurementFilterSortProps {
+	setSearchState: React.Dispatch<React.SetStateAction<ProcurementState>>;
 	setSortedDirection: React.Dispatch<React.SetStateAction<SortDirection>>;
 	sortedDirection: SortDirection;
-	searchName: string;
-	fetchPart: (pageNumber: number) => Promise<void>;
+	searchState: ProcurementState;
+	fetchProcurement: (pageNumber: number) => void;
 }
 
-export const PartFilterSort = ({
-	setSearchName,
+export const ProcurementFilterSort = ({
+	setSearchState,
 	setSortedDirection,
 	sortedDirection,
-	fetchPart,
-	searchName,
-}: PartFilterSortProps) => {
-	const [name, setName] = useState("");
+	fetchProcurement,
+	searchState,
+}: ProcurementFilterSortProps) => {
 	async function handleSortDirection() {
 		if (sortedDirection === SortDirection.UNSORTED) setSortedDirection(SortDirection.ASC);
 		else if (sortedDirection === SortDirection.ASC) setSortedDirection(SortDirection.DESC);
@@ -33,8 +32,12 @@ export const PartFilterSort = ({
 		}
 	}
 	useEffect(() => {
-		fetchPart(0);
-	}, [searchName, sortedDirection]);
+		fetchProcurement(0);
+	}, [searchState, sortedDirection]);
+	function handleState(state: string) {
+		var tempState: ProcurementState = ProcurementState[state as keyof typeof ProcurementState];
+		setSearchState(tempState);
+	}
 	return (
 		<Flex
 			alignItems="center"
@@ -43,19 +46,25 @@ export const PartFilterSort = ({
 			backdropFilter="auto"
 			backdropBlur="4px"
 			gap={"16px"}
+			mb={"16px"}
 		>
 			<Flex flexDirection={"column"} gap={"8px"} w={"33%"}>
-				<Text>Name</Text>
-				<Input
-					type="text"
+				<Text>State</Text>
+				<Select
 					rounded={"4px"}
 					h={"45px"}
 					borderColor={colorPallete.inputBorder}
-					onChange={(e) => setName(e.target.value)}
 					_hover={{
 						borderColor: colorPallete.inputBorderHover,
 					}}
-				/>
+					onChange={(e) => handleState(e.target.value)}
+					defaultValue={ProcurementState.PENDING}
+				>
+					<option value={ProcurementState.PENDING}>Pending</option>
+					<option value={ProcurementState.CANCELED}>Canceled</option>
+					<option value={ProcurementState.REALIZED}>Realized</option>
+					<option value={ProcurementState.NONE}>None</option>
+				</Select>
 			</Flex>
 			<Flex flexDirection={"column"} gap={"8px"} w={"33%"} h={"77px"}>
 				<Text textAlign={"center"}>
@@ -83,35 +92,6 @@ export const PartFilterSort = ({
 					{sortedDirection === SortDirection.DESC && (
 						<Img src={descImage} w={"25px"} h={"25px"} position={"relative"} />
 					)}
-				</Flex>
-			</Flex>
-			<Flex w={"33%"} h={"45px"}>
-				<Flex
-					flexDirection={"column"}
-					pt={"16px"}
-					position={"relative"}
-					w={"100%"}
-					h={"45px"}
-				>
-					<Button
-						w={"100%"}
-						h={"45px"}
-						rounded={"4px"}
-						overflow={"hidden"}
-						bg={colorPallete.button}
-						_hover={{
-							bg: colorPallete.buttonHover,
-							transform: "scale(1.03,1.03)",
-							transition: "0.2s",
-						}}
-						fontSize={"xl"}
-						position={"absolute"}
-						onClick={() => {
-							setSearchName(name);
-						}}
-					>
-						Search
-					</Button>
 				</Flex>
 			</Flex>
 		</Flex>

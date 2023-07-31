@@ -24,14 +24,9 @@ import { Pagination } from "../../paging/pagination/pagination";
 
 export const KeycapProfileView = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const { getKeycapProfilesPage, getKeycapProfilesPageRes } =
-		useFetchKeycapProfilesPage();
+	const { getKeycapProfilesPage, getKeycapProfilesPageRes } = useFetchKeycapProfilesPage();
 	const { deleteKeycapProfile } = useDeleteKeycapProfile();
-	const {
-		isOpen: isOpenForm,
-		onClose: onCloseForm,
-		onOpen: onOpenForm,
-	} = useDisclosure();
+	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
 	useEffect(() => {
 		getKeycapProfilesPage(0).then(() => setCurrentPage(1));
 	}, []);
@@ -83,11 +78,7 @@ export const KeycapProfileView = () => {
 				</Flex>
 				<Flex h={"408px"} fontSize={"md"}>
 					<TableContainer flex={1}>
-						<Table
-							variant="striped"
-							colorScheme={"purple"}
-							fontSize={"small"}
-						>
+						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
@@ -105,21 +96,15 @@ export const KeycapProfileView = () => {
 															flexGrow={"1"}
 															rounded={"4px"}
 															overflow={"hidden"}
-															bg={
-																colorPallete.deleteButton
-															}
+															bg={colorPallete.deleteButton}
 															color={"white"}
 															onClick={() =>
-																handleDeleteKeycapProfile(
-																	item.name
-																)
+																handleDeleteKeycapProfile(item.name)
 															}
 															_hover={{
 																bg: colorPallete.deleteButtonHover,
-																transform:
-																	"scale(1.05,1.05)",
-																transition:
-																	"0.2s",
+																transform: "scale(1.05,1.05)",
+																transition: "0.2s",
 															}}
 														>
 															Delete

@@ -25,7 +25,8 @@ import { normalizeDate, normalizeEnum } from "../utils/string.converter";
 import { ApiResponse } from "../store/auth-store/types/response.type";
 import { PartItemModal } from "../components/util-components/part-item.modal";
 import { PartItem } from "../store/part-store/types/part.type";
-import { ProcurementState } from "../utils/enum";
+import { ProcurementState, SortDirection } from "../utils/enum";
+import { ProcurementFilterSort } from "../components/filter-sort-components/procurement.filter-sort";
 
 export const ProcurementPage = () => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
@@ -34,15 +35,15 @@ export const ProcurementPage = () => {
 	const { penalizeProcurement } = usePenalizeProcurement();
 	const { realizeProcurement } = useRealizeProcurement();
 	const [partItems, setPartItems] = useState<PartItem[]>([]);
+	const [searchState, setSearchState] = useState<ProcurementState>(ProcurementState.PENDING);
+	const [sortedDirection, setSortedDirection] = useState<SortDirection>(SortDirection.UNSORTED);
 	useEffect(() => {
-		getProcurementsPage(0).then(() => {
-			setCurrentPage(1);
-		});
+		handleProcurementsPage(0);
 	}, []);
 	const { isOpen: isOpenModal, onClose: onCloseModal, onOpen: onOpenModal } = useDisclosure();
 	function handleProcurementsPage(pageNumber: number) {
-		getProcurementsPage(pageNumber - 1).then(() => {
-			setCurrentPage(pageNumber);
+		getProcurementsPage(pageNumber, searchState, sortedDirection).then(() => {
+			setCurrentPage(pageNumber + 1);
 		});
 	}
 	function isDateInThePast(badDate: Date): boolean {
@@ -70,7 +71,7 @@ export const ProcurementPage = () => {
 		});
 	}
 	function isProcurement(item: GetProcurementDto, state: ProcurementState): boolean | undefined {
-		return item.state !== state;
+		return item.state === state;
 	}
 	return (
 		<MainContrainer>
@@ -86,7 +87,14 @@ export const ProcurementPage = () => {
 					zIndex={1}
 				/>
 				<Flex zIndex={5} px={"32px"} flexDirection={"column"}>
-					<Flex justifyContent={"space-between"}>
+					<Flex flexDirection={"column"}>
+						<ProcurementFilterSort
+							fetchProcurement={handleProcurementsPage}
+							setSearchState={setSearchState}
+							setSortedDirection={setSortedDirection}
+							sortedDirection={sortedDirection}
+							searchState={searchState}
+						/>
 						<Text fontSize={"2xl"}>Procurements</Text>
 					</Flex>
 					<Flex h={"635px"} fontSize={"md"}>
@@ -135,102 +143,108 @@ export const ProcurementPage = () => {
 															>
 																Show parts
 															</Button>
-															{isDateInThePast(item.deadline) ? (
-																<Button
-																	w={"50%"}
-																	rounded={"4px"}
-																	overflow={"hidden"}
-																	color={
-																		!isProcurement(
-																			item,
-																			ProcurementState.PENDING
-																		)
-																			? "343434"
-																			: "white"
-																	}
-																	bg={
-																		!isProcurement(
-																			item,
-																			ProcurementState.PENDING
-																		)
-																			? colorPallete.button
-																			: colorPallete.disabledButton
-																	}
-																	_hover={{
-																		bg:
-																			!isProcurement(
-																				item,
-																				ProcurementState.PENDING
-																			) &&
-																			colorPallete.buttonHover,
-																		transform:
-																			"scale(1.05,1.05)",
-																		transition: "0.2s",
-																	}}
-																	onClick={() => {
-																		handleRealize(item);
-																	}}
-																	isDisabled={isProcurement(
+															<Button
+																w={"50%"}
+																rounded={"4px"}
+																overflow={"hidden"}
+																color={
+																	!isProcurement(
 																		item,
 																		ProcurementState.PENDING
-																	)}
-																>
-																	Realize
-																</Button>
-															) : (
-																<Button
-																	w={"50%"}
-																	rounded={"4px"}
-																	overflow={"hidden"}
-																	color={"white"}
-																	bg={
-																		!isProcurement(
-																			item,
-																			ProcurementState.PENDING
-																		)
-																			? colorPallete.deleteButton
-																			: colorPallete.disabledButton
-																	}
-																	_hover={{
-																		bg:
-																			!isProcurement(
-																				item,
-																				ProcurementState.PENDING
-																			) &&
-																			colorPallete.deleteButtonHover,
-																		transform:
-																			"scale(1.05,1.05)",
-																		transition: "0.2s",
-																	}}
-																	onClick={() =>
-																		handlePenalize(item)
-																	}
-																	isDisabled={isProcurement(
+																	)
+																		? "white"
+																		: "#342424"
+																}
+																bg={
+																	!isProcurement(
 																		item,
 																		ProcurementState.PENDING
-																	)}
-																>
-																	Penalize
-																</Button>
-															)}
+																	)
+																		? colorPallete.disabledButton
+																		: colorPallete.button
+																}
+																_hover={{
+																	bg:
+																		isProcurement(
+																			item,
+																			ProcurementState.PENDING
+																		) &&
+																		colorPallete.buttonHover,
+																	transform: "scale(1.05,1.05)",
+																	transition: "0.2s",
+																}}
+																onClick={() => {
+																	handleRealize(item);
+																}}
+																isDisabled={
+																	!isProcurement(
+																		item,
+																		ProcurementState.PENDING
+																	)
+																}
+															>
+																Realize
+															</Button>
 															<Button
 																w={"50%"}
 																rounded={"4px"}
 																overflow={"hidden"}
 																color={"white"}
 																bg={
+																	!isDateInThePast(
+																		item.deadline
+																	) &&
 																	isProcurement(
 																		item,
-																		ProcurementState.REALIZED
+																		ProcurementState.PENDING
 																	)
 																		? colorPallete.deleteButton
 																		: colorPallete.disabledButton
 																}
 																_hover={{
 																	bg:
+																		!isDateInThePast(
+																			item.deadline
+																		) &&
 																		isProcurement(
 																			item,
-																			ProcurementState.REALIZED
+																			ProcurementState.PENDING
+																		) &&
+																		colorPallete.deleteButtonHover,
+																	transform: "scale(1.05,1.05)",
+																	transition: "0.2s",
+																}}
+																onClick={() => handlePenalize(item)}
+																isDisabled={
+																	isDateInThePast(
+																		item.deadline
+																	) ||
+																	!isProcurement(
+																		item,
+																		ProcurementState.PENDING
+																	)
+																}
+															>
+																Penalize
+															</Button>
+															<Button
+																w={"50%"}
+																rounded={"4px"}
+																overflow={"hidden"}
+																color={"white"}
+																bg={
+																	!isProcurement(
+																		item,
+																		ProcurementState.PENDING
+																	)
+																		? colorPallete.disabledButton
+																		: colorPallete.deleteButton
+																}
+																_hover={{
+																	bg:
+																		isProcurement(
+																			item,
+																			ProcurementState.PENDING
 																		) &&
 																		colorPallete.deleteButtonHover,
 																	transform: "scale(1.05,1.05)",
@@ -240,7 +254,7 @@ export const ProcurementPage = () => {
 																isDisabled={
 																	!isProcurement(
 																		item,
-																		ProcurementState.REALIZED
+																		ProcurementState.PENDING
 																	)
 																}
 															>
@@ -260,7 +274,7 @@ export const ProcurementPage = () => {
 						lastPage={getProcurementsPageRes.data.totalPages}
 						maxLength={5}
 						setCurrentPage={setCurrentPage}
-						getPage={getProcurementsPage}
+						getPage={handleProcurementsPage}
 					/>
 					<PartItemModal
 						isOpen={isOpenModal}

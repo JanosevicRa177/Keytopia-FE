@@ -1,18 +1,48 @@
 import { Route, Routes } from "react-router-dom";
-import { KeycapProfileView } from "../../view/part-data-view/keycap-profile.view";
-import { LayoutView } from "../../view/part-data-view/layout.view";
-import { SizeView } from "../../view/part-data-view/size.view";
-import { SwitchView } from "../../view/part-data-view/switch.view";
-import { CableView } from "../../view/part-view/cable.view";
-import { CaseView } from "../../view/part-view/case.view";
-import { KeycapSetView } from "../../view/part-view/keycap-set.view";
-import { KeycapView } from "../../view/part-view/keycap.view";
-import { PCBView } from "../../view/part-view/pcb-view";
-import { PlateView } from "../../view/part-view/plate.view";
-import { StabilizersView } from "../../view/part-view/stabilizers.view";
-import { SwitchSetView } from "../../view/part-view/switch-set.view";
-import { BrandView } from "../../view/warehouse-view/brand.view";
-import { SupplierView } from "../../view/warehouse-view/supplier.view";
+import loadable from "@loadable/component";
+
+const LayoutView = loadable(() => import("../../view/part-data-view/layout.view"), {
+	resolveComponent: (components) => components.LayoutView,
+});
+const SizeView = loadable(() => import("../../view/part-data-view/size.view"), {
+	resolveComponent: (components) => components.SizeView,
+});
+const SwitchView = loadable(() => import("../../view/part-data-view/switch.view"), {
+	resolveComponent: (components) => components.SwitchView,
+});
+const KeycapProfileView = loadable(() => import("../../view/part-data-view/keycap-profile.view"), {
+	resolveComponent: (components) => components.KeycapProfileView,
+});
+const CableView = loadable(() => import("../../view/part-view/cable.view"), {
+	resolveComponent: (components) => components.CableView,
+});
+const CaseView = loadable(() => import("../../view/part-view/case.view"), {
+	resolveComponent: (components) => components.CaseView,
+});
+const KeycapView = loadable(() => import("../../view/part-view/keycap.view"), {
+	resolveComponent: (components) => components.KeycapView,
+});
+const PCBView = loadable(() => import("../../view/part-view/pcb-view"), {
+	resolveComponent: (components) => components.PCBView,
+});
+const StabilizersView = loadable(() => import("../../view/part-view/stabilizers.view"), {
+	resolveComponent: (components) => components.StabilizersView,
+});
+const PlateView = loadable(() => import("../../view/part-view/plate.view"), {
+	resolveComponent: (components) => components.PlateView,
+});
+const SwitchSetView = loadable(() => import("../../view/part-view/switch-set.view"), {
+	resolveComponent: (components) => components.SwitchSetView,
+});
+const SupplierView = loadable(() => import("../../view/warehouse-view/supplier.view"), {
+	resolveComponent: (components) => components.SupplierView,
+});
+const BrandView = loadable(() => import("../../view/warehouse-view/brand.view"), {
+	resolveComponent: (components) => components.BrandView,
+});
+const KeycapSetView = loadable(() => import("../../view/part-view/keycap-set.view"), {
+	resolveComponent: (components) => components.KeycapSetView,
+});
 
 interface AdminViewContainerProps {
 	chosenView: string;
