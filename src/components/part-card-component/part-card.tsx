@@ -1,12 +1,12 @@
 import { Flex, Img, Text, Button } from "@chakra-ui/react";
 import { colorPallete } from "../../styles/color";
-import { Part } from "../../model/part.model";
 import { useApplicationStore } from "../../store/store";
 import { toast } from "react-toastify";
+import { PartData } from "../../store/keyboard-store/types/keyboard.type";
 
 interface PartCardProps {
-	part: Part;
-	deletePart: Function;
+	part: PartData;
+	deletePart: (part: PartData) => Promise<void>;
 	showMore: Function;
 }
 
@@ -90,7 +90,7 @@ export const PartCard = ({ part, showMore, deletePart }: PartCardProps) => {
 					w={"100%"}
 					bg={colorPallete.deleteButton}
 					color={"white"}
-					onClick={() => deletePart(part.name)}
+					onClick={() => deletePart(part)}
 					_hover={{
 						bg: colorPallete.deleteButtonHover,
 						transform: "scale(1.05,1.05)",

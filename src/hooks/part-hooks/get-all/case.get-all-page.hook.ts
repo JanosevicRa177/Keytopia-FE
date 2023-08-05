@@ -1,31 +1,33 @@
-import { SortDirection, PartType } from './../../../utils/enum';
 import { toast } from "react-toastify";
 import { useResponseState } from "../../util-hooks/response-state.hook";
 import { useAxios } from "../../../utils/axios.hook";
+import { PriceWeight } from "../../../utils/enum";
 import { Page } from "../../../utils/types";
 import { PartData } from "../../../store/keyboard-store/types/keyboard.type";
 
-export const useFetchPartPage = () => {
+export const useFetchCasePage = () => {
     const { axios } = useAxios();
     const {
         setError,
         setSuccess,
-        state: getPartPageRes,
+        state: getCasePageRes,
     } = useResponseState<Page<PartData>>({ totalPages: 0, content: [] });
-    const getPartPage = async (
+    const getCasePage = async (
         pageNumber: number,
         name: string = "",
-        sortDirection: SortDirection,
-        partType?: PartType
+        sizeName?: string,
+        priceWeight?: PriceWeight,
+        color?: string
     ) => {
         try {
-            const res = await axios.get(`part/page`, {
+            const res = await axios.get(`part/case/page`, {
                 params: {
                     pageSize: 12,
                     pageNumber: pageNumber,
                     name: name,
-                    sortDirection: sortDirection,
-                    partType: partType,
+                    sizeName: sizeName,
+                    priceWeight: priceWeight,
+                    color: color
                 },
             });
             setSuccess(res.data);
@@ -36,7 +38,7 @@ export const useFetchPartPage = () => {
     };
 
     return {
-        getPartPage,
-        getPartPageRes,
+        getCasePage,
+        getCasePageRes,
     };
 };

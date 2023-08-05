@@ -98,7 +98,7 @@ export const Header = () => {
 											text={"Shop custom keyboard"}
 										/>
 										<CustomLink
-											link={"/custom-keyboard"}
+											link={"/user/make-keyboard"}
 											text={"Make your own keyboard"}
 										/>
 									</>
@@ -113,6 +113,10 @@ export const Header = () => {
 											text={"Current procurement"}
 										/>
 										<CustomLink link={"/procurements"} text={"Procurements"} />
+										<CustomLink
+											link={"/admin/make-keyboard"}
+											text={"Make keyboard"}
+										/>
 									</>
 								)}
 							</Flex>

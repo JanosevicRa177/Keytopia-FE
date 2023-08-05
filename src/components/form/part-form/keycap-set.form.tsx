@@ -398,35 +398,33 @@ export const KeycapSetForm = ({ isOpen, onClose, fetchPage }: KeycapSetFormProps
 							</FormControl>
 						</Flex>
 						<Flex gap={"16px"}>
-							<Flex minW={"50%"}>
-								<FormControl isInvalid={errors.language != null}>
-									<FormLabel fontWeight={"semibold"}>Language</FormLabel>
-									<Input
-										type="text"
-										rounded={"4px"}
-										h={"45px"}
-										borderColor={colorPallete.inputBorder}
-										{...register("language")}
-										_hover={{
-											borderColor: colorPallete.inputBorderHover,
-										}}
-									/>
-									{errors.language ? (
-										<FormErrorMessage ml={"8px"}>
-											{errors.language.message}
-										</FormErrorMessage>
-									) : (
-										<Box h={"25px"} w="100%" ml={"8px"}></Box>
-									)}
-								</FormControl>
-							</Flex>
+							<FormControl isInvalid={errors.language != null}>
+								<FormLabel fontWeight={"semibold"}>Language</FormLabel>
+								<Input
+									type="text"
+									rounded={"4px"}
+									h={"45px"}
+									borderColor={colorPallete.inputBorder}
+									{...register("language")}
+									_hover={{
+										borderColor: colorPallete.inputBorderHover,
+									}}
+								/>
+								{errors.language ? (
+									<FormErrorMessage ml={"8px"}>
+										{errors.language.message}
+									</FormErrorMessage>
+								) : (
+									<Box h={"25px"} w="100%" ml={"8px"}></Box>
+								)}
+							</FormControl>
 							<FormControl isInvalid={errors.layouts != null}>
 								<FormLabel fontWeight={"semibold"}>Layouts</FormLabel>
 								<Multiselect
 									values={layoutNames}
 									multiselectName="layouts"
 									onChange={setValue}
-									w={"250px"}
+									w={"150px"}
 									isError={errors.layouts ? true : false}
 								/>
 								{errors.layouts ? (
@@ -435,6 +433,26 @@ export const KeycapSetForm = ({ isOpen, onClose, fetchPage }: KeycapSetFormProps
 									</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%"></Box>
+								)}
+							</FormControl>
+							<FormControl isInvalid={errors.color != null}>
+								<FormLabel fontWeight={"semibold"}>Color</FormLabel>
+								<Input
+									type="text"
+									rounded={"4px"}
+									h={"45px"}
+									borderColor={colorPallete.inputBorder}
+									{...register("color")}
+									_hover={{
+										borderColor: colorPallete.inputBorderHover,
+									}}
+								/>
+								{errors.color ? (
+									<FormErrorMessage ml={"8px"}>
+										{errors.color.message}
+									</FormErrorMessage>
+								) : (
+									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
 							</FormControl>
 						</Flex>

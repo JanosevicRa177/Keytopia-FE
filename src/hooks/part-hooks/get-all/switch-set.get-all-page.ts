@@ -1,31 +1,35 @@
-import { SortDirection, PartType } from './../../../utils/enum';
 import { toast } from "react-toastify";
 import { useResponseState } from "../../util-hooks/response-state.hook";
 import { useAxios } from "../../../utils/axios.hook";
+import { PinType, PriceWeight, SwitchType } from "../../../utils/enum";
 import { Page } from "../../../utils/types";
 import { PartData } from "../../../store/keyboard-store/types/keyboard.type";
 
-export const useFetchPartPage = () => {
+export const useFetchSwitchSetPage = () => {
     const { axios } = useAxios();
     const {
         setError,
         setSuccess,
-        state: getPartPageRes,
+        state: getSwitchSetPageRes,
     } = useResponseState<Page<PartData>>({ totalPages: 0, content: [] });
-    const getPartPage = async (
+    const getSwitchSetPage = async (
         pageNumber: number,
         name: string = "",
-        sortDirection: SortDirection,
-        partType?: PartType
+        priceWeight?: PriceWeight,
+        pinType?: PinType,
+        switchType?: SwitchType,
+        sizeName?: string,
     ) => {
         try {
-            const res = await axios.get(`part/page`, {
+            const res = await axios.get(`part/switch-set/page`, {
                 params: {
                     pageSize: 12,
                     pageNumber: pageNumber,
                     name: name,
-                    sortDirection: sortDirection,
-                    partType: partType,
+                    priceWeight: priceWeight,
+                    pinType: pinType,
+                    switchType: switchType,
+                    sizeName: sizeName
                 },
             });
             setSuccess(res.data);
@@ -36,7 +40,7 @@ export const useFetchPartPage = () => {
     };
 
     return {
-        getPartPage,
-        getPartPageRes,
+        getSwitchSetPage,
+        getSwitchSetPageRes,
     };
 };

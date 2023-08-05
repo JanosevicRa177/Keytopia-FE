@@ -2,23 +2,26 @@
 import { Flex, Box, Button, Text, useDisclosure } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useDeletePart } from "../../../hooks/part-hooks/delete/part.delete.hook";
-import { useFetchPartPage } from "../../../hooks/part-hooks/get-all/part.get-all-page.hook";
 import { useGetOneCable } from "../../../hooks/part-hooks/get-one/cable.get-one.hook";
-import { PartWithData, Cable, Part } from "../../../model/part.model";
+import { PartWithData, Cable } from "../../../model/part.model";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { colorPallete } from "../../../styles/color";
 import { PartType, SortDirection } from "../../../utils/enum";
 import { normalizeNames, normalizeConnectionType } from "../../../utils/string.converter";
 import { VariableWithValue } from "../../../utils/types";
-import { CableForm } from "../../form/part-form/cable.form";
 import { PartCard } from "../../part-card-component/part-card";
 import { Pagination } from "../../paging/pagination/pagination";
 import { PartModalView } from "../../single-view/part-modal.view";
 import { PartFilterSort } from "../../filter-sort-components/part.filter-sort";
+import { PartData } from "../../../store/keyboard-store/types/keyboard.type";
+import { useFetchPartPage } from "../../../hooks/part-hooks/get-all/part.get-all-page.hook";
+import { PartFormContainer } from "../../form/part-form/part-forms.container";
 
-const partType = PartType.CABLE;
+interface PartViewProps {
+	partType?: PartType;
+}
 
-export const CableView = () => {
+export const PartView = ({ partType }: PartViewProps) => {
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [part, setPart] = useState<PartWithData>({
 		name: "",
@@ -34,9 +37,12 @@ export const CableView = () => {
 	const { isOpen: isOpenModal, onClose: onCloseModal, onOpen: onOpenModal } = useDisclosure();
 	useEffect(() => {
 		fetchPage(0);
+	}, [partType]);
+	useEffect(() => {
+		fetchPage(0);
 	}, []);
-	async function handleDeletePart(name: String) {
-		deletePart(name, partType).then((response: ApiResponse<null>) => {
+	async function handleDeletePart(part: PartData) {
+		deletePart(part.name, part.partType).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
 				fetchPage(0);
 			}
@@ -47,8 +53,8 @@ export const CableView = () => {
 			setCurrentPage(page + 1)
 		);
 	}
-	async function handleShowMoreCable(name: String) {
-		await getCable(name).then((cable: ApiResponse<Cable | null>) => {
+	async function handleShowMoreCable(part: PartData) {
+		await getCable(part.name).then((cable: ApiResponse<Cable | null>) => {
 			if (cable.data === null) {
 				return;
 			}
@@ -142,7 +148,7 @@ export const CableView = () => {
 					searchName={searchName}
 				/>
 				<Flex fontSize={"md"} flexWrap={"wrap"} gap={"27px"} my={"32px"}>
-					{getPartPageRes.data.content.map((part: Part) => (
+					{getPartPageRes.data.content.map((part: PartData) => (
 						<PartCard
 							key={part.name}
 							part={part}
@@ -157,11 +163,10 @@ export const CableView = () => {
 					maxLength={5}
 					setCurrentPage={setCurrentPage}
 					getPage={fetchPage}
-					partType={partType}
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<CableForm isOpen={isOpenForm} onClose={onCloseForm} fetchPage={fetchPage} />
+			<PartFormContainer isOpen={isOpenForm} onClose={onCloseForm} fetchPage={fetchPage} />
 			<PartModalView isOpen={isOpenModal} onClose={onCloseModal} part={part} />
 		</Box>
 	);

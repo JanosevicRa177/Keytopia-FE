@@ -36,10 +36,10 @@ import { PriceWeight, PCBType, PinType, StabilizerType } from "../../../utils/en
 interface PCBFormProps {
 	isOpen: boolean;
 	onClose: () => void;
-	fetchPart: (pageNumber: number) => Promise<void>;
+	fetchPage: (pageNumber: number) => Promise<void>;
 }
 
-export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
+export const PCBForm = ({ isOpen, onClose, fetchPage }: PCBFormProps) => {
 	const { getBrands } = useFetchBrands();
 	const { getSizes } = useFetchSizes();
 	const { getSuppliers } = useFetchSupplier();
@@ -96,7 +96,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPart }: PCBFormProps) => {
 		}
 		createPCB(values, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				fetchPart(0);
+				fetchPage(0);
 				reset();
 				setImage(null);
 				setShowBrand(true);

@@ -2,16 +2,13 @@
 import { useEffect, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 import { PageLink } from "../page-link/page-link";
-import { PartType } from "../../../utils/enum";
 
 export type PaginationProps = {
 	currentPage: number;
 	lastPage: number;
 	maxLength: number;
-	sortBy?: string;
 	sortDirection?: string;
 	getPage: (page: number) => void;
-	partType?: PartType;
 	setCurrentPage: (page: number) => void;
 };
 export const Pagination: React.FC<PaginationProps> = ({

@@ -1,6 +1,5 @@
 import { Center, Flex, Text, Img, Button, useDisclosure } from "@chakra-ui/react";
 import { MainContrainer } from "../components/page-component/main-container";
-import { SectionContainer, SectionStyle } from "../components/page-component/section-container";
 import { useApplicationStore } from "../store/store";
 import userImg from "../images/user.png";
 import { colorPallete } from "../styles/color";
@@ -29,7 +28,19 @@ export const UserPage = () => {
 				backdropFilter="auto"
 				backdropBlur="4px"
 			>
-				<SectionContainer style={SectionStyle.left}>
+				<Flex
+					bg={"rgba(255,255,255,0.8)"}
+					backdropFilter="auto"
+					backdropBlur="4px"
+					w={"calc(100% - 32px)"}
+					boxShadow={"4px 4px 16px 0px rgba(0,0,0,0.2)"}
+					h={"calc(100% - 64px)"}
+					my={"32px"}
+					mx={"16px"}
+					rounded={"16px"}
+					position={"relative"}
+					flexDir={"row"}
+				>
 					<Flex
 						my={"32px"}
 						mx={"32px"}
@@ -115,7 +126,7 @@ export const UserPage = () => {
 							{user?.name} {user?.surname}
 						</Text>
 					</Flex>
-				</SectionContainer>
+				</Flex>
 			</Center>
 			<ChangePasswordForm
 				isOpen={isOpenChangePasswordForm}

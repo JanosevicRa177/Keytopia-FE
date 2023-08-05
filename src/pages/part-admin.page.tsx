@@ -2,24 +2,35 @@ import { ControlContainer } from "../components/page-component/admin-page.tsx/co
 import { MainContrainer } from "../components/page-component/main-container";
 import { useState } from "react";
 import { ControlLinkContainer } from "../components/page-component/admin-page.tsx/control-link-container";
-import { AdminViewContainer } from "../components/page-component/admin-page.tsx/admin-view-contrainer";
 import { ProcurementCartComponent } from "../components/cart-components/procurement-components/procurement.components";
 import { Flex } from "@chakra-ui/react";
+import { PartViewContainer } from "../components/page-component/admin-page.tsx/admin-view-contrainer";
+import { PartType } from "../utils/enum";
+import { RouteWithPartType } from "../model/util.model";
 
 export const PartAdminPage = () => {
-	const [chosenView, setChosenView] = useState("Cable");
 	const parts = [
-		"Cable",
-		"Case",
-		"Keycap",
-		"Keycap set",
-		"Plate",
-		"PCB",
-		"Stabilizers",
-		"Switch set",
+		{ value: "All parts", route: "part" },
+		{ value: "Case", route: "part", partType: PartType.CASE },
+		{ value: "Cable", route: "part", partType: PartType.CABLE },
+		{ value: "Keycap", route: "part", partType: PartType.KEYCAP },
+		{ value: "Keycap set", route: "part", partType: PartType.KEYCAP_SET },
+		{ value: "Plate", route: "part", partType: PartType.PLATE },
+		{ value: "PCB", route: "part", partType: PartType.PCB },
+		{ value: "Stabilizers", route: "part", partType: PartType.STABILIZER },
+		{ value: "Switch set", route: "part", partType: PartType.SWITCH_SET },
 	];
-	const partDatas = ["Keycap profile", "Switch", "Size", "Layout"];
-	const warehouse = ["Brand", "Supplier"];
+	const [chosenView, setChosenView] = useState<RouteWithPartType>(parts[0]);
+	const partDatas = [
+		{ value: "Keycap profile", route: "keycap-profile" },
+		{ value: "Switch", route: "switch" },
+		{ value: "Size", route: "size" },
+		{ value: "Layout", route: "layout" },
+	];
+	const warehouse = [
+		{ value: "Brand", route: "brand" },
+		{ value: "Supplier", route: "supplier" },
+	];
 	return (
 		<MainContrainer>
 			<Flex
@@ -49,7 +60,7 @@ export const PartAdminPage = () => {
 					/>
 					<ProcurementCartComponent />
 				</ControlContainer>
-				<AdminViewContainer chosenView={chosenView} />
+				<PartViewContainer partType={chosenView.partType} />
 			</Flex>
 		</MainContrainer>
 	);

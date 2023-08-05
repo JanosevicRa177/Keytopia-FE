@@ -1,31 +1,32 @@
-import { SortDirection, PartType } from './../../../utils/enum';
+import { StabilizerType } from './../../../utils/enum';
 import { toast } from "react-toastify";
 import { useResponseState } from "../../util-hooks/response-state.hook";
 import { useAxios } from "../../../utils/axios.hook";
+import { PriceWeight } from "../../../utils/enum";
 import { Page } from "../../../utils/types";
 import { PartData } from "../../../store/keyboard-store/types/keyboard.type";
 
-export const useFetchPartPage = () => {
+export const useFetchStabilizersPage = () => {
     const { axios } = useAxios();
     const {
         setError,
         setSuccess,
-        state: getPartPageRes,
+        state: getStabilizersPageRes,
     } = useResponseState<Page<PartData>>({ totalPages: 0, content: [] });
-    const getPartPage = async (
+    const getStabilizersPage = async (
         pageNumber: number,
         name: string = "",
-        sortDirection: SortDirection,
-        partType?: PartType
+        stabilizerType?: StabilizerType,
+        priceWeight?: PriceWeight
     ) => {
         try {
-            const res = await axios.get(`part/page`, {
+            const res = await axios.get(`part/stabilizers/page`, {
                 params: {
                     pageSize: 12,
                     pageNumber: pageNumber,
                     name: name,
-                    sortDirection: sortDirection,
-                    partType: partType,
+                    priceWeight: priceWeight,
+                    stabilizerType: stabilizerType,
                 },
             });
             setSuccess(res.data);
@@ -36,7 +37,7 @@ export const useFetchPartPage = () => {
     };
 
     return {
-        getPartPage,
-        getPartPageRes,
+        getStabilizersPage,
+        getStabilizersPageRes,
     };
 };

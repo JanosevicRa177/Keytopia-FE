@@ -33,11 +33,7 @@ interface SwitchFormProps {
 	fetchSwitch: (pageNumber: number) => Promise<void>;
 }
 
-export const SwitchForm = ({
-	isOpen,
-	onClose,
-	fetchSwitch,
-}: SwitchFormProps) => {
+export const SwitchForm = ({ isOpen, onClose, fetchSwitch }: SwitchFormProps) => {
 	const { createSwitch } = useCreateSwitch();
 	const {
 		register,
@@ -105,12 +101,8 @@ export const SwitchForm = ({
 							)}
 						</FormControl>
 						<Flex gap={"16px"}>
-							<FormControl
-								isInvalid={errors.actuationForce != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Actuation force
-								</FormLabel>
+							<FormControl isInvalid={errors.actuationForce != null}>
+								<FormLabel fontWeight={"semibold"}>Actuation force</FormLabel>
 								<Input
 									type="number"
 									rounded={"4px"}
@@ -118,8 +110,7 @@ export const SwitchForm = ({
 									borderColor={colorPallete.inputBorder}
 									{...register("actuationForce")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.actuationForce ? (
@@ -130,12 +121,8 @@ export const SwitchForm = ({
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
 							</FormControl>
-							<FormControl
-								isInvalid={errors.actuationPoint != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Actuation point
-								</FormLabel>
+							<FormControl isInvalid={errors.actuationPoint != null}>
+								<FormLabel fontWeight={"semibold"}>Actuation point</FormLabel>
 								<Input
 									type="number"
 									rounded={"4px"}
@@ -143,8 +130,7 @@ export const SwitchForm = ({
 									borderColor={colorPallete.inputBorder}
 									{...register("actuationPoint")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.actuationPoint ? (
@@ -158,28 +144,20 @@ export const SwitchForm = ({
 						</Flex>
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.switchType != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Switch type
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Switch type</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("switchType")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
+									defaultValue={SwitchType.TACTILE}
 								>
-									<option value={SwitchType.TACTILE} selected>
-										Tactile
-									</option>
-									<option value={SwitchType.LINEAR}>
-										Linear
-									</option>
-									<option value={SwitchType.CLICKY}>
-										Clicky
-									</option>
+									<option value={SwitchType.TACTILE}>Tactile</option>
+									<option value={SwitchType.LINEAR}>Linear</option>
+									<option value={SwitchType.CLICKY}>Clicky</option>
 								</Select>
 								{errors.switchType ? (
 									<FormErrorMessage ml={"8px"}>
@@ -190,22 +168,18 @@ export const SwitchForm = ({
 								)}
 							</FormControl>
 							<FormControl isInvalid={errors.pinType != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Pin type
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Pin type</FormLabel>
 								<Select
 									rounded={"4px"}
 									h={"45px"}
 									borderColor={colorPallete.inputBorder}
 									{...register("pinType")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
+									defaultValue={PinType.PIN5}
 								>
-									<option value={PinType.PIN5} selected>
-										5 pin
-									</option>
+									<option value={PinType.PIN5}>5 pin</option>
 									<option value={PinType.PIN3}>3 pin</option>
 								</Select>
 								{errors.pinType ? (
@@ -218,9 +192,7 @@ export const SwitchForm = ({
 							</FormControl>
 						</Flex>
 						<FormControl isInvalid={errors.priceWeight != null}>
-							<FormLabel fontWeight={"semibold"}>
-								Price weight
-							</FormLabel>
+							<FormLabel fontWeight={"semibold"}>Price weight</FormLabel>
 							<Select
 								rounded={"4px"}
 								h={"45px"}
@@ -229,13 +201,10 @@ export const SwitchForm = ({
 								_hover={{
 									borderColor: colorPallete.inputBorderHover,
 								}}
+								defaultValue={PriceWeight.LIGHT}
 							>
-								<option value={PriceWeight.LIGHT} selected>
-									Light
-								</option>
-								<option value={PriceWeight.MEDIUM}>
-									Medium
-								</option>
+								<option value={PriceWeight.LIGHT}>Light</option>
+								<option value={PriceWeight.MEDIUM}>Medium</option>
 								<option value={PriceWeight.HEAVY}>Heavy</option>
 							</Select>
 							{errors.priceWeight ? (

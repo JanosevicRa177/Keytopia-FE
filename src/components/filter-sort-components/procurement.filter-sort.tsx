@@ -63,7 +63,7 @@ export const ProcurementFilterSort = ({
 					<option value={ProcurementState.PENDING}>Pending</option>
 					<option value={ProcurementState.CANCELED}>Canceled</option>
 					<option value={ProcurementState.REALIZED}>Realized</option>
-					<option value={ProcurementState.NONE}>None</option>
+					<option value={null as unknown as ProcurementState}>None</option>
 				</Select>
 			</Flex>
 			<Flex flexDirection={"column"} gap={"8px"} w={"33%"} h={"77px"}>

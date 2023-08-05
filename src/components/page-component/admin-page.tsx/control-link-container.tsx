@@ -1,11 +1,12 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { InnerLink } from "./inner-link";
+import { RouteWithPartType } from "../../../model/util.model";
 
 interface ControlLinkContainerProps {
-	chosen: string;
-	names: string[];
+	chosen: RouteWithPartType;
+	names: RouteWithPartType[];
 	header: string;
-	setChosen: React.Dispatch<React.SetStateAction<string>>;
+	setChosen: React.Dispatch<React.SetStateAction<RouteWithPartType>>;
 }
 
 export const ControlLinkContainer = (props: ControlLinkContainerProps) => {
@@ -20,11 +21,11 @@ export const ControlLinkContainer = (props: ControlLinkContainerProps) => {
 				{props.header}:
 			</Text>
 			<Flex columnGap={"12px"} fontSize={"xl"}>
-				{props.names.map((name) => {
+				{props.names.map((route) => {
 					return (
 						<InnerLink
-							key={name}
-							text={name}
+							key={route.value}
+							route={route}
 							chosen={props.chosen}
 							setChosen={props.setChosen}
 						/>
