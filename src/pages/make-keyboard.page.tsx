@@ -13,9 +13,10 @@ import {
 	useSteps,
 } from "@chakra-ui/react";
 import { MainContrainer } from "../components/page-component/main-container";
-import { FirstStepAdmin } from "../components/step-components/admin/first.step";
+import { FirstStep } from "../components/step-components/first.step";
 import { StepControlContainer } from "../components/step-components/step-control.component";
 import { KeyboardCards } from "../components/part-card-component/keyboard-cards";
+import { ChooseCase } from "../components/step-components/choose-case.step";
 
 const steps = [
 	{ title: "Choose initial setup", description: "This will be important later!" },
@@ -29,7 +30,7 @@ const steps = [
 	{ title: "Final step", description: "" },
 ];
 
-export const MakeKeyboardAdminPage = () => {
+export const MakeKeyboardPage = () => {
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
 		count: steps.length,
@@ -57,8 +58,8 @@ export const MakeKeyboardAdminPage = () => {
 						maxW={"25%"}
 					>
 						{steps.map((step, index) => (
-							<Step key={index} onClick={() => setActiveStep(index)}>
-								<Flex gap={"8px"} h={"100px"} cursor={"pointer"}>
+							<Step key={index}>
+								<Flex gap={"8px"} minH={"100px"} maxH={"100px"}>
 									<StepIndicator transition={"0.2s ease"}>
 										<StepStatus
 											complete={<StepIcon />}
@@ -75,9 +76,19 @@ export const MakeKeyboardAdminPage = () => {
 							</Step>
 						))}
 					</Stepper>
-					<Flex flexGrow={"1"} flexDir={"column"} gap={"48px"}>
+					<Flex
+						flexGrow={"1"}
+						flexDir={"column"}
+						gap={"48px"}
+						px={"16px"}
+						bg={"rgba(255,255,255,0.9)"}
+						py={"24px"}
+						boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
+						rounded={"6px"}
+					>
 						<KeyboardCards />
-						{activeStep === 0 && <FirstStepAdmin />}
+						{activeStep === 0 && <FirstStep />}
+						{activeStep === 1 && <ChooseCase />}
 						<StepControlContainer
 							activeStep={activeStep}
 							setActiveStep={setActiveStep}

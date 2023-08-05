@@ -17,9 +17,9 @@ export const SmallPartCard = ({ part }: SmallPartCardProps) => {
 			px={"8px"}
 			py={"8px"}
 			w={"calc(33% - 15px)"}
-			h={"165px"}
 			rounded={"8px"}
 			flexDir={"column"}
+			minH={"185px"}
 		>
 			{part.name === "" ? (
 				<Img src={xImg} h={"100%"} w={"100%"} />
@@ -40,8 +40,15 @@ export const SmallPartCard = ({ part }: SmallPartCardProps) => {
 						flexDirection={"column"}
 						fontSize={"small"}
 					>
-						<Text overflow={"hidden"}>{part.name}asdasdasd</Text>
-						<Flex textAlign={"end"} mr={"12px"} justifyContent={"space-between"}>
+						<Text overflow={"hidden"} fontWeight={"bold"}>
+							{part.name}
+						</Text>
+						<Flex
+							textAlign={"end"}
+							mr={"12px"}
+							justifyContent={"space-between"}
+							fontWeight={"bold"}
+						>
 							<Text>Price: </Text>
 							<Text>{part.price} $ </Text>
 						</Flex>

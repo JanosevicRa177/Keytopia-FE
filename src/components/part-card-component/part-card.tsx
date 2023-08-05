@@ -6,11 +6,12 @@ import { PartData } from "../../store/keyboard-store/types/keyboard.type";
 
 interface PartCardProps {
 	part: PartData;
-	deletePart: (part: PartData) => Promise<void>;
-	showMore: (part: PartData) => Promise<void>;
+	deletePart?: (part: PartData) => Promise<void>;
+	showMore?: (part: PartData) => Promise<void>;
+	choosePart?: (part: any) => Promise<void>;
 }
 
-export const PartCard = ({ part, showMore, deletePart }: PartCardProps) => {
+export const PartCard = ({ part, showMore, deletePart, choosePart }: PartCardProps) => {
 	const addToProcurement = useApplicationStore((state) => state.addToProcurement);
 	function handleAddToProcurement() {
 		addToProcurement({
@@ -30,7 +31,6 @@ export const PartCard = ({ part, showMore, deletePart }: PartCardProps) => {
 			px={"12px"}
 			py={"16px"}
 			w={"calc(33% - 15px)"}
-			h={"475px"}
 			rounded={"8px"}
 			flexDir={"column"}
 			gap={"24px"}
@@ -54,51 +54,80 @@ export const PartCard = ({ part, showMore, deletePart }: PartCardProps) => {
 			</Flex>
 
 			<Flex gap={"12px"} flexWrap={"wrap"}>
-				<Button
-					w={"calc(50% - 6px)"}
-					rounded={"4px"}
-					overflow={"hidden"}
-					color={"#343434"}
-					bg={colorPallete.button}
-					onClick={() => showMore(part)}
-					_hover={{
-						bg: colorPallete.buttonHover,
-						transform: "scale(1.05,1.05)",
-						transition: "0.2s",
-					}}
-				>
-					Show more
-				</Button>
-				<Button
-					rounded={"4px"}
-					overflow={"hidden"}
-					w={"calc(50% - 6px)"}
-					bg={colorPallete.deleteButton}
-					color={"white"}
-					onClick={() => deletePart(part)}
-					_hover={{
-						bg: colorPallete.deleteButtonHover,
-						transform: "scale(1.05,1.05)",
-						transition: "0.2s",
-					}}
-				>
-					Delete
-				</Button>
-				<Button
-					rounded={"4px"}
-					overflow={"hidden"}
-					w={"100%"}
-					bg={colorPallete.button}
-					color={"#343434"}
-					onClick={() => handleAddToProcurement()}
-					_hover={{
-						bg: colorPallete.buttonHover,
-						transform: "scale(1.05,1.05)",
-						transition: "0.2s",
-					}}
-				>
-					Add to procurement
-				</Button>
+				{showMore !== undefined && (
+					<Button
+						w={"calc(50% - 6px)"}
+						rounded={"4px"}
+						overflow={"hidden"}
+						color={"#343434"}
+						bg={colorPallete.button}
+						onClick={() => {
+							if (showMore !== undefined) showMore(part);
+						}}
+						_hover={{
+							bg: colorPallete.buttonHover,
+							transform: "scale(1.05,1.05)",
+							transition: "0.2s",
+						}}
+					>
+						Show more
+					</Button>
+				)}
+				{choosePart !== undefined && (
+					<Button
+						w={"calc(50% - 6px)"}
+						rounded={"4px"}
+						overflow={"hidden"}
+						color={"#343434"}
+						bg={colorPallete.button}
+						onClick={() => {
+							if (showMore !== undefined) choosePart(part);
+						}}
+						_hover={{
+							bg: colorPallete.buttonHover,
+							transform: "scale(1.05,1.05)",
+							transition: "0.2s",
+						}}
+					>
+						Choose
+					</Button>
+				)}
+				{deletePart !== undefined && (
+					<Button
+						rounded={"4px"}
+						overflow={"hidden"}
+						w={"calc(50% - 6px)"}
+						bg={colorPallete.deleteButton}
+						color={"white"}
+						onClick={() => {
+							if (deletePart !== undefined) deletePart(part);
+						}}
+						_hover={{
+							bg: colorPallete.deleteButtonHover,
+							transform: "scale(1.05,1.05)",
+							transition: "0.2s",
+						}}
+					>
+						Delete
+					</Button>
+				)}
+				{deletePart !== undefined && (
+					<Button
+						rounded={"4px"}
+						overflow={"hidden"}
+						w={"100%"}
+						bg={colorPallete.button}
+						color={"#343434"}
+						onClick={() => handleAddToProcurement()}
+						_hover={{
+							bg: colorPallete.buttonHover,
+							transform: "scale(1.05,1.05)",
+							transition: "0.2s",
+						}}
+					>
+						Add to procurement
+					</Button>
+				)}
 			</Flex>
 		</Flex>
 	);

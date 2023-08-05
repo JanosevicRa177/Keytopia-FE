@@ -5,7 +5,7 @@ import { MainPage } from "../pages/main.page";
 import { UserPage } from "../pages/user.page";
 import { CurrentProcurementPage } from "../pages/current-procurement.page";
 import { ProcurementPage } from "../pages/procurements-page";
-import { MakeKeyboardAdminPage } from "../pages/make-keyboard-admin.page";
+import { MakeKeyboardPage } from "../pages/make-keyboard.page";
 
 interface CustomRouteProps {
 	path: string;
@@ -53,8 +53,8 @@ export const routes: CustomRouteProps[] = [
 		needAuth: true,
 	},
 	{
-		path: "admin/make-keyboard",
-		element: <MakeKeyboardAdminPage />,
+		path: "make-keyboard",
+		element: <MakeKeyboardPage />,
 		needAuth: true,
 		requiredRole: "ADMIN",
 	},

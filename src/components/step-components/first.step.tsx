@@ -1,20 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Flex, FormLabel, Img, Input, Select, Text } from "@chakra-ui/react";
-import keyboardSizes from "../../../images/keyboardSizes.png";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useFetchSizes } from "../../../hooks/part-data-hooks/get-all/size.get-all.hook";
-import { ApiResponse } from "../../../store/auth-store/types/response.type";
-import { colorPallete } from "../../../styles/color";
-import { PriceWeight, SwitchType } from "../../../utils/enum";
-import { useApplicationStore } from "../../../store/store";
-import soundImg from "../../../images/sound.png";
-import lienar from "../../../sounds/linear.wav";
-import clicky from "../../../sounds/clicky.wav";
-import tactile from "../../../sounds/tactile.wav";
+import { useFetchSizes } from "../../hooks/part-data-hooks/get-all/size.get-all.hook";
+import { ApiResponse } from "../../store/auth-store/types/response.type";
+import { colorPallete } from "../../styles/color";
+import { PriceWeight, SwitchType } from "../../utils/enum";
+import { useApplicationStore } from "../../store/store";
 
-export const FirstStepAdmin = () => {
-	const setName = useApplicationStore((state) => state.setName);
+import soundImg from "../../images/sound.png";
+import keyboardSizes from "../../images/keyboardSizes.png";
+import lienar from "../../sounds/linear.wav";
+import clicky from "../../sounds/clicky.wav";
+import tactile from "../../sounds/tactile.wav";
+
+export const FirstStep = () => {
+	const setColor = useApplicationStore((state) => state.setColor);
 	const setSizeName = useApplicationStore((state) => state.setSizeName);
 	const setSwitchType = useApplicationStore((state) => state.setSwitchType);
 	const setPriceWeight = useApplicationStore((state) => state.setPriceWeight);
@@ -30,7 +31,7 @@ export const FirstStepAdmin = () => {
 			setSizeName(res.data[0]);
 			setSwitchType(SwitchType.TACTILE);
 			setPriceWeight(PriceWeight.MEDIUM);
-			setName("");
+			setColor("");
 		});
 	}, []);
 	return (
@@ -43,7 +44,7 @@ export const FirstStepAdmin = () => {
 					Choose what kind of keyboard you want
 				</Text>
 
-				<FormLabel fontWeight={"semibold"}>Name</FormLabel>
+				<FormLabel fontWeight={"semibold"}>Color</FormLabel>
 				<Input
 					type="text"
 					rounded={"4px"}
@@ -52,7 +53,7 @@ export const FirstStepAdmin = () => {
 					_hover={{
 						borderColor: colorPallete.inputBorderHover,
 					}}
-					onChange={(e) => setName(e.target.value)}
+					onChange={(e) => setColor(e.target.value)}
 				/>
 				<FormLabel fontWeight={"semibold"} mt={"16px"}>
 					Size

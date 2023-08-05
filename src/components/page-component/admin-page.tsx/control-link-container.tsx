@@ -19,7 +19,7 @@ export const ControlLinkContainer = (props: ControlLinkContainerProps) => {
 			flexDir={"column"}
 			py={"12px"}
 		>
-			<Text fontSize={"xl"} mr={"12px"} w={"85px"}>
+			<Text fontSize={"xl"} mr={"12px"} w={"85px"} textShadow={"4px 4px 12px 6px rgb(0,0,0)"}>
 				{props.header}
 			</Text>
 			<Flex flexDir={"column"}>

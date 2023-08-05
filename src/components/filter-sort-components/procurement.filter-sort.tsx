@@ -67,9 +67,7 @@ export const ProcurementFilterSort = ({
 				</Select>
 			</Flex>
 			<Flex flexDirection={"column"} gap={"8px"} w={"33%"} h={"77px"}>
-				<Text textAlign={"center"}>
-					Sort by quantity ( {normalizeEnum(sortedDirection)} )
-				</Text>
+				<Text textAlign={"center"}>Sort by date ( {normalizeEnum(sortedDirection)} )</Text>
 				<Flex
 					verticalAlign={"center"}
 					justifyContent={"center"}

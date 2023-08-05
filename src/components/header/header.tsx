@@ -114,7 +114,7 @@ export const Header = () => {
 										/>
 										<CustomLink link={"/procurements"} text={"Procurements"} />
 										<CustomLink
-											link={"/admin/make-keyboard"}
+											link={"/make-keyboard"}
 											text={"Make keyboard"}
 										/>
 									</>
