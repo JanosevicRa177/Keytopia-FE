@@ -22,6 +22,9 @@ export const Pagination: React.FC<PaginationProps> = ({
 	useEffect(() => {
 		setPageNums(getPaginationItems(currentPage, lastPage, maxLength));
 	}, [currentPage, lastPage]);
+	const scrollToTop = () => {
+		window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+	};
 	return (
 		<Flex mx={"auto"} gap={"8px"} my={"16px"}>
 			<PageLink
@@ -30,6 +33,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 				onClick={() => {
 					setCurrentPage(currentPage - 1);
 					getPage(currentPage - 1 - 1);
+					scrollToTop();
 				}}
 			>
 				Previous
@@ -43,6 +47,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 					onClick={() => {
 						setCurrentPage(pageNum);
 						getPage(pageNum - 1);
+						scrollToTop();
 					}}
 				>
 					{!isNaN(pageNum) ? pageNum : "..."}
@@ -54,6 +59,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 				onClick={() => {
 					setCurrentPage(currentPage + 1);
 					getPage(currentPage - 1 + 1);
+					scrollToTop();
 				}}
 			>
 				Next

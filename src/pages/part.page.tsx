@@ -2,13 +2,12 @@ import { ControlContainer } from "../components/page-component/admin-page.tsx/co
 import { MainContrainer } from "../components/page-component/main-container";
 import { useState } from "react";
 import { ControlLinkContainer } from "../components/page-component/admin-page.tsx/control-link-container";
-import { ProcurementCartComponent } from "../components/cart-components/procurement-components/procurement.components";
 import { Flex } from "@chakra-ui/react";
-import { PartViewContainer } from "../components/page-component/admin-page.tsx/admin-view-contrainer";
+import { PartViewContainer } from "../components/page-component/admin-page.tsx/part-view-contrainer";
 import { PartType } from "../utils/enum";
 import { RouteWithPartType } from "../model/util.model";
 
-export const PartAdminPage = () => {
+export const PartPage = () => {
 	const parts = [
 		{ value: "All parts", route: "part" },
 		{ value: "Case", route: "part", partType: PartType.CASE },
@@ -33,12 +32,7 @@ export const PartAdminPage = () => {
 	];
 	return (
 		<MainContrainer>
-			<Flex
-				bg={"rgba(255,255,255,0.5)"}
-				backdropFilter="auto"
-				backdropBlur="4px"
-				flexDirection={"column"}
-			>
+			<Flex bg={"rgba(255,255,255,0.5)"} backdropFilter="auto" backdropBlur="4px">
 				<ControlContainer>
 					<ControlLinkContainer
 						header="Parts"
@@ -58,7 +52,6 @@ export const PartAdminPage = () => {
 						setChosen={setChosenView}
 						names={warehouse}
 					/>
-					<ProcurementCartComponent />
 				</ControlContainer>
 				<PartViewContainer partType={chosenView.partType} />
 			</Flex>

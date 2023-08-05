@@ -16,11 +16,13 @@ export const ControlLinkContainer = (props: ControlLinkContainerProps) => {
 			boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
 			rounded={"8px"}
 			px={"18px"}
+			flexDir={"column"}
+			py={"12px"}
 		>
-			<Text fontSize={"3xl"} mr={"12px"} mb={"8px"}>
-				{props.header}:
+			<Text fontSize={"xl"} mr={"12px"} w={"85px"}>
+				{props.header}
 			</Text>
-			<Flex columnGap={"12px"} fontSize={"xl"}>
+			<Flex flexDir={"column"}>
 				{props.names.map((route) => {
 					return (
 						<InnerLink

@@ -7,6 +7,8 @@ import { PartView } from "../../view/part-view/part.view";
 import { BrandView } from "../../view/warehouse-view/brand.view";
 import { SupplierView } from "../../view/warehouse-view/supplier.view";
 import { PartType } from "../../../utils/enum";
+import { ProcurementCartComponent } from "../../cart-components/procurement-components/procurement.components";
+import { Flex } from "@chakra-ui/react";
 
 interface PartViewContainerProps {
 	partType?: PartType;
@@ -14,7 +16,8 @@ interface PartViewContainerProps {
 
 export const PartViewContainer = (props: PartViewContainerProps) => {
 	return (
-		<>
+		<Flex flexDir={"column"} gap={"24px"} my={"32px"} mx={"24px"} flexGrow={"1"}>
+			<ProcurementCartComponent />
 			<Routes>
 				<Route path="/part" element={<PartView partType={props.partType} />} />
 				<Route path="/size" element={<SizeView />} />
@@ -24,6 +27,6 @@ export const PartViewContainer = (props: PartViewContainerProps) => {
 				<Route path="/supplier" element={<SupplierView />} />
 				<Route path={"keycap-profile"} element={<KeycapProfileView />} />
 			</Routes>
-		</>
+		</Flex>
 	);
 };

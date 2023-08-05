@@ -53,7 +53,7 @@ export const SwitchView = () => {
 	}
 
 	return (
-		<Box w={"100%"}>
+		<Box minW={"927px"}>
 			<Flex
 				color={"#343434"}
 				bg={"rgba(255,255,255,0.9)"}
@@ -68,7 +68,7 @@ export const SwitchView = () => {
 				flexDirection={"column"}
 				alignContent={"center"}
 				justifyContent={"center"}
-				w={"90%"}
+				w={"100%"}
 			>
 				<Flex justifyContent={"space-between"}>
 					<Text fontSize={"2xl"}>Switch</Text>
@@ -90,17 +90,29 @@ export const SwitchView = () => {
 						New
 					</Button>
 				</Flex>
-				<Flex h={"408px"} fontSize={"md"}>
-					<TableContainer flex={1}>
+				<Flex h={"408px"} fontSize={"md"} w={"863px"}>
+					<TableContainer>
 						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
-									<Th>Name</Th>
-									<Th>Actuation force</Th>
-									<Th>Actuation point</Th>
-									<Th>Pin type</Th>
-									<Th>Switch type</Th>
-									<Th>Price weight</Th>
+									<Th px={"12px"} py={"16px"}>
+										Name
+									</Th>
+									<Th px={"12px"} py={"16px"}>
+										Actuation force
+									</Th>
+									<Th px={"12px"} py={"16px"}>
+										Actuation point
+									</Th>
+									<Th px={"12px"} py={"16px"}>
+										Pin type
+									</Th>
+									<Th px={"12px"} py={"16px"}>
+										Switch type
+									</Th>
+									<Th px={"12px"} py={"16px"}>
+										Price weight
+									</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
@@ -108,12 +120,22 @@ export const SwitchView = () => {
 									getSwitchesPageRes.data.content.map((item: Switch) => (
 										<Tr key={item.name}>
 											<Td>{item.name}</Td>
-											<Td w={"10%"}>{item.actuationForce}</Td>
-											<Td w={"10%"}>{item.actuationPoint}</Td>
-											<Td w={"10%"}>{mapPinType(item.pinType)}</Td>
-											<Td w={"10%"}>{mapSwitchType(item.switchType)}</Td>
-											<Td w={"10%"}>{item.priceWeight}</Td>
-											<Td>
+											<Td px={"27px"} py={"16px"}>
+												{item.actuationForce}
+											</Td>
+											<Td px={"27px"} py={"16px"}>
+												{item.actuationPoint}
+											</Td>
+											<Td px={"27px"} py={"16px"}>
+												{mapPinType(item.pinType)}
+											</Td>
+											<Td px={"27px"} py={"16px"}>
+												{mapSwitchType(item.switchType)}
+											</Td>
+											<Td px={"27px"} py={"16px"}>
+												{item.priceWeight}
+											</Td>
+											<Td px={"27px"} py={"16px"}>
 												<Flex gap={"4"}>
 													<Button
 														flexGrow={"1"}
@@ -129,6 +151,7 @@ export const SwitchView = () => {
 															transform: "scale(1.05,1.05)",
 															transition: "0.2s",
 														}}
+														w={"150px"}
 													>
 														Delete
 													</Button>

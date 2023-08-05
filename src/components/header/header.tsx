@@ -105,7 +105,7 @@ export const Header = () => {
 								) : (
 									<>
 										<CustomLink
-											link={"/manage/parts/cable"}
+											link={"/manage/parts/part"}
 											text={"Manage parts"}
 										/>
 										<CustomLink

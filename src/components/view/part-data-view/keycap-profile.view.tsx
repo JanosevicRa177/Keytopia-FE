@@ -39,7 +39,7 @@ export const KeycapProfileView = () => {
 	}
 
 	return (
-		<Box w={"100%"}>
+		<Box minW={"927px"}>
 			<Flex
 				color={"#343434"}
 				bg={"rgba(255,255,255,0.9)"}
@@ -54,7 +54,7 @@ export const KeycapProfileView = () => {
 				flexDirection={"column"}
 				alignContent={"center"}
 				justifyContent={"center"}
-				w={"90%"}
+				w={"100%"}
 			>
 				<Flex justifyContent={"space-between"}>
 					<Text fontSize={"2xl"}>Keycap profile</Text>

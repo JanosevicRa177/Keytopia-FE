@@ -1,4 +1,4 @@
-import { Center, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { colorPallete } from "../../../styles/color";
 import { Link } from "react-router-dom";
 import { normalizeRoute } from "../../../utils/string.converter";
@@ -11,9 +11,14 @@ interface InnerLinkProps {
 }
 
 export const InnerLink: React.FC<InnerLinkProps> = (props) => {
+	const scrollToTop = () => {
+		window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+	};
 	return (
-		<Center
+		<Flex
+			ml={"20px"}
 			onClick={() => {
+				scrollToTop();
 				props.setChosen(props.route);
 			}}
 		>
@@ -28,10 +33,11 @@ export const InnerLink: React.FC<InnerLinkProps> = (props) => {
 					borderColor={colorPallete.inputBorderHover}
 					fontWeight="700"
 					transition={"0.2s ease"}
+					whiteSpace={"nowrap"}
 				>
 					{props.route.value}
 				</Text>
 			</Link>
-		</Center>
+		</Flex>
 	);
 };

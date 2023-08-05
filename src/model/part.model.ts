@@ -81,7 +81,6 @@ export type PCB = Part & PCBPart;
 export type Plate = Part & PlatePart;
 export type Stabilizers = Part & StabilizersPart;
 export type SwitchSet = Part & SwitchSetPart;
-export type SwitchSetShowMore = Part & SwitchSetShowMorePart;
 
 export type PartWithData = {
     name: string;

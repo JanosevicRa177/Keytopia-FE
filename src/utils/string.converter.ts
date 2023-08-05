@@ -1,3 +1,6 @@
+import { Switch } from "../model/part-data.model";
+import { Part, PartWithData } from "../model/part.model";
+import { PartType } from "./enum";
 import { VariableWithValue } from "./types";
 
 export function normalizeNames(names: string[]): string[] {
@@ -139,4 +142,124 @@ export function normalizeRoute(string: string): string {
     const words = string.toLowerCase().split(" ");
     const convertedWords = words.map((word) => word.charAt(0).toLowerCase() + word.slice(1));
     return convertedWords.join("-");
+}
+
+export function handlePartVariables(part: Part, setData: React.Dispatch<React.SetStateAction<PartWithData>>, partType: PartType) {
+    if (part === null) {
+        return;
+    }
+    const variableNames: string[] = Object.keys(part as Part);
+    let normalizedNames: string[] = normalizeNames(variableNames);
+    const data: VariableWithValue[] = [];
+    variableNames.forEach((name: string) => {
+        if (
+            name === "name" ||
+            name === "imageUrl" ||
+            name === "priceWeight" ||
+            part[name as keyof Part]?.toString() == null
+        ) {
+            normalizedNames.shift();
+            return;
+        }
+        if (name === "type") {
+            if (partType === PartType.PCB) {
+                normalizePCBType(
+                    part[name as keyof Part]?.toString() as string,
+                    data,
+                    normalizedNames
+                );
+                return;
+            }
+            normalizeStabilizerType(
+                part[name as keyof Part]?.toString() as string,
+                data,
+                normalizedNames
+            );
+            return;
+        }
+        if (name === "pinType") {
+            if (partType === PartType.PCB) {
+                normalizePinType(
+                    part[name as keyof Part]?.toString() as string,
+                    data,
+                    normalizedNames
+                );
+                return;
+            }
+            normalizeStabilizerType(
+                part[name as keyof Part]?.toString() as string,
+                data,
+                normalizedNames
+            );
+            return;
+        }
+        if (name === "stabilizerType") {
+            normalizeStabilizerType(
+                part[name as keyof Part]?.toString() as string,
+                data,
+                normalizedNames
+            );
+            return;
+        }
+        if (name === "price") {
+            data.push({
+                variable: normalizedNames[0],
+                value: (part[name as keyof Part]?.toString() as string) + " $",
+            });
+            normalizedNames.shift();
+            return;
+        }
+        if (name === "aswitch") {
+            const switchData: Switch = part[
+                name as keyof unknown
+            ] as Switch;
+            const switchVariableNames: string[] = Object.keys(
+                part[name as keyof unknown] as Switch
+            );
+            let switchNormalizedNames: string[] = normalizeNames(switchVariableNames);
+            switchVariableNames.forEach((name: string) => {
+                if (
+                    name === "priceWeight" ||
+                    switchData[name as keyof Switch]?.toString() == null
+                ) {
+                    switchNormalizedNames.shift();
+                    return;
+                }
+                if (name === "pinType") {
+                    normalizePinType(
+                        switchData[name as keyof Switch]?.toString() as string,
+                        data,
+                        switchNormalizedNames
+                    );
+                    return;
+                }
+                if (name === "switchType") {
+                    normalizeSwitchType(
+                        switchData[name as keyof Switch]?.toString() as string,
+                        data,
+                        switchNormalizedNames
+                    );
+                    return;
+                }
+                data.push({
+                    variable: switchNormalizedNames[0],
+                    value: switchData[name as keyof Switch]?.toString() as string,
+                });
+                switchNormalizedNames.shift();
+            });
+            normalizedNames.shift();
+            return;
+        }
+        data.push({
+            variable: normalizedNames[0],
+            value: part[name as keyof Part]?.toString() as string,
+        });
+        normalizedNames.shift();
+    });
+    setData({
+        imageUrl: part.imageUrl ?? "",
+        variables: data,
+        name: part.name,
+    });
+
 }

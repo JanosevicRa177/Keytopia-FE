@@ -7,7 +7,7 @@ import { PartData } from "../../store/keyboard-store/types/keyboard.type";
 interface PartCardProps {
 	part: PartData;
 	deletePart: (part: PartData) => Promise<void>;
-	showMore: Function;
+	showMore: (part: PartData) => Promise<void>;
 }
 
 export const PartCard = ({ part, showMore, deletePart }: PartCardProps) => {
@@ -60,7 +60,7 @@ export const PartCard = ({ part, showMore, deletePart }: PartCardProps) => {
 					overflow={"hidden"}
 					color={"#343434"}
 					bg={colorPallete.button}
-					onClick={() => showMore(part.name)}
+					onClick={() => showMore(part)}
 					_hover={{
 						bg: colorPallete.buttonHover,
 						transform: "scale(1.05,1.05)",
@@ -70,24 +70,9 @@ export const PartCard = ({ part, showMore, deletePart }: PartCardProps) => {
 					Show more
 				</Button>
 				<Button
+					rounded={"4px"}
+					overflow={"hidden"}
 					w={"calc(50% - 6px)"}
-					rounded={"4px"}
-					overflow={"hidden"}
-					bg={colorPallete.button}
-					color={"#343434"}
-					onClick={() => handleAddToProcurement()}
-					_hover={{
-						bg: colorPallete.buttonHover,
-						transform: "scale(1.05,1.05)",
-						transition: "0.2s",
-					}}
-				>
-					Add to procurement
-				</Button>
-				<Button
-					rounded={"4px"}
-					overflow={"hidden"}
-					w={"100%"}
 					bg={colorPallete.deleteButton}
 					color={"white"}
 					onClick={() => deletePart(part)}
@@ -98,6 +83,21 @@ export const PartCard = ({ part, showMore, deletePart }: PartCardProps) => {
 					}}
 				>
 					Delete
+				</Button>
+				<Button
+					rounded={"4px"}
+					overflow={"hidden"}
+					w={"100%"}
+					bg={colorPallete.button}
+					color={"#343434"}
+					onClick={() => handleAddToProcurement()}
+					_hover={{
+						bg: colorPallete.buttonHover,
+						transform: "scale(1.05,1.05)",
+						transition: "0.2s",
+					}}
+				>
+					Add to procurement
 				</Button>
 			</Flex>
 		</Flex>

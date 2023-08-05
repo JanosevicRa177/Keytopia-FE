@@ -51,7 +51,7 @@ export const SupplierView = () => {
 	}
 
 	return (
-		<Box w={"100%"}>
+		<Box minW={"927px"}>
 			<Flex
 				color={"#343434"}
 				bg={"rgba(255,255,255,0.9)"}
@@ -66,7 +66,7 @@ export const SupplierView = () => {
 				flexDirection={"column"}
 				alignContent={"center"}
 				justifyContent={"center"}
-				w={"90%"}
+				w={"100%"}
 			>
 				<Flex justifyContent={"space-between"}>
 					<Text fontSize={"2xl"}>Supplier</Text>
