@@ -55,19 +55,19 @@ export const ProcurementPage = () => {
 	function handleRealize(item: GetProcurementDto) {
 		realizeProcurement(item.id).then((res: ApiResponse<null>) => {
 			if (res.status === "ERROR") return;
-			handleProcurementsPage(currentPage);
+			handleProcurementsPage(0);
 		});
 	}
 	function handlePenalize(item: GetProcurementDto) {
 		penalizeProcurement(item.id).then((res: ApiResponse<null>) => {
 			if (res.status === "ERROR") return;
-			handleProcurementsPage(currentPage);
+			handleProcurementsPage(0);
 		});
 	}
 	function handleDelete(item: GetProcurementDto) {
 		deleteProcurement(item.id).then((res: ApiResponse<null>) => {
 			if (res.status === "ERROR") return;
-			handleProcurementsPage(1);
+			handleProcurementsPage(0);
 		});
 	}
 	function isProcurement(item: GetProcurementDto, state: ProcurementState): boolean | undefined {
@@ -86,7 +86,16 @@ export const ProcurementPage = () => {
 					h={"calc(100vh + 20px)"}
 					zIndex={1}
 				/>
-				<Flex zIndex={5} px={"32px"} flexDirection={"column"}>
+				<Flex
+					zIndex={5}
+					mx={"32px"}
+					px={"32px"}
+					py={"32px"}
+					flexDirection={"column"}
+					bg={"rgba(255,255,255,0.9)"}
+					boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
+					rounded={"8px"}
+				>
 					<Flex flexDirection={"column"}>
 						<ProcurementFilterSort
 							fetchProcurement={handleProcurementsPage}
@@ -97,7 +106,14 @@ export const ProcurementPage = () => {
 						/>
 						<Text fontSize={"2xl"}>Procurements</Text>
 					</Flex>
-					<Flex h={"635px"} fontSize={"md"}>
+					<Flex
+						h={"625px"}
+						fontSize={"md"}
+						rounded={"8px"}
+						mt={"12px"}
+						border={"2px"}
+						borderColor={colorPallete.button}
+					>
 						<TableContainer flex={1}>
 							<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 								<Thead>
@@ -106,6 +122,7 @@ export const ProcurementPage = () => {
 										<Th>Deadline</Th>
 										<Th>Status</Th>
 										<Th>Supplier</Th>
+										<Th></Th>
 									</Tr>
 								</Thead>
 								<Tbody>

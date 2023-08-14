@@ -9,22 +9,31 @@ interface PartCardProps {
 	deletePart?: (part: PartData) => Promise<void>;
 	showMore?: (part: PartData) => Promise<void>;
 	choosePart?: (part: any) => Promise<void>;
+	choosenPartName?: string;
 }
 
-export const PartCard = ({ part, showMore, deletePart, choosePart }: PartCardProps) => {
+export const PartCard = ({
+	part,
+	showMore,
+	deletePart,
+	choosePart,
+	choosenPartName,
+}: PartCardProps) => {
 	const addToProcurement = useApplicationStore((state) => state.addToProcurement);
+	const user = useApplicationStore((state) => state.user);
 	function handleAddToProcurement() {
 		addToProcurement({
 			name: part.name,
 			price: part.price,
 			quantity: 1,
-			image: part.imageUrl ?? "",
+			image: part.imageUrl.toString() ?? "",
+			isKeyboard: false,
 		});
 		toast.success("1 instance of " + part.name + " added procurement");
 	}
 	return (
 		<Flex
-			bg={colorPallete.card}
+			bg={choosenPartName === part.name ? colorPallete.choosenCard : colorPallete.card}
 			backdropFilter="auto"
 			backdropBlur="4px"
 			boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
@@ -34,9 +43,10 @@ export const PartCard = ({ part, showMore, deletePart, choosePart }: PartCardPro
 			rounded={"8px"}
 			flexDir={"column"}
 			gap={"24px"}
+			transition={"0.3s ease"}
 		>
 			<Img
-				src={part.imageUrl}
+				src={part.imageUrl.toString()}
 				rounded={"4px"}
 				minH={"226px"}
 				maxH={"196px"}
@@ -92,7 +102,7 @@ export const PartCard = ({ part, showMore, deletePart, choosePart }: PartCardPro
 						Choose
 					</Button>
 				)}
-				{deletePart !== undefined && (
+				{deletePart !== undefined && user?.role === "ADMIN" && (
 					<Button
 						rounded={"4px"}
 						overflow={"hidden"}
@@ -115,7 +125,7 @@ export const PartCard = ({ part, showMore, deletePart, choosePart }: PartCardPro
 					<Button
 						rounded={"4px"}
 						overflow={"hidden"}
-						w={"100%"}
+						w={user?.role === "ADMIN" ? "100%" : "calc(50% - 6px)"}
 						bg={colorPallete.button}
 						color={"#343434"}
 						onClick={() => handleAddToProcurement()}
@@ -125,7 +135,7 @@ export const PartCard = ({ part, showMore, deletePart, choosePart }: PartCardPro
 							transition: "0.2s",
 						}}
 					>
-						Add to procurement
+						{user?.role === "ADMIN" ? "Add to procurement" : "Add to cart"}
 					</Button>
 				)}
 			</Flex>

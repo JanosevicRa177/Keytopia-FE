@@ -33,7 +33,6 @@ import {
 	SWITCH_SET_DEFAULT_VALUES,
 	SWITCH_SET_VALIDATION_SCHEMA,
 } from "../../../utils/constants/part.constants";
-import { PriceWeight } from "../../../utils/enum";
 import { useForm } from "react-hook-form";
 
 interface SwitchSetFormProps {
@@ -184,30 +183,6 @@ export const SwitchSetForm = ({ isOpen, onClose, fetchPage }: SwitchSetFormProps
 								{errors.price ? (
 									<FormErrorMessage ml={"8px"}>
 										Price should be a positive number
-									</FormErrorMessage>
-								) : (
-									<Box h={"25px"} w="100%" ml={"8px"}></Box>
-								)}
-							</FormControl>
-							<FormControl isInvalid={errors.priceWeight != null}>
-								<FormLabel fontWeight={"semibold"}>Price weight</FormLabel>
-								<Select
-									rounded={"4px"}
-									h={"45px"}
-									borderColor={colorPallete.inputBorder}
-									{...register("priceWeight")}
-									_hover={{
-										borderColor: colorPallete.inputBorderHover,
-									}}
-									defaultValue={PriceWeight.LIGHT}
-								>
-									<option value={PriceWeight.LIGHT}>Light</option>
-									<option value={PriceWeight.MEDIUM}>Medium</option>
-									<option value={PriceWeight.HEAVY}>Heavy</option>
-								</Select>
-								{errors.priceWeight ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.priceWeight.message}
 									</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>

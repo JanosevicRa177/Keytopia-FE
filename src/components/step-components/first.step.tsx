@@ -29,13 +29,13 @@ export const FirstStep = () => {
 			}
 			setSizeNames(res.data);
 			setSizeName(res.data[0]);
-			setSwitchType(SwitchType.TACTILE);
 			setPriceWeight(PriceWeight.MEDIUM);
 			setColor("");
+			setSwitchType(SwitchType.TACTILE);
 		});
 	}, []);
 	return (
-		<Flex gap={"16px"}>
+		<Flex gap={"32px"}>
 			<Flex w={"50%"}>
 				<Img src={keyboardSizes} rounded={"16px"} w={"100%"} />
 			</Flex>

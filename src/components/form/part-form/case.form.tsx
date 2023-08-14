@@ -88,6 +88,7 @@ export const CaseForm = ({ isOpen, onClose, fetchPage }: CaseFormProps) => {
 					return;
 				}
 				setSizeNames(res.data);
+				setValue("size", res.data[0]);
 			});
 			setInit(false);
 		}

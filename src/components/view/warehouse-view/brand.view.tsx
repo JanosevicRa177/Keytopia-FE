@@ -48,7 +48,7 @@ export const BrandView = () => {
 				px={"32px"}
 				py={"32px"}
 				boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
-				rounded={"4px"}
+				rounded={"8px"}
 				position={"relative"}
 				fontWeight={"bold"}
 				flexDirection={"column"}
@@ -76,13 +76,21 @@ export const BrandView = () => {
 						New
 					</Button>
 				</Flex>
-				<Flex h={"408px"} fontSize={"md"}>
+				<Flex
+					h={"408px"}
+					fontSize={"md"}
+					rounded={"8px"}
+					mt={"12px"}
+					border={"2px"}
+					borderColor={colorPallete.button}
+				>
 					<TableContainer flex={1}>
 						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
 									<Th>Slogan</Th>
+									<Th></Th>
 								</Tr>
 							</Thead>
 							<Tbody>
@@ -124,7 +132,6 @@ export const BrandView = () => {
 					getPage={getBrandsPage}
 				/>
 			</Flex>
-			<Box h={"calc(100vh - 815px)"} />
 			<BrandForm isOpen={isOpenForm} onClose={onCloseForm} fetchBrands={getBrandsPage} />
 		</Box>
 	);

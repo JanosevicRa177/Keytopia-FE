@@ -48,7 +48,7 @@ export const KeycapProfileView = () => {
 				px={"32px"}
 				py={"32px"}
 				boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
-				rounded={"4px"}
+				rounded={"8px"}
 				position={"relative"}
 				fontWeight={"bold"}
 				flexDirection={"column"}
@@ -76,12 +76,20 @@ export const KeycapProfileView = () => {
 						New
 					</Button>
 				</Flex>
-				<Flex h={"408px"} fontSize={"md"}>
+				<Flex
+					h={"408px"}
+					fontSize={"md"}
+					border={"2px"}
+					rounded={"8px"}
+					mt={"12px"}
+					borderColor={colorPallete.button}
+				>
 					<TableContainer flex={1}>
 						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
 									<Th>Name</Th>
+									<Th></Th>
 								</Tr>
 							</Thead>
 							<Tbody>
@@ -126,7 +134,6 @@ export const KeycapProfileView = () => {
 					getPage={getKeycapProfilesPage}
 				/>
 			</Flex>
-			<Box h={"calc(100vh - 815px)"} />
 			<KeycapProfileForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}

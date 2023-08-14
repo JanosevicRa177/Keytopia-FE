@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { InnerLink } from "./inner-link";
-import { RouteWithPartType } from "../../../model/util.model";
+import { RouteWithPartType } from "../../model/util.model";
 
 interface ControlLinkContainerProps {
 	chosen: RouteWithPartType;
@@ -17,12 +17,18 @@ export const ControlLinkContainer = (props: ControlLinkContainerProps) => {
 			rounded={"8px"}
 			px={"18px"}
 			flexDir={"column"}
-			py={"12px"}
+			py={"7px"}
 		>
-			<Text fontSize={"xl"} mr={"12px"} w={"85px"} textShadow={"4px 4px 12px 6px rgb(0,0,0)"}>
+			<Text
+				mr={"12px"}
+				w={"85px"}
+				fontWeight={"bold"}
+				fontSize={"large"}
+				textShadow={"4px 4px 12px 6px rgb(0,0,0)"}
+			>
 				{props.header}
 			</Text>
-			<Flex flexDir={"column"}>
+			<Flex flexDir={"column"} fontSize={"sm"}>
 				{props.names.map((route) => {
 					return (
 						<InnerLink

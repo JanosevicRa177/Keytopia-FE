@@ -11,7 +11,7 @@ export const AuthPage = () => {
 	return (
 		<Center
 			w={"calc(100vw - 32px)"}
-			h={"calc(100vh - 105px)"}
+			h={"calc(100vh - 118px)"}
 			top={"-35px"}
 			position={"relative"}
 		>

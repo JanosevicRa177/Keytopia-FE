@@ -1,8 +1,8 @@
 import { Flex, Text } from "@chakra-ui/react";
-import { colorPallete } from "../../../styles/color";
+import { RouteWithPartType } from "../../model/util.model";
+import { colorPallete } from "../../styles/color";
+import { normalizeRoute } from "../../utils/string.converter";
 import { Link } from "react-router-dom";
-import { normalizeRoute } from "../../../utils/string.converter";
-import { RouteWithPartType } from "../../../model/util.model";
 
 interface InnerLinkProps {
 	chosen: RouteWithPartType;
@@ -16,7 +16,7 @@ export const InnerLink: React.FC<InnerLinkProps> = (props) => {
 	};
 	return (
 		<Flex
-			ml={"20px"}
+			ml={"14px"}
 			onClick={() => {
 				scrollToTop();
 				props.setChosen(props.route);
@@ -31,7 +31,6 @@ export const InnerLink: React.FC<InnerLinkProps> = (props) => {
 					}
 					borderBottom={props.chosen.value === props.route.value ? "1px" : "0px"}
 					borderColor={colorPallete.inputBorderHover}
-					fontWeight="700"
 					transition={"0.2s ease"}
 					whiteSpace={"nowrap"}
 				>

@@ -8,12 +8,17 @@ export const MainPage = () => {
 	const navigate = useNavigate();
 	return (
 		<MainContrainer>
-			<Flex
-				bg={"rgba(255,255,255,0.5)"}
-				backdropFilter="auto"
-				backdropBlur="4px"
-				flexDirection={"column"}
-			>
+			<Flex backdropFilter="auto" flexDirection={"column"}>
+				<Flex
+					bg={"rgba(255,255,255,0.5)"}
+					backdropFilter="auto"
+					backdropBlur="4px"
+					w={"1140px"}
+					top={"-20px"}
+					position={"fixed"}
+					h={"calc(100vh + 20px)"}
+					zIndex={1}
+				/>
 				<SectionContainer style={SectionStyle.right}>
 					<Img src="key0.png" h={"100%"} w={"50%"} position={"absolute"} />
 					<Box h={"100%"} w={"50%"} />
@@ -62,7 +67,7 @@ export const MainPage = () => {
 									rounded={"4px"}
 									overflow={"hidden"}
 									onClick={() => {
-										navigate("/shop-parts");
+										navigate("/parts/part");
 									}}
 									bg={colorPallete.button}
 									_hover={{
@@ -108,7 +113,7 @@ export const MainPage = () => {
 									overflow={"hidden"}
 									bg={colorPallete.button}
 									onClick={() => {
-										navigate("/custom-keyboard");
+										navigate("/make-keyboard");
 									}}
 									_hover={{
 										bg: colorPallete.buttonHover,
@@ -153,7 +158,7 @@ export const MainPage = () => {
 									overflow={"hidden"}
 									bg={colorPallete.button}
 									onClick={() => {
-										navigate("/shop-keyboard");
+										navigate("/parts/keyboard");
 									}}
 									_hover={{
 										bg: colorPallete.buttonHover,
@@ -198,7 +203,7 @@ export const MainPage = () => {
 									overflow={"hidden"}
 									bg={colorPallete.button}
 									onClick={() => {
-										navigate("/shop-parts");
+										navigate("/parts/part");
 									}}
 									_hover={{
 										bg: colorPallete.buttonHover,

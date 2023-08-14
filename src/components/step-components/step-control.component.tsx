@@ -1,6 +1,11 @@
 import { Button, Flex } from "@chakra-ui/react";
 import { colorPallete } from "../../styles/color";
 import { useApplicationStore } from "../../store/store";
+import { calculateDisabled } from "../../utils/functions";
+import { useCreateKeyboardAdmin } from "../../hooks/keyboard-hooks/create-keyboard.admin.hook";
+import { toast } from "react-toastify";
+import { ApiResponse } from "../../store/auth-store/types/response.type";
+import { useNavigate } from "react-router-dom";
 
 interface StepControlContainerProps {
 	setActiveStep: (step: number) => void;
@@ -8,15 +13,29 @@ interface StepControlContainerProps {
 }
 
 export const StepControlContainer = ({ setActiveStep, activeStep }: StepControlContainerProps) => {
+	const navigate = useNavigate();
 	const scrollToTop = () => {
 		window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 	};
-	const keyboard = useApplicationStore((state) => state.keyboard);
-	function calculateDisabled() {
-		if (activeStep === 1) return keyboard.case === undefined;
+	function handleSubmit() {
+		if (keyboard.image == null) {
+			toast.error("You must choose image first!");
+			return;
+		}
+		createKeyboardAdmin(keyboard).then((resp: ApiResponse<null>) => {
+			if (resp.status === "SUCCESS") {
+				navigate("/");
+				setImage(undefined);
+			}
+		});
 	}
+	const user = useApplicationStore((state) => state.user);
+	const keyboard = useApplicationStore((state) => state.keyboard);
+	const setImage = useApplicationStore((state) => state.setImage);
+
+	const { createKeyboardAdmin } = useCreateKeyboardAdmin();
 	return (
-		<Flex justifyContent={"end"} gap={"12px"}>
+		<Flex justifyContent={"end"} gap={"12px"} mt={"32px"}>
 			{activeStep !== 0 && (
 				<Button
 					w={"150px"}
@@ -39,15 +58,19 @@ export const StepControlContainer = ({ setActiveStep, activeStep }: StepControlC
 					Back
 				</Button>
 			)}
-			{activeStep !== 9 ? (
+			{activeStep !== 8 ? (
 				<Button
 					w={"150px"}
 					h={"45px"}
 					rounded={"4px"}
 					overflow={"hidden"}
-					bg={calculateDisabled() ? colorPallete.disabledButton : colorPallete.button}
+					bg={
+						calculateDisabled(activeStep, keyboard)
+							? colorPallete.disabledButton
+							: colorPallete.button
+					}
 					_hover={{
-						bg: !calculateDisabled() && colorPallete.buttonHover,
+						bg: !calculateDisabled(activeStep, keyboard) && colorPallete.buttonHover,
 						transform: "scale(1.03,1.03)",
 						transition: "0.2s",
 					}}
@@ -56,8 +79,8 @@ export const StepControlContainer = ({ setActiveStep, activeStep }: StepControlC
 						setActiveStep(activeStep + 1);
 						scrollToTop();
 					}}
-					color={calculateDisabled() ? "white" : "#343434"}
-					isDisabled={calculateDisabled()}
+					color={calculateDisabled(activeStep, keyboard) ? "white" : "#343434"}
+					isDisabled={calculateDisabled(activeStep, keyboard)}
 				>
 					Next
 				</Button>
@@ -75,8 +98,9 @@ export const StepControlContainer = ({ setActiveStep, activeStep }: StepControlC
 					}}
 					fontSize={"xl"}
 					color={"#343434"}
+					onClick={() => handleSubmit()}
 				>
-					Order
+					{user?.role === "Order" ? "" : "Make keyboard"}
 				</Button>
 			)}
 		</Flex>

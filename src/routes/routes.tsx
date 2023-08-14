@@ -31,15 +31,14 @@ export const routes: CustomRouteProps[] = [
 		needAuth: false,
 	},
 	{
-		path: "/manage/parts/*",
+		path: "/parts/*",
 		element: <PartPage />,
 		needAuth: false,
 	},
 	{
-		path: "/current/procurement",
+		path: "/cart",
 		element: <CurrentProcurementPage />,
-		needAuth: true,
-		requiredRole: "ADMIN",
+		needAuth: false,
 	},
 	{
 		path: "/procurements",
@@ -53,9 +52,8 @@ export const routes: CustomRouteProps[] = [
 		needAuth: true,
 	},
 	{
-		path: "make-keyboard",
+		path: "/make-keyboard",
 		element: <MakeKeyboardPage />,
-		needAuth: true,
-		requiredRole: "ADMIN",
+		needAuth: false,
 	},
 ];

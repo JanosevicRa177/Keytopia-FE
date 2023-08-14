@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { PartCard } from "../part-card-component/part-card";
 import { Pagination } from "../paging/pagination/pagination";
 import { useFetchCasePage } from "../../hooks/part-hooks/get-all/case.get-all-page.hook";
@@ -16,6 +16,7 @@ export const ChooseCase = () => {
 	const sizeName = useApplicationStore((state) => state.sizeName);
 	const color = useApplicationStore((state) => state.color);
 	const setCase = useApplicationStore((state) => state.setCase);
+	const keyboard = useApplicationStore((store) => store.keyboard);
 
 	useEffect(() => {
 		fetchPage(0);
@@ -30,6 +31,9 @@ export const ChooseCase = () => {
 	async function fetchPage(page: number) {
 		getCasePage(page, "", sizeName, priceWeight, color).then(() => setCurrentPage(page + 1));
 	}
+	function getCaseName(): string {
+		return keyboard.caseEntity?.name ?? "";
+	}
 	return (
 		<Flex
 			alignItems="center"
@@ -38,6 +42,7 @@ export const ChooseCase = () => {
 			backdropBlur="4px"
 			flexDir={"column"}
 		>
+			<Text fontSize={"4xl"}>Choose case</Text>
 			<Flex fontSize={"md"} flexWrap={"wrap"} gap={"24px"} my={"16px"} w={"100%"}>
 				{getCasePageRes.data.content.map((part: PartData) => (
 					<PartCard
@@ -45,6 +50,7 @@ export const ChooseCase = () => {
 						part={part}
 						showMore={handleShowMoreCase}
 						choosePart={chooseCase}
+						choosenPartName={getCaseName()}
 					/>
 				))}
 			</Flex>

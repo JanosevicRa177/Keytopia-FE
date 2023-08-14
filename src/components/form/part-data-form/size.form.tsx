@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form";
 import {
 	SIZE_DEFAULT_VALUES,
 	SIZE_VALIDATION_SCHEMA,
-} from "../../../utils/constants/part-data.constatns";
+} from "../../../utils/constants/part-data.constants";
 
 interface SizeFormProps {
 	isOpen: boolean;
@@ -98,12 +98,8 @@ export const SizeForm = ({ isOpen, onClose, fetchSizes }: SizeFormProps) => {
 								<Box h={"25px"} w="100%" ml={"8px"}></Box>
 							)}
 						</FormControl>
-						<FormControl
-							isInvalid={errors.neededNumberOfKeys != null}
-						>
-							<FormLabel fontWeight={"semibold"}>
-								Needed Number Of Keys
-							</FormLabel>
+						<FormControl isInvalid={errors.neededNumberOfKeys != null}>
+							<FormLabel fontWeight={"semibold"}>Needed Number Of Keys</FormLabel>
 							<Input
 								type="number"
 								rounded={"4px"}
@@ -116,8 +112,8 @@ export const SizeForm = ({ isOpen, onClose, fetchSizes }: SizeFormProps) => {
 							/>
 							{errors.neededNumberOfKeys ? (
 								<FormErrorMessage ml={"8px"}>
-									Needed number of keys is required and should
-									be a positive number
+									Needed number of keys is required and should be a positive
+									number
 								</FormErrorMessage>
 							) : (
 								<Box h={"25px"} w="100%" ml={"8px"}></Box>

@@ -17,6 +17,13 @@ import { FirstStep } from "../components/step-components/first.step";
 import { StepControlContainer } from "../components/step-components/step-control.component";
 import { KeyboardCards } from "../components/part-card-component/keyboard-cards";
 import { ChooseCase } from "../components/step-components/choose-case.step";
+import { ChoosePCB } from "../components/step-components/choose-pcb.step";
+import { ChoosePlate } from "../components/step-components/choose-plate.step";
+import { ChooseCable } from "../components/step-components/choose.cable.step";
+import { ChooseKeycapSet } from "../components/step-components/choose-keycap-set.step";
+import { ChooseStabilizers } from "../components/step-components/choose-stabilizers.step";
+import { ChooseSwitchSet } from "../components/step-components/choose-switch-set.step";
+import { FinalStep } from "../components/step-components/final.step";
 
 const steps = [
 	{ title: "Choose initial setup", description: "This will be important later!" },
@@ -54,8 +61,9 @@ export const MakeKeyboardPage = () => {
 						size="lg"
 						orientation="vertical"
 						colorScheme="purple"
-						minW={"25%"}
-						maxW={"25%"}
+						minW={"20%"}
+						maxW={"20%"}
+						mt={"24px"}
 					>
 						{steps.map((step, index) => (
 							<Step key={index}>
@@ -79,20 +87,27 @@ export const MakeKeyboardPage = () => {
 					<Flex
 						flexGrow={"1"}
 						flexDir={"column"}
-						gap={"48px"}
-						px={"16px"}
+						gap={"32px"}
+						px={"24px"}
 						bg={"rgba(255,255,255,0.9)"}
-						py={"24px"}
+						py={"32px"}
 						boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
 						rounded={"6px"}
 					>
 						<KeyboardCards />
-						{activeStep === 0 && <FirstStep />}
-						{activeStep === 1 && <ChooseCase />}
 						<StepControlContainer
 							activeStep={activeStep}
 							setActiveStep={setActiveStep}
 						/>
+						{activeStep === 0 && <FirstStep />}
+						{activeStep === 1 && <ChooseCase />}
+						{activeStep === 2 && <ChoosePCB />}
+						{activeStep === 3 && <ChoosePlate />}
+						{activeStep === 4 && <ChooseCable />}
+						{activeStep === 5 && <ChooseKeycapSet />}
+						{activeStep === 6 && <ChooseStabilizers />}
+						{activeStep === 7 && <ChooseSwitchSet />}
+						{activeStep === 8 && <FinalStep />}
 					</Flex>
 				</Flex>
 			</Flex>

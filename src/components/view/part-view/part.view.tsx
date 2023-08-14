@@ -59,7 +59,7 @@ export const PartView = ({ partType }: PartViewProps) => {
 				px={"32px"}
 				py={"32px"}
 				boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
-				rounded={"4px"}
+				rounded={"8px"}
 				position={"relative"}
 				fontWeight={"bold"}
 				flexDirection={"column"}

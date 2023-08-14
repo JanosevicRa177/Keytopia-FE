@@ -20,14 +20,17 @@ export const UserPage = () => {
 	} = useDisclosure();
 	return (
 		<MainContrainer>
-			<Center
-				h={"calc(100vh - 105px)"}
-				w={"100%"}
-				px={"8px"}
-				bg={"rgba(255,255,255,0.5)"}
-				backdropFilter="auto"
-				backdropBlur="4px"
-			>
+			<Center h={"calc(100vh - 105px)"} w={"100%"} px={"8px"}>
+				<Flex
+					bg={"rgba(255,255,255,0.5)"}
+					backdropFilter="auto"
+					backdropBlur="4px"
+					w={"1140px"}
+					top={"-20px"}
+					position={"fixed"}
+					h={"calc(100vh + 20px)"}
+					zIndex={1}
+				/>
 				<Flex
 					bg={"rgba(255,255,255,0.8)"}
 					backdropFilter="auto"
@@ -37,9 +40,10 @@ export const UserPage = () => {
 					h={"calc(100% - 64px)"}
 					my={"32px"}
 					mx={"16px"}
-					rounded={"16px"}
+					rounded={"8px"}
 					position={"relative"}
 					flexDir={"row"}
+					zIndex={"2"}
 				>
 					<Flex
 						my={"32px"}

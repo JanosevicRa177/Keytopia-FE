@@ -88,6 +88,7 @@ export const PlateForm = ({ isOpen, onClose, fetchPage }: PlateFormProps) => {
 					return;
 				}
 				setSizeNames(res.data);
+				setValue("size", res.data[0]);
 			});
 			setInit(false);
 		}

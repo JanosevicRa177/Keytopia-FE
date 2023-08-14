@@ -60,7 +60,7 @@ export const SupplierView = () => {
 				px={"32px"}
 				py={"32px"}
 				boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
-				rounded={"4px"}
+				rounded={"8px"}
 				position={"relative"}
 				fontWeight={"bold"}
 				flexDirection={"column"}
@@ -88,15 +88,23 @@ export const SupplierView = () => {
 						New
 					</Button>
 				</Flex>
-				<Flex h={"408px"} fontSize={"md"}>
+				<Flex
+					h={"408px"}
+					fontSize={"md"}
+					rounded={"8px"}
+					mt={"12px"}
+					border={"2px"}
+					borderColor={colorPallete.button}
+				>
 					<TableContainer flex={1}>
 						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
-									<Th>Name</Th>
-									<Th>Address</Th>
-									<Th>Phone</Th>
-									<Th>Penals</Th>
+									<Th w={"10%"}>Name</Th>
+									<Th w={"30%"}>Address</Th>
+									<Th w={"10%"}>Phone</Th>
+									<Th w={"10%"}>Penals</Th>
+									<Th></Th>
 								</Tr>
 							</Thead>
 							<Tbody>
@@ -114,6 +122,7 @@ export const SupplierView = () => {
 											<Td>
 												<Flex gap={"4"}>
 													<Button
+														fontSize={"small"}
 														w={"50%"}
 														rounded={"4px"}
 														overflow={"hidden"}
@@ -136,6 +145,7 @@ export const SupplierView = () => {
 														overflow={"hidden"}
 														bg={colorPallete.deleteButton}
 														color={"white"}
+														fontSize={"small"}
 														onClick={() =>
 															handleDeleteSupplier(item.name)
 														}
@@ -163,7 +173,6 @@ export const SupplierView = () => {
 					getPage={getSuppliersPage}
 				/>
 			</Flex>
-			<Box h={"calc(100vh - 815px)"} />
 			<SupplierForm
 				isOpen={isOpenForm}
 				onClose={onCloseForm}

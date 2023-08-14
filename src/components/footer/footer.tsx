@@ -13,6 +13,7 @@ export const Footer = () => {
 			backdropFilter="auto"
 			backdropBlur="4px"
 			zIndex={10}
+			py={"24px"}
 		>
 			<footer>
 				<Text fontSize={"xl"}>© 2023 Keytopia</Text>

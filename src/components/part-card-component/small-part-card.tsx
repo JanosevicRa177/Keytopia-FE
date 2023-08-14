@@ -19,17 +19,17 @@ export const SmallPartCard = ({ part }: SmallPartCardProps) => {
 			w={"calc(33% - 15px)"}
 			rounded={"8px"}
 			flexDir={"column"}
-			minH={"185px"}
+			minH={"165px"}
 		>
 			{part.name === "" ? (
 				<Img src={xImg} h={"100%"} w={"100%"} />
 			) : (
 				<Flex flexDir={"column"} gap={"8px"}>
 					<Img
-						src={part.imageUrl}
+						src={part.imageUrl.toString()}
 						rounded={"4px"}
-						minH={"100px"}
-						maxH={"100px"}
+						minH={"80px"}
+						maxH={"80px"}
 						w={"100%"}
 						boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
 					/>

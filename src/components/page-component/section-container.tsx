@@ -22,6 +22,7 @@ export const SectionContainer: React.FC<{
 			rounded={"16px"}
 			position={"relative"}
 			flexDir={props.style === SectionStyle.right ? "row-reverse" : "row"}
+			zIndex={"2"}
 		>
 			{props.children}
 		</Flex>

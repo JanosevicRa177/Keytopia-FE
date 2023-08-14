@@ -1,4 +1,3 @@
-import { StabilizerType } from './../../../utils/enum';
 import { toast } from "react-toastify";
 import { useResponseState } from "../../util-hooks/response-state.hook";
 import { useAxios } from "../../../utils/axios.hook";
@@ -16,7 +15,6 @@ export const useFetchPCBPage = () => {
     const getPCBPage = async (
         pageNumber: number,
         name: string = "",
-        stabilizerType?: StabilizerType,
         sizeName?: string,
         priceWeight?: PriceWeight
     ) => {
@@ -27,7 +25,6 @@ export const useFetchPCBPage = () => {
                     pageNumber: pageNumber,
                     name: name,
                     priceWeight: priceWeight,
-                    stabilizerType: stabilizerType,
                     sizeName: sizeName
                 },
             });

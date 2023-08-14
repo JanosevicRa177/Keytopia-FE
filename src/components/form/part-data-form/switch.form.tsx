@@ -22,7 +22,7 @@ import { colorPallete } from "../../../styles/color";
 import {
 	SWTICH_DEFAULT_VALUES,
 	SWTICH_VALIDATION_SCHEMA,
-} from "../../../utils/constants/part-data.constatns";
+} from "../../../utils/constants/part-data.constants";
 import { SwitchType, PinType, PriceWeight } from "../../../utils/enum";
 import { useForm } from "react-hook-form";
 import { Switch } from "../../../model/part-data.model";

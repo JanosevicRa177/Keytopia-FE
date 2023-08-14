@@ -62,7 +62,7 @@ export const SwitchView = () => {
 				px={"32px"}
 				py={"32px"}
 				boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
-				rounded={"4px"}
+				rounded={"8px"}
 				position={"relative"}
 				fontWeight={"bold"}
 				flexDirection={"column"}
@@ -90,7 +90,15 @@ export const SwitchView = () => {
 						New
 					</Button>
 				</Flex>
-				<Flex h={"408px"} fontSize={"md"} w={"863px"}>
+				<Flex
+					h={"408px"}
+					fontSize={"md"}
+					w={"863px"}
+					rounded={"8px"}
+					mt={"12px"}
+					border={"2px"}
+					borderColor={colorPallete.button}
+				>
 					<TableContainer>
 						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
@@ -113,6 +121,7 @@ export const SwitchView = () => {
 									<Th px={"12px"} py={"16px"}>
 										Price weight
 									</Th>
+									<Th></Th>
 								</Tr>
 							</Thead>
 							<Tbody>
@@ -120,22 +129,22 @@ export const SwitchView = () => {
 									getSwitchesPageRes.data.content.map((item: Switch) => (
 										<Tr key={item.name}>
 											<Td>{item.name}</Td>
-											<Td px={"27px"} py={"16px"}>
+											<Td px={"26px"} py={"16px"}>
 												{item.actuationForce}
 											</Td>
-											<Td px={"27px"} py={"16px"}>
+											<Td px={"26.5px"} py={"16px"}>
 												{item.actuationPoint}
 											</Td>
-											<Td px={"27px"} py={"16px"}>
+											<Td px={"26.5px"} py={"16px"}>
 												{mapPinType(item.pinType)}
 											</Td>
-											<Td px={"27px"} py={"16px"}>
+											<Td px={"26.5px"} py={"16px"}>
 												{mapSwitchType(item.switchType)}
 											</Td>
-											<Td px={"27px"} py={"16px"}>
+											<Td px={"26.5px"} py={"16px"}>
 												{item.priceWeight}
 											</Td>
-											<Td px={"27px"} py={"16px"}>
+											<Td px={"26.5px"} py={"16px"}>
 												<Flex gap={"4"}>
 													<Button
 														flexGrow={"1"}
@@ -171,7 +180,6 @@ export const SwitchView = () => {
 					getPage={getSwitchesPage}
 				/>
 			</Flex>
-			<Box h={"calc(100vh - 815px)"} />
 			<SwitchForm isOpen={isOpenForm} onClose={onCloseForm} fetchSwitch={getSwitchesPage} />
 		</Box>
 	);

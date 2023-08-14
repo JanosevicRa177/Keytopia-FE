@@ -1,11 +1,13 @@
-import { ControlContainer } from "../components/page-component/admin-page.tsx/control-container";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ControlContainer } from "../components/page-component/control-container";
 import { MainContrainer } from "../components/page-component/main-container";
-import { useState } from "react";
-import { ControlLinkContainer } from "../components/page-component/admin-page.tsx/control-link-container";
 import { Flex } from "@chakra-ui/react";
-import { PartViewContainer } from "../components/page-component/admin-page.tsx/part-view-contrainer";
 import { PartType } from "../utils/enum";
 import { RouteWithPartType } from "../model/util.model";
+import { ControlLinkContainer } from "../components/page-component/control-link-container";
+import { PartViewContainer } from "../components/page-component/part-view-contrainer";
+import { ControlLinkKeyboardContainer } from "../components/page-component/control-link-keyboard.container";
+import { useState } from "react";
 
 export const PartPage = () => {
 	const parts = [
@@ -30,10 +32,25 @@ export const PartPage = () => {
 		{ value: "Brand", route: "brand" },
 		{ value: "Supplier", route: "supplier" },
 	];
+	const sales = [
+		{ value: "Delivery services", route: "delivery-service" },
+		{ value: "Orders", route: "order" },
+	];
 	return (
 		<MainContrainer>
-			<Flex bg={"rgba(255,255,255,0.5)"} backdropFilter="auto" backdropBlur="4px">
+			<Flex
+				bg={"rgba(255,255,255,0.5)"}
+				backdropFilter="auto"
+				backdropBlur="4px"
+				w={"1140px"}
+				top={"-20px"}
+				position={"fixed"}
+				h={"calc(100vh + 20px)"}
+				zIndex={1}
+			/>
+			<Flex backdropBlur="4px" zIndex={"2"}>
 				<ControlContainer>
+					<ControlLinkKeyboardContainer chosen={chosenView} setChosen={setChosenView} />
 					<ControlLinkContainer
 						header="Parts"
 						chosen={chosenView}
@@ -51,6 +68,12 @@ export const PartPage = () => {
 						chosen={chosenView}
 						setChosen={setChosenView}
 						names={warehouse}
+					/>
+					<ControlLinkContainer
+						header="Sales"
+						chosen={chosenView}
+						setChosen={setChosenView}
+						names={sales}
 					/>
 				</ControlContainer>
 				<PartViewContainer partType={chosenView.partType} />

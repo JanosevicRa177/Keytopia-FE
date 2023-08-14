@@ -93,6 +93,7 @@ export const KeycapSetForm = ({ isOpen, onClose, fetchPage }: KeycapSetFormProps
 					return;
 				}
 				setKeycapProfileNames(res.data);
+				setValue("keycapProfile", res.data[0]);
 			});
 			getLayouts().then((res: ApiResponse<string[] | null>) => {
 				if (res.data == null) {

@@ -22,7 +22,7 @@ import { colorPallete } from "../../../styles/color";
 import {
 	KEYCAP_PROFILE_DEFAULT_VALUES,
 	KEYCAP_PROFILE_VALIDATION_SCHEMA,
-} from "../../../utils/constants/part-data.constatns";
+} from "../../../utils/constants/part-data.constants";
 import { useForm } from "react-hook-form";
 
 interface KeycapProfileFormProps {
@@ -107,9 +107,7 @@ export const KeycapProfileForm = ({
 								w={"calc(100% - 64px)"}
 								h={"45px"}
 								rounded={"4px"}
-								onClick={handleSubmit(
-									handleCreateKeycapProfile
-								)}
+								onClick={handleSubmit(handleCreateKeycapProfile)}
 								overflow={"hidden"}
 								bg={colorPallete.button}
 								_hover={{

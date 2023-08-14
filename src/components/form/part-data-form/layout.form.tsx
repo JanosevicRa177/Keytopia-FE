@@ -22,7 +22,7 @@ import { colorPallete } from "../../../styles/color";
 import {
 	LAYOUT_DEFAULT_VALUES,
 	LAYOUT_VALIDATION_SCHEMA,
-} from "../../../utils/constants/part-data.constatns";
+} from "../../../utils/constants/part-data.constants";
 import { useForm } from "react-hook-form";
 
 interface LayoutFormProps {
@@ -31,11 +31,7 @@ interface LayoutFormProps {
 	fetchLayouts: (pageNumber: number) => Promise<void>;
 }
 
-export const LayoutForm = ({
-	isOpen,
-	onClose,
-	fetchLayouts,
-}: LayoutFormProps) => {
+export const LayoutForm = ({ isOpen, onClose, fetchLayouts }: LayoutFormProps) => {
 	const { createLayout } = useCreateLayout();
 	const {
 		register,
@@ -84,9 +80,7 @@ export const LayoutForm = ({
 					>
 						<Flex gap={"16px"}>
 							<FormControl isInvalid={errors.name != null}>
-								<FormLabel fontWeight={"semibold"}>
-									Name
-								</FormLabel>
+								<FormLabel fontWeight={"semibold"}>Name</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -94,8 +88,7 @@ export const LayoutForm = ({
 									borderColor={colorPallete.inputBorder}
 									{...register("name")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.name ? (
@@ -106,12 +99,8 @@ export const LayoutForm = ({
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
 							</FormControl>
-							<FormControl
-								isInvalid={errors.localization != null}
-							>
-								<FormLabel fontWeight={"semibold"}>
-									Localization
-								</FormLabel>
+							<FormControl isInvalid={errors.localization != null}>
+								<FormLabel fontWeight={"semibold"}>Localization</FormLabel>
 								<Input
 									type="text"
 									rounded={"4px"}
@@ -119,8 +108,7 @@ export const LayoutForm = ({
 									borderColor={colorPallete.inputBorder}
 									{...register("localization")}
 									_hover={{
-										borderColor:
-											colorPallete.inputBorderHover,
+										borderColor: colorPallete.inputBorderHover,
 									}}
 								/>
 								{errors.localization ? (

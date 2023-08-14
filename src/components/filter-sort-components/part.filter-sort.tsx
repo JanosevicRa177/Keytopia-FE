@@ -8,6 +8,7 @@ import { normalizeEnum } from "../../utils/string.converter";
 import unsortedImage from "../../images/unsort.png";
 import ascImage from "../../images/asc.png";
 import descImage from "../../images/desc.png";
+import { useApplicationStore } from "../../store/store";
 
 interface PartFilterSortProps {
 	setSearchName: React.Dispatch<React.SetStateAction<string>>;
@@ -25,6 +26,7 @@ export const PartFilterSort = ({
 	searchName,
 }: PartFilterSortProps) => {
 	const [name, setName] = useState("");
+	const user = useApplicationStore((state) => state.user);
 	async function handleSortDirection() {
 		if (sortedDirection === SortDirection.UNSORTED) setSortedDirection(SortDirection.ASC);
 		else if (sortedDirection === SortDirection.ASC) setSortedDirection(SortDirection.DESC);
@@ -59,7 +61,8 @@ export const PartFilterSort = ({
 			</Flex>
 			<Flex flexDirection={"column"} gap={"8px"} w={"33%"} h={"77px"}>
 				<Text textAlign={"center"}>
-					Sort by quantity ( {normalizeEnum(sortedDirection)} )
+					Sort by {user?.role === "ADMIN" ? "quantity" : "price"} ({" "}
+					{normalizeEnum(sortedDirection)} )
 				</Text>
 				<Flex
 					verticalAlign={"center"}

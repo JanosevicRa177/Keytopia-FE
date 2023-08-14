@@ -11,10 +11,10 @@ export const KeyboardCards = () => {
 	useEffect(() => {
 		let tempParts: PartData[] = [];
 		tempParts.push({
-			name: keyboard.case?.name ?? "",
-			imageUrl: keyboard.case?.imageUrl ?? "",
+			name: keyboard.caseEntity?.name ?? "",
+			imageUrl: keyboard.caseEntity?.imageUrl ?? "",
 			partType: PartType.CASE,
-			price: keyboard.case?.price ?? 0,
+			price: keyboard.caseEntity?.price ?? 0,
 		});
 		tempParts.push({
 			name: keyboard.pcb?.name ?? "",

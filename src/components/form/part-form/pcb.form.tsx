@@ -85,6 +85,7 @@ export const PCBForm = ({ isOpen, onClose, fetchPage }: PCBFormProps) => {
 					return;
 				}
 				setSizeNames(res.data);
+				setValue("size", res.data[0]);
 			});
 			setInit(false);
 		}

@@ -1,4 +1,4 @@
-import { Box, Flex, Img, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Center, Flex, Img, Text, useDisclosure } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useApplicationStore } from "../../store/store";
 import { colorPallete, colors } from "../../styles/color";
@@ -9,6 +9,7 @@ import { RegisterAdminForm } from "../form/auth-form/register-admin.form";
 import downArrow from "../../images/downArrowWhite.png";
 import userImg from "../../images/user.png";
 import logo from "../../images/logo.png";
+import { ProcurementCartComponent } from "../cart-components/procurement.components";
 
 export const Header = () => {
 	const navigate = useNavigate();
@@ -90,93 +91,91 @@ export const Header = () => {
 									/>
 								</Box>
 								<Box w={"60px"} mr={"8px"}></Box>
-								{user?.role !== "ADMIN" ? (
+								<CustomLink
+									link={"/parts/part"}
+									text={user?.role !== "ADMIN" ? "Shop parts" : "Manage parts"}
+								/>
+								<CustomLink
+									link={"/parts/keyboard"}
+									text={
+										user?.role !== "ADMIN" ? "Shop keyboards" : "Show keyboards"
+									}
+								/>
+								<CustomLink link={"/make-keyboard"} text={"Make keyboard"} />
+								{user?.role === "ADMIN" && (
 									<>
-										<CustomLink link={"/shop-parts"} text={"Shop parts"} />
-										<CustomLink
-											link={"/shop-keyboard"}
-											text={"Shop custom keyboard"}
-										/>
-										<CustomLink
-											link={"/user/make-keyboard"}
-											text={"Make your own keyboard"}
-										/>
-									</>
-								) : (
-									<>
-										<CustomLink
-											link={"/manage/parts/part"}
-											text={"Manage parts"}
-										/>
-										<CustomLink
-											link={"/current/procurement"}
-											text={"Current procurement"}
-										/>
 										<CustomLink link={"/procurements"} text={"Procurements"} />
-										<CustomLink
-											link={"/make-keyboard"}
-											text={"Make keyboard"}
-										/>
 									</>
 								)}
 							</Flex>
-							<Flex gap="15px">
-								{user ? (
-									<Flex cursor={"pointer"} gap={"12px"}>
-										<Flex
-											gap={"4px"}
-											cursor={"pointer"}
-											onClick={() => handleUserProfile()}
-										>
-											<Text>{user.name}</Text>
-											<Text>{user.surname}</Text>
-											<Img src={userImg} w={"30px"} h={"30px"} ml={"4px"} />
-										</Flex>
-										<Flex
-											flexDirection={"column"}
-											alignItems={"center"}
-											justifyContent={"center"}
-										>
-											<Img
-												src={downArrow}
-												onClick={() => setIsOpenControl(!isOpenControl)}
-												w={"15px"}
-												h={"15px"}
+							<Center gap={"12px"}>
+								<ProcurementCartComponent />
+								<Flex gap="15px">
+									{user ? (
+										<Flex cursor={"pointer"} gap={"12px"}>
+											<Center
+												gap={"4px"}
 												cursor={"pointer"}
-											/>
-											<Flex position={"relative"}>
-												<UserControlComponent isOpen={isOpenControl}>
-													{user?.role === "ADMIN" && (
+												onClick={() => handleUserProfile()}
+											>
+												<Text color={"white"}>{user.name}</Text>
+												<Text color={"white"}>{user.surname}</Text>
+												<Img
+													src={userImg}
+													w={"30px"}
+													h={"30px"}
+													ml={"4px"}
+												/>
+											</Center>
+											<Flex
+												flexDirection={"column"}
+												alignItems={"center"}
+												justifyContent={"center"}
+											>
+												<Img
+													src={downArrow}
+													onClick={() => setIsOpenControl(!isOpenControl)}
+													w={"15px"}
+													h={"15px"}
+													cursor={"pointer"}
+												/>
+												<Flex position={"relative"}>
+													<UserControlComponent isOpen={isOpenControl}>
+														{user?.role === "ADMIN" && (
+															<Text
+																cursor={"pointer"}
+																onClick={() => onOpenForm()}
+																fontWeight={"bold"}
+															>
+																Register admin
+															</Text>
+														)}
 														<Text
 															cursor={"pointer"}
-															onClick={() => onOpenForm()}
+															onClick={handleLogout}
 															fontWeight={"bold"}
 														>
-															Register admin
+															Logout
 														</Text>
-													)}
-													<Text
-														cursor={"pointer"}
-														onClick={handleLogout}
-														fontWeight={"bold"}
-													>
-														Logout
-													</Text>
-												</UserControlComponent>
+													</UserControlComponent>
+												</Flex>
 											</Flex>
 										</Flex>
-									</Flex>
-								) : (
-									<Flex gap="15px" color={"white"}>
-										<Text onClick={() => handleLogin()} fontWeight={"bold"}>
-											Login
-										</Text>
-										<Text onClick={() => handleRegister()} fontWeight={"bold"}>
-											Register
-										</Text>
-									</Flex>
-								)}
-							</Flex>
+									) : (
+										<Flex gap="15px" color={"white"}>
+											<Text onClick={() => handleLogin()} fontWeight={"bold"}>
+												Login
+											</Text>
+											<Text
+												onClick={() => handleRegister()}
+												fontWeight={"bold"}
+											>
+												Register
+											</Text>
+										</Flex>
+									)}
+								</Flex>
+							</Center>
 						</Flex>
 					</Box>
 				</Box>
