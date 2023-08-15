@@ -20,7 +20,7 @@ export const UserPage = () => {
 	} = useDisclosure();
 	return (
 		<MainContrainer>
-			<Center h={"calc(100vh - 105px)"} w={"100%"} px={"8px"}>
+			<Center h={"calc(100vh - 118px)"} w={"100%"} px={"8px"}>
 				<Flex
 					bg={"rgba(255,255,255,0.5)"}
 					backdropFilter="auto"

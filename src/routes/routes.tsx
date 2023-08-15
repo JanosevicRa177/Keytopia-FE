@@ -6,6 +6,7 @@ import { UserPage } from "../pages/user.page";
 import { CurrentProcurementPage } from "../pages/current-procurement.page";
 import { ProcurementPage } from "../pages/procurements-page";
 import { MakeKeyboardPage } from "../pages/make-keyboard.page";
+import { KeyboardPage } from "../pages/keyboard.page";
 
 interface CustomRouteProps {
 	path: string;
@@ -33,6 +34,11 @@ export const routes: CustomRouteProps[] = [
 	{
 		path: "/parts/*",
 		element: <PartPage />,
+		needAuth: false,
+	},
+	{
+		path: "/keyboard/:name",
+		element: <KeyboardPage />,
 		needAuth: false,
 	},
 	{

@@ -7,9 +7,12 @@ import { RouteWithPartType } from "../model/util.model";
 import { ControlLinkContainer } from "../components/page-component/control-link-container";
 import { PartViewContainer } from "../components/page-component/part-view-contrainer";
 import { ControlLinkKeyboardContainer } from "../components/page-component/control-link-keyboard.container";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const PartPage = () => {
+	let location = useLocation();
+	const [oldLocation, setOldLocation] = useState("");
 	const parts = [
 		{ value: "All parts", route: "part" },
 		{ value: "Case", route: "part", partType: PartType.CASE },
@@ -21,7 +24,20 @@ export const PartPage = () => {
 		{ value: "Stabilizers", route: "part", partType: PartType.STABILIZER },
 		{ value: "Switch set", route: "part", partType: PartType.SWITCH_SET },
 	];
-	const [chosenView, setChosenView] = useState<RouteWithPartType>(parts[0]);
+	const [chosenView, setChosenView] = useState<RouteWithPartType>(
+		location.pathname === "/parts/part" ? parts[0] : { value: "Keyboards", route: "keyboard" }
+	);
+	useEffect(() => {
+		if (location.pathname === oldLocation) return;
+		if (location.pathname === "/parts/part" || location.pathname === "/parts/keyboard") {
+			setChosenView(
+				location.pathname === "/parts/part"
+					? parts[0]
+					: { value: "Keyboards", route: "keyboard" }
+			);
+		}
+		setOldLocation(location.pathname);
+	}, [location]);
 	const partDatas = [
 		{ value: "Keycap profile", route: "keycap-profile" },
 		{ value: "Switch", route: "switch" },

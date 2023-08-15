@@ -9,6 +9,7 @@ import { PartView } from "../view/part-view/part.view";
 import { BrandView } from "../view/warehouse-view/brand.view";
 import { SupplierView } from "../view/warehouse-view/supplier.view";
 import { DeliveryServiceView } from "../view/sales-view/delivery-service.view";
+import { KeyboardView } from "../view/keyboard-view/keyboard.view";
 
 interface PartViewContainerProps {
 	partType?: PartType;
@@ -26,6 +27,7 @@ export const PartViewContainer = (props: PartViewContainerProps) => {
 				<Route path="/supplier" element={<SupplierView />} />
 				<Route path={"keycap-profile"} element={<KeycapProfileView />} />
 				<Route path="/delivery-service" element={<DeliveryServiceView />} />
+				<Route path="/keyboard" element={<KeyboardView />} />
 			</Routes>
 		</Flex>
 	);

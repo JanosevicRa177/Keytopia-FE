@@ -2,6 +2,7 @@ import { StabilizerType } from "./../utils/enum";
 import { CableConnector, KeycapMaterial, PCBType, PinType, PriceWeight } from "../utils/enum";
 import { VariableWithValue } from "../utils/types";
 import { Switch } from "./part-data.model";
+import { PartData } from "../store/keyboard-store/types/keyboard.type";
 
 export type CablePart = {
     material: string;
@@ -87,3 +88,17 @@ export type PartWithData = {
     variables: VariableWithValue[];
     imageUrl: string;
 };
+
+export type Keyboard = {
+    name: string;
+    price: number;
+    caseDto: PartData;
+    cableDto: PartData;
+    keycapSetDto: PartData;
+    switchSetDto: PartData;
+    pcbDto: PartData;
+    plateDto: PartData;
+    stabilizersDto: PartData;
+    imageUrl: string;
+    quantity: number;
+}
