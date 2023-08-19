@@ -9,6 +9,7 @@ import { PartViewContainer } from "../components/page-component/part-view-contra
 import { ControlLinkKeyboardContainer } from "../components/page-component/control-link-keyboard.container";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useApplicationStore } from "../store/store";
 
 export const PartPage = () => {
 	let location = useLocation();
@@ -52,6 +53,7 @@ export const PartPage = () => {
 		{ value: "Delivery services", route: "delivery-service" },
 		{ value: "Orders", route: "order" },
 	];
+	const user = useApplicationStore((state) => state.user);
 	return (
 		<MainContrainer>
 			<Flex
@@ -73,24 +75,28 @@ export const PartPage = () => {
 						setChosen={setChosenView}
 						names={parts}
 					/>
-					<ControlLinkContainer
-						header="Part data"
-						chosen={chosenView}
-						setChosen={setChosenView}
-						names={partDatas}
-					/>
-					<ControlLinkContainer
-						header="Warehouse"
-						chosen={chosenView}
-						setChosen={setChosenView}
-						names={warehouse}
-					/>
-					<ControlLinkContainer
-						header="Sales"
-						chosen={chosenView}
-						setChosen={setChosenView}
-						names={sales}
-					/>
+					{user?.role === "ADMIN" && (
+						<>
+							<ControlLinkContainer
+								header="Part data"
+								chosen={chosenView}
+								setChosen={setChosenView}
+								names={partDatas}
+							/>
+							<ControlLinkContainer
+								header="Warehouse"
+								chosen={chosenView}
+								setChosen={setChosenView}
+								names={warehouse}
+							/>
+							<ControlLinkContainer
+								header="Sales"
+								chosen={chosenView}
+								setChosen={setChosenView}
+								names={sales}
+							/>
+						</>
+					)}
 				</ControlContainer>
 				<PartViewContainer partType={chosenView.partType} />
 			</Flex>

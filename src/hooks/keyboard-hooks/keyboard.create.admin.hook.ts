@@ -1,4 +1,4 @@
-import { MakeKeyboardStrings } from './../../store/keyboard-store/types/keyboard.type';
+import { MakeKeyboardStrings } from '../../store/keyboard-store/types/keyboard.type';
 import { toast } from "react-toastify";
 import { ApiResponse } from "../../store/auth-store/types/response.type";
 import { useAxios } from "../../utils/axios.hook";
@@ -11,7 +11,7 @@ export const useCreateKeyboardAdmin = () => {
             name: keyboard.name, cable: keyboard.cable?.name,
             caseEntity: keyboard.caseEntity?.name, pcb: keyboard.pcb?.name, stabilizers: keyboard.stabilizers?.name,
             plate: keyboard.plate?.name, switchSet: keyboard.switchSet?.name, keycapSet: keyboard.keycapSet?.name,
-            image: keyboard.image
+            image: keyboard.image, isAssembled: keyboard.isAssembled, switchesLubed: keyboard.switchesLubed
         } as MakeKeyboardStrings
         try {
             await axios.post(`/keyboard/admin`, keyboardStrings, {

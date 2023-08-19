@@ -10,8 +10,6 @@ export type KeyboardStoreState = {
     switchType: SwitchType;
     priceWeight: PriceWeight;
     color: string;
-    lubeSwitches: boolean;
-    assembleKeyboard: boolean;
 };
 
 export type KeyboardActions = {
@@ -33,31 +31,29 @@ export type KeyboardActions = {
 };
 
 export const state: KeyboardStoreState = {
-    keyboard: {},
+    keyboard: { isAssembled: false, switchesLubed: false },
     sizeName: "",
     switchType: SwitchType.TACTILE,
     priceWeight: PriceWeight.MEDIUM,
-    color: "",
-    lubeSwitches: false,
-    assembleKeyboard: false
+    color: ""
 };
 
 export type KeyboardStore = KeyboardStoreState & KeyboardActions;
 
 export const keyboardStoreSlice: StateCreator<Store, [], [], KeyboardStore> = (set) => ({
     ...state,
-    setAssembleKeyboard: (assembleKeyboard: boolean) => {
+    setAssembleKeyboard: (isAssembled: boolean) => {
         set(
             produce((state: KeyboardStoreState) => {
-                state.assembleKeyboard = assembleKeyboard;
+                state.keyboard.isAssembled = isAssembled;
                 return state;
             })
         );
     },
-    setLubeSwithces: (lubeSwitches: boolean) => {
+    setLubeSwithces: (switchesLubed: boolean) => {
         set(
             produce((state: KeyboardStoreState) => {
-                state.lubeSwitches = lubeSwitches;
+                state.keyboard.switchesLubed = switchesLubed;
                 return state;
             })
         );
@@ -78,6 +74,7 @@ export const keyboardStoreSlice: StateCreator<Store, [], [], KeyboardStore> = (s
                 if (switchSet.name === state.keyboard.switchSet?.name)
                     state.keyboard.switchSet = undefined;
                 else state.keyboard.switchSet = switchSet;
+                state.keyboard.switchesLubed = false;
                 return state;
             })
         );
@@ -168,7 +165,7 @@ export const keyboardStoreSlice: StateCreator<Store, [], [], KeyboardStore> = (s
         set(
             produce((state: KeyboardStoreState) => {
                 state.color = color;
-                state.keyboard = {};
+                state.keyboard = { switchesLubed: false, isAssembled: false };
                 return state;
             })
         );
@@ -178,6 +175,7 @@ export const keyboardStoreSlice: StateCreator<Store, [], [], KeyboardStore> = (s
             produce((state: KeyboardStoreState) => {
                 state.switchType = switchType;
                 state.keyboard.switchSet = undefined;
+                state.keyboard.switchesLubed = false;
                 return state;
             })
         );
@@ -185,7 +183,7 @@ export const keyboardStoreSlice: StateCreator<Store, [], [], KeyboardStore> = (s
     setPriceWeight: (priceWeight: PriceWeight) => {
         set(
             produce((state: KeyboardStoreState) => {
-                state.keyboard = {};
+                state.keyboard = { switchesLubed: false, isAssembled: false };
                 state.priceWeight = priceWeight
                 return state;
             })

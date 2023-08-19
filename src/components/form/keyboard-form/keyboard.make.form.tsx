@@ -36,7 +36,7 @@ export const MakeKeyboardForm = ({
 	const { makeKeyboard } = useMakeKeyboard();
 	const [quantity, setQuantity] = useState<number>();
 	const [isValid, setIsValid] = useState<boolean>();
-	async function handleCreateSize() {
+	async function handleMakeKeyboard() {
 		if (quantity === undefined || quantity <= 0) {
 			toast.error("choose valid number for quantity!");
 			return;
@@ -103,7 +103,7 @@ export const MakeKeyboardForm = ({
 								w={"calc(100% - 64px)"}
 								h={"45px"}
 								rounded={"4px"}
-								onClick={() => handleCreateSize()}
+								onClick={() => handleMakeKeyboard()}
 								overflow={"hidden"}
 								bg={colorPallete.button}
 								_hover={{

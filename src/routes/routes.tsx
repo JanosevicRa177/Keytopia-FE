@@ -3,7 +3,7 @@ import { PartPage } from "../pages/part.page";
 import { AuthPage } from "../pages/auth.page";
 import { MainPage } from "../pages/main.page";
 import { UserPage } from "../pages/user.page";
-import { CurrentProcurementPage } from "../pages/current-procurement.page";
+import { CartPage } from "../pages/cart.page";
 import { ProcurementPage } from "../pages/procurements-page";
 import { MakeKeyboardPage } from "../pages/make-keyboard.page";
 import { KeyboardPage } from "../pages/keyboard.page";
@@ -43,7 +43,7 @@ export const routes: CustomRouteProps[] = [
 	},
 	{
 		path: "/cart",
-		element: <CurrentProcurementPage />,
+		element: <CartPage />,
 		needAuth: false,
 	},
 	{

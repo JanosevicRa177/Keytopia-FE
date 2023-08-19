@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Keyboard } from "../model/part.model";
-import { Button, Flex, Img, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Center, Flex, Img, Text, useDisclosure } from "@chakra-ui/react";
 import { useGetOneKeyboard } from "../hooks/keyboard-hooks/keyboard.get-one.hook";
 import { KeyboardPartCard } from "../components/single-view/keyboard-part.card";
 import { PartType } from "../utils/enum";
@@ -14,6 +14,8 @@ import { colorPallete } from "../styles/color";
 import { toast } from "react-toastify";
 import { useApplicationStore } from "../store/store";
 import { MakeKeyboardForm } from "../components/form/keyboard-form/keyboard.make.form";
+import checkmark from "../images/checkmark.png";
+import keyboardImg from "../images/keyboard.png";
 
 export const KeyboardPage = () => {
 	const [part, setPart] = useState<PartData>();
@@ -23,7 +25,7 @@ export const KeyboardPage = () => {
 	const [keyboard, setKeyboard] = useState<Keyboard>();
 	const { getKeyboard } = useGetOneKeyboard();
 	const { isOpen, onClose, onOpen } = useDisclosure();
-	const addToProcurement = useApplicationStore((state) => state.addToProcurement);
+	const addToCart = useApplicationStore((state) => state.addToCart);
 	useEffect(() => {
 		getKeyboardFunc();
 	}, []);
@@ -34,13 +36,12 @@ export const KeyboardPage = () => {
 			} else navigate("/part/keyboard");
 		});
 	}
-	function handleAddToProcurement() {
-		addToProcurement({
+	function handleAddToCart() {
+		addToCart({
 			name: keyboard?.name ?? "",
 			price: keyboard?.price ?? 0,
 			quantity: 1,
 			image: keyboard?.imageUrl != null ? keyboard?.imageUrl.toString() : "",
-			isKeyboard: false,
 		});
 		toast.success("1 instance of " + keyboard?.name + " added procurement");
 	}
@@ -78,8 +79,8 @@ export const KeyboardPage = () => {
 					<Flex minW={"30%"} alignItems={"center"} fontSize={"2xl"} fontWeight={"700"}>
 						<Flex flexDir={"column"} gap={"12px"}>
 							<Img
-								src={keyboard?.imageUrl}
-								rounded={"4px"}
+								src={keyboard?.imageUrl == null ? keyboardImg : keyboard?.imageUrl}
+								rounded={"6px"}
 								minH={"230px"}
 								maxH={"230px"}
 								w={"100%"}
@@ -90,10 +91,42 @@ export const KeyboardPage = () => {
 								<Text>Price: </Text>
 								<Text>{keyboard?.price} $ </Text>
 							</Flex>
+							{keyboard?.quantity !== null && (
+								<Flex
+									textAlign={"end"}
+									mr={"12px"}
+									justifyContent={"space-between"}
+								>
+									<Text>Quantity: </Text>
+									<Text>{keyboard?.quantity} </Text>
+								</Flex>
+							)}
 							<Flex textAlign={"end"} mr={"12px"} justifyContent={"space-between"}>
-								<Text>Quantity: </Text>
-								<Text>{keyboard?.quantity} </Text>
+								<Text>Keyboard assembled: </Text>
+								{keyboard?.assembled === true ? (
+									<Center>
+										<Img src={checkmark} w={"20px"} h={"20px"} />
+									</Center>
+								) : (
+									<></>
+								)}
 							</Flex>
+							{keyboard?.switchSetDto != null && (
+								<Flex
+									textAlign={"end"}
+									mr={"12px"}
+									justifyContent={"space-between"}
+								>
+									<Text>Switches lubed: </Text>
+									{keyboard?.switchesLubed === true ? (
+										<Center>
+											<Img src={checkmark} w={"20px"} h={"20px"} />
+										</Center>
+									) : (
+										<></>
+									)}
+								</Flex>
+							)}
 							<Button
 								rounded={"4px"}
 								overflow={"hidden"}
@@ -104,7 +137,7 @@ export const KeyboardPage = () => {
 								color={"#343434"}
 								onClick={() => {
 									if (user?.role === "ADMIN") handleMakeKeyboard();
-									else handleAddToProcurement();
+									else handleAddToCart();
 								}}
 								_hover={{
 									bg: colorPallete.buttonHover,

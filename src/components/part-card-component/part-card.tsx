@@ -19,15 +19,14 @@ export const PartCard = ({
 	choosePart,
 	choosenPartName,
 }: PartCardProps) => {
-	const addToProcurement = useApplicationStore((state) => state.addToProcurement);
+	const addToCart = useApplicationStore((state) => state.addToCart);
 	const user = useApplicationStore((state) => state.user);
-	function handleAddToProcurement() {
-		addToProcurement({
+	function handleAddToCart() {
+		addToCart({
 			name: part.name,
 			price: part.price,
 			quantity: 1,
 			image: part.imageUrl.toString() ?? "",
-			isKeyboard: false,
 		});
 		toast.success("1 instance of " + part.name + " added procurement");
 	}
@@ -128,7 +127,7 @@ export const PartCard = ({
 						w={user?.role === "ADMIN" ? "100%" : "calc(50% - 6px)"}
 						bg={colorPallete.button}
 						color={"#343434"}
-						onClick={() => handleAddToProcurement()}
+						onClick={() => handleAddToCart()}
 						_hover={{
 							bg: colorPallete.buttonHover,
 							transform: "scale(1.05,1.05)",

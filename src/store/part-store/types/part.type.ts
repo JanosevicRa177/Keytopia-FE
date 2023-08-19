@@ -1,17 +1,21 @@
 export type PartStoreItem = {
     name: string;
-    image: string;
+    image: string | null;
     quantity: number;
     price: number;
-    isKeyboard: boolean;
+    generatedByBuyer?: boolean;
 };
 
 export type PartItem = {
     name: string;
     quantity: number;
-    isKeyboard: boolean;
 };
 
 export type Procurement = {
     parts: PartItem[];
+};
+
+export type Order = {
+    parts: PartItem[];
+    deliveryServiceName: string;
 };

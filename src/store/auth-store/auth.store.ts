@@ -49,6 +49,8 @@ export const authStoreSlice: StateCreator<Store, [], [], AuthStore> = (set, get)
                     return state;
                 })
             );
+            if (get().user?.role === "ADMIN")
+                get().emptyCart();
             toast.success("Successfully logged in!");
         } catch (e: any) {
             set(
@@ -78,6 +80,8 @@ export const authStoreSlice: StateCreator<Store, [], [], AuthStore> = (set, get)
         );
     },
     logout: () => {
+        if (get().user?.role === "ADMIN")
+            get().emptyCart();
         set(
             produce((state: AuthStore) => {
                 state.token = null;

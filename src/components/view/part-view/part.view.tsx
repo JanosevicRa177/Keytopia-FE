@@ -13,6 +13,7 @@ import { useFetchPartPage } from "../../../hooks/part-hooks/get-all/part.get-all
 import { PartFormContainer } from "../../form/part-form/part-forms.container";
 import { PartModalControl } from "../../single-view/part-modal.control";
 import { normalizeEnum } from "../../../utils/string.converter";
+import { useApplicationStore } from "../../../store/store";
 
 interface PartViewProps {
 	partType?: PartType;
@@ -26,7 +27,7 @@ export const PartView = ({ partType }: PartViewProps) => {
 	const [sortedDirection, setSortedDirection] = useState<SortDirection>(SortDirection.UNSORTED);
 	const { deletePart } = useDeletePart();
 	const { isOpen: isOpenForm, onClose: onCloseForm, onOpen: onOpenForm } = useDisclosure();
-
+	const user = useApplicationStore((state) => state.user);
 	useEffect(() => {
 		fetchPage(0);
 	}, [partType]);
@@ -68,23 +69,25 @@ export const PartView = ({ partType }: PartViewProps) => {
 			>
 				<Flex justifyContent={"space-between"}>
 					<Text fontSize={"2xl"}>{normalizeEnum(partType?.toString() ?? "Parts")}</Text>
-					<Button
-						w={"90px"}
-						rounded={"4px"}
-						overflow={"hidden"}
-						bg={colorPallete.button}
-						onClick={() => {
-							onOpenForm();
-						}}
-						_hover={{
-							bg: colorPallete.buttonHover,
-							transform: "scale(1.05,1.05)",
-							transition: "0.2s",
-						}}
-						fontSize={"md"}
-					>
-						New
-					</Button>
+					{user?.role === "ADMIN" && (
+						<Button
+							w={"90px"}
+							rounded={"4px"}
+							overflow={"hidden"}
+							bg={colorPallete.button}
+							onClick={() => {
+								onOpenForm();
+							}}
+							_hover={{
+								bg: colorPallete.buttonHover,
+								transform: "scale(1.05,1.05)",
+								transition: "0.2s",
+							}}
+							fontSize={"md"}
+						>
+							New
+						</Button>
+					)}
 				</Flex>
 				<PartFilterSort
 					fetchPart={fetchPage}
@@ -112,7 +115,13 @@ export const PartView = ({ partType }: PartViewProps) => {
 				/>
 			</Flex>
 			<Box h={"calc(100vh - 815px)"} />
-			<PartFormContainer isOpen={isOpenForm} onClose={onCloseForm} fetchPage={fetchPage} />
+			{user?.role === "ADMIN" && (
+				<PartFormContainer
+					isOpen={isOpenForm}
+					onClose={onCloseForm}
+					fetchPage={fetchPage}
+				/>
+			)}
 			<PartModalControl partData={part} setPartData={setPart} />
 		</Box>
 	);

@@ -10,6 +10,8 @@ export type MakeKeyboard = {
     stabilizers?: PartDataWithStabilizerType;
     switchSet?: PartWithPinType;
     image?: File
+    switchesLubed: boolean;
+    isAssembled: boolean;
 };
 
 export type MakeKeyboardStrings = {
@@ -21,7 +23,9 @@ export type MakeKeyboardStrings = {
     cable?: string;
     stabilizers?: string;
     switchSet?: string;
-    image?: File
+    image?: File;
+    switchesLubed: boolean;
+    isAssembled: boolean;
 };
 
 export type PartData = {

@@ -4,6 +4,8 @@ import { useApplicationStore } from "../../store/store";
 import { toast } from "react-toastify";
 import { PartData } from "../../store/keyboard-store/types/keyboard.type";
 
+import keyboardImg from "../../images/keyboard.png";
+
 interface KeyboardCardProps {
 	keyboard: PartData;
 	deleteKeyboard: (keyboard: PartData) => Promise<void>;
@@ -11,15 +13,14 @@ interface KeyboardCardProps {
 }
 
 export const KeyboardCard = ({ keyboard, showMore, deleteKeyboard }: KeyboardCardProps) => {
-	const addToProcurement = useApplicationStore((state) => state.addToProcurement);
+	const addToCart = useApplicationStore((state) => state.addToCart);
 	const user = useApplicationStore((state) => state.user);
-	function handleAddToProcurement() {
-		addToProcurement({
+	function handleAddToCart() {
+		addToCart({
 			name: keyboard.name,
 			price: keyboard.price,
 			quantity: 1,
 			image: keyboard.imageUrl != null ? keyboard.imageUrl.toString() : "",
-			isKeyboard: false,
 		});
 		toast.success("1 instance of " + keyboard.name + " added procurement");
 	}
@@ -38,7 +39,7 @@ export const KeyboardCard = ({ keyboard, showMore, deleteKeyboard }: KeyboardCar
 			transition={"0.3s ease"}
 		>
 			<Img
-				src={keyboard.imageUrl.toString()}
+				src={keyboard.imageUrl == null ? keyboardImg : keyboard.imageUrl.toString()}
 				rounded={"4px"}
 				minH={"226px"}
 				maxH={"196px"}
@@ -99,7 +100,7 @@ export const KeyboardCard = ({ keyboard, showMore, deleteKeyboard }: KeyboardCar
 						bg={colorPallete.button}
 						color={"#343434"}
 						onClick={() => {
-							handleAddToProcurement();
+							handleAddToCart();
 						}}
 						_hover={{
 							bg: colorPallete.buttonHover,

@@ -100,5 +100,7 @@ export type Keyboard = {
     plateDto: PartData;
     stabilizersDto: PartData;
     imageUrl: string;
-    quantity: number;
+    quantity?: number;
+    assembled: boolean;
+    switchesLubed: boolean;
 }
