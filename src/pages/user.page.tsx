@@ -5,6 +5,7 @@ import userImg from "../images/user.png";
 import { colorPallete } from "../styles/color";
 import { ChangePasswordForm } from "../components/form/auth-form/change-password.form";
 import { UpdateAccountForm } from "../components/form/auth-form/update-account.form";
+import { useNavigate } from "react-router-dom";
 
 export const UserPage = () => {
 	const user = useApplicationStore((state) => state.user);
@@ -18,6 +19,7 @@ export const UserPage = () => {
 		onClose: onCloseUpdateAccountForm,
 		onOpen: onOpenUpdateAccountForm,
 	} = useDisclosure();
+	const navigate = useNavigate();
 	return (
 		<MainContrainer>
 			<Center h={"calc(100vh - 118px)"} w={"100%"} px={"8px"}>
@@ -54,15 +56,21 @@ export const UserPage = () => {
 						fontSize={"2xl"}
 					>
 						<Flex gap={"4px"}>
-							<Text fontWeight={"bold"}>Email:</Text>
+							<Text fontWeight={"bold"} w={"100px"}>
+								Email:
+							</Text>
 							<Text>{user?.email}</Text>
 						</Flex>
 						<Flex gap={"4px"}>
-							<Text fontWeight={"bold"}>Phone:</Text>
+							<Text fontWeight={"bold"} w={"100px"}>
+								Phone:
+							</Text>
 							<Text>{user?.phone}</Text>
 						</Flex>
 						<Flex gap={"4px"}>
-							<Text fontWeight={"bold"}>Address:</Text>
+							<Text fontWeight={"bold"} w={"100px"}>
+								Address:
+							</Text>
 							<Text>
 								{" "}
 								{user?.address.street} {user?.address.streetNumber},{" "}
@@ -71,10 +79,10 @@ export const UserPage = () => {
 							</Text>
 						</Flex>
 						<Flex gap={"16px"} mt={"16px"}>
-							<Flex justifyContent={"center"} position={"relative"} flexGrow={"1"}>
+							<Flex justifyContent={"center"} gap={"16px"} w={"100%"}>
 								<Button
-									w={"100%"}
 									h={"45px"}
+									w={user?.role === "BUYER" ? "33%" : "50%"}
 									rounded={"4px"}
 									overflow={"hidden"}
 									bg={colorPallete.button}
@@ -84,34 +92,50 @@ export const UserPage = () => {
 										transition: "0.2s",
 									}}
 									fontSize={"xl"}
-									position={"absolute"}
-									onClick={() => {
-										onOpenChangePasswordForm();
-									}}
-								>
-									Change password
-								</Button>
-							</Flex>
-							<Flex justifyContent={"center"} position={"relative"} flexGrow={"1"}>
-								<Button
-									w={"100%"}
-									h={"45px"}
-									rounded={"4px"}
-									overflow={"hidden"}
-									bg={colorPallete.button}
-									_hover={{
-										bg: colorPallete.buttonHover,
-										transform: "scale(1.05,1.05)",
-										transition: "0.2s",
-									}}
-									fontSize={"xl"}
-									position={"absolute"}
 									onClick={() => {
 										onOpenUpdateAccountForm();
 									}}
 								>
 									Update account
 								</Button>
+								<Button
+									h={"45px"}
+									w={user?.role === "BUYER" ? "33%" : "50%"}
+									rounded={"4px"}
+									overflow={"hidden"}
+									bg={colorPallete.button}
+									_hover={{
+										bg: colorPallete.buttonHover,
+										transform: "scale(1.05,1.05)",
+										transition: "0.2s",
+									}}
+									fontSize={"xl"}
+									onClick={() => {
+										onOpenChangePasswordForm();
+									}}
+								>
+									Change password
+								</Button>
+								{user?.role === "BUYER" && (
+									<Button
+										h={"45px"}
+										w={"33%"}
+										rounded={"4px"}
+										overflow={"hidden"}
+										bg={colorPallete.button}
+										_hover={{
+											bg: colorPallete.buttonHover,
+											transform: "scale(1.05,1.05)",
+											transition: "0.2s",
+										}}
+										fontSize={"xl"}
+										onClick={() => {
+											navigate("/user/orders");
+										}}
+									>
+										My Orders
+									</Button>
+								)}
 							</Flex>
 						</Flex>
 					</Flex>

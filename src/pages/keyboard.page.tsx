@@ -16,6 +16,7 @@ import { useApplicationStore } from "../store/store";
 import { MakeKeyboardForm } from "../components/form/keyboard-form/keyboard.make.form";
 import checkmark from "../images/checkmark.png";
 import keyboardImg from "../images/keyboard.png";
+import { CommercializeKeyboardForm } from "../components/form/keyboard-form/keyboard.commercialize.form";
 
 export const KeyboardPage = () => {
 	const [part, setPart] = useState<PartData>();
@@ -24,7 +25,12 @@ export const KeyboardPage = () => {
 	const user = useApplicationStore((state) => state.user);
 	const [keyboard, setKeyboard] = useState<Keyboard>();
 	const { getKeyboard } = useGetOneKeyboard();
-	const { isOpen, onClose, onOpen } = useDisclosure();
+	const { isOpen: isOpenMake, onClose: onCloseMake, onOpen: onOpenMake } = useDisclosure();
+	const {
+		isOpen: isOpenCommercialize,
+		onClose: onCloseCommercialize,
+		onOpen: onOpenCommercialize,
+	} = useDisclosure();
 	const addToCart = useApplicationStore((state) => state.addToCart);
 	useEffect(() => {
 		getKeyboardFunc();
@@ -44,9 +50,6 @@ export const KeyboardPage = () => {
 			image: keyboard?.imageUrl != null ? keyboard?.imageUrl.toString() : "",
 		});
 		toast.success("1 instance of " + keyboard?.name + " added procurement");
-	}
-	function handleMakeKeyboard() {
-		onOpen();
 	}
 	async function handleShowMorePart(part: PartData, partType: PartType) {
 		setPart({ name: part.name, partType: partType } as PartData);
@@ -127,26 +130,83 @@ export const KeyboardPage = () => {
 									)}
 								</Flex>
 							)}
-							<Button
-								rounded={"4px"}
-								overflow={"hidden"}
-								w={"100%"}
-								fontSize={"2xl"}
-								minH={"55px"}
-								bg={colorPallete.button}
-								color={"#343434"}
-								onClick={() => {
-									if (user?.role === "ADMIN") handleMakeKeyboard();
-									else handleAddToCart();
-								}}
-								_hover={{
-									bg: colorPallete.buttonHover,
-									transform: "scale(1.05,1.05)",
-									transition: "0.2s",
-								}}
-							>
-								{user?.role === "ADMIN" ? "Make keyboard" : "Add to cart"}
-							</Button>
+							{user?.role === "BUYER" ? (
+								<Button
+									rounded={"4px"}
+									overflow={"hidden"}
+									w={"100%"}
+									fontSize={"2xl"}
+									minH={"55px"}
+									bg={colorPallete.button}
+									color={"#343434"}
+									onClick={() => {
+										handleAddToCart();
+									}}
+									_hover={{
+										bg: colorPallete.buttonHover,
+										transform: "scale(1.05,1.05)",
+										transition: "0.2s",
+									}}
+								>
+									Add to cart
+								</Button>
+							) : (
+								<Flex gap={"14px"}>
+									<Button
+										rounded={"4px"}
+										overflow={"hidden"}
+										w={"calc(50% - 8px)"}
+										fontSize={"large"}
+										minH={"55px"}
+										bg={
+											!keyboard?.generatedByAdmin
+												? colorPallete.disabledButton
+												: colorPallete.button
+										}
+										color={!keyboard?.generatedByAdmin ? "white" : "#343434"}
+										onClick={() => {
+											onOpenMake();
+										}}
+										_hover={{
+											bg: !keyboard?.generatedByAdmin
+												? colorPallete.disabledButton
+												: colorPallete.buttonHover,
+											transform: "scale(1.05,1.05)",
+											transition: "0.2s",
+										}}
+										isDisabled={!keyboard?.generatedByAdmin}
+									>
+										Make keyboard
+									</Button>
+									<Button
+										rounded={"4px"}
+										overflow={"hidden"}
+										w={"calc(50% - 8px)"}
+										fontSize={"large"}
+										minH={"55px"}
+										bg={
+											keyboard?.generatedByAdmin
+												? colorPallete.disabledButton
+												: colorPallete.button
+										}
+										color={keyboard?.generatedByAdmin ? "white" : "#343434"}
+										onClick={() => {
+											onOpenCommercialize();
+										}}
+										_hover={{
+											bg: keyboard?.generatedByAdmin
+												? colorPallete.disabledButton
+												: colorPallete.buttonHover,
+											transform: "scale(1.05,1.05)",
+											transition: "0.2s",
+										}}
+										isDisabled={keyboard?.generatedByAdmin}
+									>
+										Commercialize
+										<br /> keyboard
+									</Button>
+								</Flex>
+							)}
 						</Flex>
 					</Flex>
 					<Flex fontSize={"md"} my={"12px"} flexDir={"column"} justifyContent={"center"}>
@@ -198,8 +258,14 @@ export const KeyboardPage = () => {
 			<PartModalControl partData={part} setPartData={setPart} />
 			<MakeKeyboardForm
 				keyboardName={keyboard?.name ?? ""}
-				isOpen={isOpen}
-				onClose={onClose}
+				isOpen={isOpenMake}
+				onClose={onCloseMake}
+				getKeyboard={getKeyboardFunc}
+			/>
+			<CommercializeKeyboardForm
+				keyboardName={keyboard?.name ?? ""}
+				isOpen={isOpenCommercialize}
+				onClose={onCloseCommercialize}
 				getKeyboard={getKeyboardFunc}
 			/>
 		</MainContrainer>

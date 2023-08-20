@@ -1,13 +1,19 @@
 import { toast } from "react-toastify";
+import { CommercializeKeyboard } from "../../model/part.model";
 import { ApiResponse } from "../../store/auth-store/types/response.type";
 import { useAxios } from "../../utils/axios.hook";
 
-export const useMakeKeyboard = () => {
+export const useCommercializeKeyboard = () => {
     const { axios } = useAxios();
-    const makeKeyboard = async (name: String, quantity: number): Promise<ApiResponse<null>> => {
+    const commercializeKeyboard = async (name: string, newName: string, image: File): Promise<ApiResponse<null>> => {
         try {
-            await axios.patch(`/keyboard/make/${name}/${quantity}`);
-            toast.success(`Keyboards successfuly added!`);
+            const body = { image: image, newName: newName } as CommercializeKeyboard
+            await axios.patch(`/keyboard/commercialize/${name}`, body, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            toast.success("Keyboard commercialized!");
             return {
                 data: null,
                 error: null,
@@ -24,6 +30,6 @@ export const useMakeKeyboard = () => {
     };
 
     return {
-        makeKeyboard,
+        commercializeKeyboard,
     };
 };

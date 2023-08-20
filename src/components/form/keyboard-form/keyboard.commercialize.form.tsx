@@ -16,38 +16,48 @@ import {
 } from "@chakra-ui/react";
 import { ApiResponse } from "../../../store/auth-store/types/response.type";
 import { colorPallete } from "../../../styles/color";
-import { useMakeKeyboard } from "../../../hooks/keyboard-hooks/keyboard.make.hook";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useCommercializeKeyboard } from "../../../hooks/keyboard-hooks/keybopard.commercialize.hook";
+import { useNavigate } from "react-router-dom";
 
-interface MakeKeyboardFormProps {
+interface CommercializeKeyboardFormProps {
 	isOpen: boolean;
 	onClose: () => void;
 	keyboardName: string;
 	getKeyboard: () => void;
 }
 
-export const MakeKeyboardForm = ({
+export const CommercializeKeyboardForm = ({
 	isOpen,
 	onClose,
 	keyboardName,
 	getKeyboard,
-}: MakeKeyboardFormProps) => {
-	const { makeKeyboard } = useMakeKeyboard();
-	const [quantity, setQuantity] = useState<number>();
+}: CommercializeKeyboardFormProps) => {
+	const { commercializeKeyboard } = useCommercializeKeyboard();
+	const navigate = useNavigate();
+	const [newName, setNewName] = useState<string>();
 	const [isValid, setIsValid] = useState<boolean>();
-	async function handleMakeKeyboard() {
-		if (quantity === undefined || quantity <= 0) {
-			toast.error("choose valid number for quantity!");
+	const [image, setImage] = useState<File>();
+	async function handleCommercializeKeyboard() {
+		if (image === undefined) {
+			toast.error("Choose image for keyboard!");
 			return;
 		}
-		makeKeyboard(keyboardName, quantity).then((response: ApiResponse<null>) => {
+		if (newName === undefined || newName === "") {
+			toast.error("You must enter new name!");
+			return;
+		}
+		commercializeKeyboard(keyboardName, newName, image).then((response: ApiResponse<null>) => {
 			if (response.status === "SUCCESS") {
-				getKeyboard();
 				onClose();
+				navigate(`/keyboard/${newName}`);
 			}
 		});
 	}
+	useEffect(() => {
+		setIsValid(newName !== undefined && newName !== "" && image !== undefined);
+	}, [image, newName]);
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -58,7 +68,8 @@ export const MakeKeyboardForm = ({
 			<ModalOverlay />
 			<ModalContent margin={"auto"}>
 				<ModalHeader textAlign={"center"} mt={4}>
-					Make keyboard our of parts: {keyboardName}
+					Commercialize keyboard:
+					<br /> {keyboardName}
 				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
@@ -75,15 +86,13 @@ export const MakeKeyboardForm = ({
 						justifyContent={"center"}
 					>
 						<FormControl isInvalid={isValid !== undefined && isValid === false}>
-							<FormLabel fontWeight={"semibold"}>Quantity</FormLabel>
+							<FormLabel fontWeight={"semibold"}>New name</FormLabel>
 							<Input
-								type="number"
 								rounded={"4px"}
 								h={"45px"}
 								borderColor={colorPallete.inputBorder}
 								onChange={(e) => {
-									setQuantity(parseInt(e.target.value));
-									setIsValid(parseInt(e.target.value) > 0);
+									setNewName(e.target.value);
 								}}
 								_hover={{
 									borderColor: colorPallete.inputBorderHover,
@@ -91,19 +100,37 @@ export const MakeKeyboardForm = ({
 								min={1}
 							/>
 							{isValid !== undefined && isValid === false ? (
-								<FormErrorMessage ml={"8px"}>
-									Quantity is required and should be a positive number
-								</FormErrorMessage>
+								<FormErrorMessage ml={"8px"}>You must enter name!</FormErrorMessage>
 							) : (
 								<Box h={"26px"} w="100%" ml={"8px"}></Box>
 							)}
 						</FormControl>
+						<Flex flexDirection={"column"}>
+							<FormLabel fontWeight={"semibold"}>Image</FormLabel>
+							<Input
+								id="image"
+								minW={"100%"}
+								rounded={"4px"}
+								h={"45px"}
+								borderColor={colorPallete.inputBorder}
+								onChange={(e) => {
+									if (e.target.files) {
+										setImage(e.target.files[0]);
+									}
+								}}
+								_hover={{
+									borderColor: colorPallete.inputBorderHover,
+								}}
+								type="file"
+								width={"80%"}
+							/>
+						</Flex>
 						<Center h={"45px"} mt={"16px"} w={"auto"}>
 							<Button
 								w={"calc(100% - 64px)"}
 								h={"45px"}
 								rounded={"4px"}
-								onClick={() => handleMakeKeyboard()}
+								onClick={() => handleCommercializeKeyboard()}
 								overflow={"hidden"}
 								bg={!isValid ? colorPallete.disabledButton : colorPallete.button}
 								color={!isValid ? "white" : "#343434"}
@@ -118,7 +145,7 @@ export const MakeKeyboardForm = ({
 								position={"absolute"}
 								isDisabled={!isValid}
 							>
-								Make keyboard
+								Commercialize
 							</Button>
 						</Center>
 					</Flex>

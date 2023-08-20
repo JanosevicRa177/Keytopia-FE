@@ -11,6 +11,7 @@ import { SupplierView } from "../view/warehouse-view/supplier.view";
 import { DeliveryServiceView } from "../view/sales-view/delivery-service.view";
 import { KeyboardView } from "../view/keyboard-view/keyboard.view";
 import ProtectedRoute from "../../routes/ProtectedRoute";
+import { OrderView } from "../view/sales-view/order.view";
 
 interface PartViewContainerProps {
 	partType?: PartType;
@@ -89,6 +90,16 @@ export const PartViewContainer = (props: PartViewContainerProps) => {
 							requiredRole={"ADMIN"}
 							needAuthorization={true}
 							element={<DeliveryServiceView />}
+						/>
+					}
+				/>
+				<Route
+					path="/order"
+					element={
+						<ProtectedRoute
+							requiredRole={"ADMIN"}
+							needAuthorization={true}
+							element={<OrderView />}
 						/>
 					}
 				/>

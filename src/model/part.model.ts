@@ -103,4 +103,10 @@ export type Keyboard = {
     quantity?: number;
     assembled: boolean;
     switchesLubed: boolean;
+    generatedByAdmin: boolean;
+}
+
+export type CommercializeKeyboard = {
+    newName: string;
+    image: File;
 }
