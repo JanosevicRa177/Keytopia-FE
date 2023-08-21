@@ -59,45 +59,27 @@ export const OrderProductsModal = ({ isOpen, onClose, order }: OrderProductsModa
 												key={index}
 												transition={"0.1s ease"}
 												bgColor={
-													index !== -1
-														? index % 2 === 0
-															? colorPallete.inputBorderHover
-															: colorPallete.oddTableColor
-														: index % 2 === 0
-														? "#949494"
-														: "#D3D3D3"
+													index % 2 === 0
+														? colorPallete.inputBorderHover
+														: colorPallete.oddTableColor
 												}
 												saturate={"0"}
 											>
 												<Td w={"10%"}>
-													<Flex
-														justifyContent={"space-between"}
-														h={"119.5px"}
-													>
-														<Flex
-															fontSize={"large"}
-															alignItems={"center"}
-														>
+													<Flex justifyContent={"space-between"} h={"119.5px"}>
+														<Flex fontSize={"large"} alignItems={"center"}>
 															<Flex flexDir={"column"} gap={"8px"}>
 																<Flex gap={"4px"}>
-																	<Text fontWeight={"700"}>
-																		Name :
-																	</Text>
+																	<Text fontWeight={"700"}>Name :</Text>
 																	<Text>{product.part.name}</Text>
 																</Flex>
 																<Flex gap={"4px"}>
-																	<Text fontWeight={"700"}>
-																		Id :
-																	</Text>
+																	<Text fontWeight={"700"}>Id :</Text>
 																	<Text>{product.id}</Text>
 																</Flex>
 																<Flex gap={"4px"}>
-																	<Text fontWeight={"700"}>
-																		Price :
-																	</Text>
-																	<Text>
-																		{product.part.price} $
-																	</Text>
+																	<Text fontWeight={"700"}>Price :</Text>
+																	<Text>{product.part.price} $</Text>
 																</Flex>
 															</Flex>
 														</Flex>
@@ -117,12 +99,7 @@ export const OrderProductsModal = ({ isOpen, onClose, order }: OrderProductsModa
 									</Tbody>
 								</Table>
 							</TableContainer>
-							<Flex
-								justifyContent={"end"}
-								pr={"15px"}
-								pb={"32px"}
-								position={"relative"}
-							></Flex>
+							<Flex justifyContent={"end"} pr={"15px"} pb={"32px"} position={"relative"}></Flex>
 						</Flex>
 					</Flex>
 				</ModalBody>

@@ -95,11 +95,7 @@ export const KeyboardPage = () => {
 								<Text>{keyboard?.price} $ </Text>
 							</Flex>
 							{keyboard?.quantity !== null && (
-								<Flex
-									textAlign={"end"}
-									mr={"12px"}
-									justifyContent={"space-between"}
-								>
+								<Flex textAlign={"end"} mr={"12px"} justifyContent={"space-between"}>
 									<Text>Quantity: </Text>
 									<Text>{keyboard?.quantity} </Text>
 								</Flex>
@@ -115,11 +111,7 @@ export const KeyboardPage = () => {
 								)}
 							</Flex>
 							{keyboard?.switchSetDto != null && (
-								<Flex
-									textAlign={"end"}
-									mr={"12px"}
-									justifyContent={"space-between"}
-								>
+								<Flex textAlign={"end"} mr={"12px"} justifyContent={"space-between"}>
 									<Text>Switches lubed: </Text>
 									{keyboard?.switchesLubed === true ? (
 										<Center>
@@ -130,7 +122,7 @@ export const KeyboardPage = () => {
 									)}
 								</Flex>
 							)}
-							{user?.role === "BUYER" ? (
+							{user?.role !== "ADMIN" ? (
 								<Button
 									rounded={"4px"}
 									overflow={"hidden"}
@@ -185,9 +177,7 @@ export const KeyboardPage = () => {
 										fontSize={"large"}
 										minH={"55px"}
 										bg={
-											keyboard?.generatedByAdmin
-												? colorPallete.disabledButton
-												: colorPallete.button
+											keyboard?.generatedByAdmin ? colorPallete.disabledButton : colorPallete.button
 										}
 										color={keyboard?.generatedByAdmin ? "white" : "#343434"}
 										onClick={() => {
@@ -210,12 +200,7 @@ export const KeyboardPage = () => {
 						</Flex>
 					</Flex>
 					<Flex fontSize={"md"} my={"12px"} flexDir={"column"} justifyContent={"center"}>
-						<Flex
-							flexWrap={"wrap"}
-							justifyContent={"center"}
-							rowGap={"24px"}
-							columnGap={"24px"}
-						>
+						<Flex flexWrap={"wrap"} justifyContent={"center"} rowGap={"24px"} columnGap={"24px"}>
 							<KeyboardPartCard
 								part={keyboard?.caseDto as PartData}
 								showMore={handleShowMorePart}

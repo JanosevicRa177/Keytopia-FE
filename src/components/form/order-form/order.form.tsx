@@ -101,9 +101,8 @@ export const OrderForm = ({ isOpen, onClose }: MakeKeyboardFormProps) => {
 								Address :
 							</Text>
 							<Text fontWeight={"300"}>
-								{user?.address.street} {user?.address.streetNumber},{" "}
-								{user?.address.zipCode} {user?.address.city},{" "}
-								{user?.address.country}
+								{user?.address.street} {user?.address.streetNumber}, {user?.address.zipCode}{" "}
+								{user?.address.city}, {user?.address.country}
 							</Text>
 						</Flex>
 						<Flex fontWeight={"700"} gap={"4px"}>
@@ -124,7 +123,6 @@ export const OrderForm = ({ isOpen, onClose }: MakeKeyboardFormProps) => {
 								defaultValue={deliveryServices[0]}
 								onChange={(e) => {
 									setChoosenDeliveryService(e.target.value);
-									console.log(e.target.value);
 								}}
 							>
 								{deliveryServices.map((deliveryService, index) => (
