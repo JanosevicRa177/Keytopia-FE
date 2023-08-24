@@ -85,7 +85,7 @@ export const OrderProductsModal = ({ isOpen, onClose, order }: OrderProductsModa
 														</Flex>
 														<Img
 															src={
-																product.part.imageUrl === ""
+																product.part.imageUrl === "" || product.part.imageUrl === null
 																	? keyboardImg
 																	: product.part.imageUrl.toString()
 															}
