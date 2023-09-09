@@ -31,9 +31,9 @@ const steps = [
 	{ title: "Choose PCB", description: "He is the brain behind it all!" },
 	{ title: "Choose Plate", description: "Additional reinforcement for keyboard." },
 	{ title: "Choose Cable", description: "Juice delivery guy!" },
-	{ title: "Choose Keycap set", description: "The main makeup of the keyboard!" },
-	{ title: "Choose Stabilizers", description: "Even the big boy keys need help!" },
 	{ title: "Choose Switch set", description: "How does it sound so good?" },
+	{ title: "Choose Stabilizers", description: "Even the big boy keys need help!" },
+	{ title: "Choose Keycap set", description: "The main makeup of the keyboard!" },
 	{ title: "Final step", description: "" },
 ];
 
@@ -95,18 +95,15 @@ export const MakeKeyboardPage = () => {
 						rounded={"6px"}
 					>
 						<KeyboardCards />
-						<StepControlContainer
-							activeStep={activeStep}
-							setActiveStep={setActiveStep}
-						/>
+						<StepControlContainer activeStep={activeStep} setActiveStep={setActiveStep} />
 						{activeStep === 0 && <FirstStep />}
 						{activeStep === 1 && <ChooseCase />}
 						{activeStep === 2 && <ChoosePCB />}
 						{activeStep === 3 && <ChoosePlate />}
 						{activeStep === 4 && <ChooseCable />}
-						{activeStep === 5 && <ChooseKeycapSet />}
+						{activeStep === 5 && <ChooseSwitchSet />}
 						{activeStep === 6 && <ChooseStabilizers />}
-						{activeStep === 7 && <ChooseSwitchSet />}
+						{activeStep === 7 && <ChooseKeycapSet />}
 						{activeStep === 8 && <FinalStep />}
 					</Flex>
 				</Flex>

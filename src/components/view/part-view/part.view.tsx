@@ -43,9 +43,7 @@ export const PartView = ({ partType }: PartViewProps) => {
 		});
 	}
 	async function fetchPage(page: number) {
-		getPartPage(page, searchName, sortedDirection, partType).then(() =>
-			setCurrentPage(page + 1)
-		);
+		getPartPage(page, searchName, sortedDirection, partType).then(() => setCurrentPage(page + 1));
 	}
 	async function handleShowMorePart(part: PartData) {
 		setPart(part);
@@ -56,7 +54,6 @@ export const PartView = ({ partType }: PartViewProps) => {
 			<Flex
 				color={"#343434"}
 				bg={"rgba(255,255,255,0.9)"}
-				mb={"32px"}
 				px={"32px"}
 				py={"32px"}
 				boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
@@ -114,13 +111,8 @@ export const PartView = ({ partType }: PartViewProps) => {
 					getPage={fetchPage}
 				/>
 			</Flex>
-			<Box h={"calc(100vh - 815px)"} />
 			{user?.role === "ADMIN" && (
-				<PartFormContainer
-					isOpen={isOpenForm}
-					onClose={onCloseForm}
-					fetchPage={fetchPage}
-				/>
+				<PartFormContainer isOpen={isOpenForm} onClose={onCloseForm} fetchPage={fetchPage} />
 			)}
 			<PartModalControl partData={part} setPartData={setPart} />
 		</Box>

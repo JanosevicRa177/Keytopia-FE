@@ -127,161 +127,111 @@ export const ProcurementPage = () => {
 								</Thead>
 								<Tbody>
 									{getProcurementsPageRes.data.content &&
-										getProcurementsPageRes.data.content.map(
-											(item: GetProcurementDto) => (
-												<Tr key={item.id}>
-													<Td w={"10%"}>
-														{normalizeDate(item.date.toString())}
-													</Td>
-													<Td w={"10%"}>
-														{normalizeDate(item.deadline.toString())}
-													</Td>
-													<Td w={"10%"}>{normalizeEnum(item.state)}</Td>
-													<Td w={"15%"}>{item.supplierName}</Td>
-													<Td>
-														<Flex gap={"4"}>
-															<Button
-																w={"50%"}
-																rounded={"4px"}
-																overflow={"hidden"}
-																bg={colorPallete.button}
-																color={"#343434"}
-																_hover={{
-																	bg: colorPallete.buttonHover,
-																	transform: "scale(1.05,1.05)",
-																	transition: "0.2s",
-																}}
-																onClick={() => {
-																	setPartItems(
-																		item.procurementParts
-																	);
-																	onOpenModal();
-																}}
-															>
-																Show parts
-															</Button>
-															<Button
-																w={"50%"}
-																rounded={"4px"}
-																overflow={"hidden"}
-																color={
-																	!isProcurement(
-																		item,
-																		ProcurementState.PENDING
-																	)
-																		? "white"
-																		: "#342424"
-																}
-																bg={
-																	!isProcurement(
-																		item,
-																		ProcurementState.PENDING
-																	)
-																		? colorPallete.disabledButton
-																		: colorPallete.button
-																}
-																_hover={{
-																	bg:
-																		isProcurement(
-																			item,
-																			ProcurementState.PENDING
-																		) &&
-																		colorPallete.buttonHover,
-																	transform: "scale(1.05,1.05)",
-																	transition: "0.2s",
-																}}
-																onClick={() => {
-																	handleRealize(item);
-																}}
-																isDisabled={
-																	!isProcurement(
-																		item,
-																		ProcurementState.PENDING
-																	)
-																}
-															>
-																Realize
-															</Button>
-															<Button
-																w={"50%"}
-																rounded={"4px"}
-																overflow={"hidden"}
-																color={"white"}
-																bg={
-																	!isDateInThePast(
-																		item.deadline
-																	) &&
-																	isProcurement(
-																		item,
-																		ProcurementState.PENDING
-																	)
-																		? colorPallete.deleteButton
-																		: colorPallete.disabledButton
-																}
-																_hover={{
-																	bg:
-																		!isDateInThePast(
-																			item.deadline
-																		) &&
-																		isProcurement(
-																			item,
-																			ProcurementState.PENDING
-																		) &&
-																		colorPallete.deleteButtonHover,
-																	transform: "scale(1.05,1.05)",
-																	transition: "0.2s",
-																}}
-																onClick={() => handlePenalize(item)}
-																isDisabled={
-																	isDateInThePast(
-																		item.deadline
-																	) ||
-																	!isProcurement(
-																		item,
-																		ProcurementState.PENDING
-																	)
-																}
-															>
-																Penalize
-															</Button>
-															<Button
-																w={"50%"}
-																rounded={"4px"}
-																overflow={"hidden"}
-																color={"white"}
-																bg={
-																	!isProcurement(
-																		item,
-																		ProcurementState.PENDING
-																	)
-																		? colorPallete.disabledButton
-																		: colorPallete.deleteButton
-																}
-																_hover={{
-																	bg:
-																		isProcurement(
-																			item,
-																			ProcurementState.PENDING
-																		) &&
-																		colorPallete.deleteButtonHover,
-																	transform: "scale(1.05,1.05)",
-																	transition: "0.2s",
-																}}
-																onClick={() => handleDelete(item)}
-																isDisabled={
-																	!isProcurement(
-																		item,
-																		ProcurementState.PENDING
-																	)
-																}
-															>
-																Delete
-															</Button>
-														</Flex>
-													</Td>
-												</Tr>
-											)
-										)}
+										getProcurementsPageRes.data.content.map((item: GetProcurementDto) => (
+											<Tr key={item.id.toString()}>
+												<Td w={"10%"}>{normalizeDate(item.date.toString())}</Td>
+												<Td w={"10%"}>{normalizeDate(item.deadline.toString())}</Td>
+												<Td w={"10%"}>{normalizeEnum(item.state)}</Td>
+												<Td w={"15%"}>{item.supplierName}</Td>
+												<Td>
+													<Flex gap={"4"}>
+														<Button
+															w={"50%"}
+															rounded={"4px"}
+															overflow={"hidden"}
+															bg={colorPallete.button}
+															color={"#343434"}
+															_hover={{
+																bg: colorPallete.buttonHover,
+																transform: "scale(1.05,1.05)",
+																transition: "0.2s",
+															}}
+															onClick={() => {
+																setPartItems(item.procurementParts);
+																onOpenModal();
+															}}
+														>
+															Show parts
+														</Button>
+														<Button
+															w={"50%"}
+															rounded={"4px"}
+															overflow={"hidden"}
+															color={
+																!isProcurement(item, ProcurementState.PENDING) ? "white" : "#342424"
+															}
+															bg={
+																!isProcurement(item, ProcurementState.PENDING)
+																	? colorPallete.disabledButton
+																	: colorPallete.button
+															}
+															_hover={{
+																bg:
+																	isProcurement(item, ProcurementState.PENDING) &&
+																	colorPallete.buttonHover,
+																transform: "scale(1.05,1.05)",
+																transition: "0.2s",
+															}}
+															onClick={() => {
+																handleRealize(item);
+															}}
+															isDisabled={!isProcurement(item, ProcurementState.PENDING)}
+														>
+															Realize
+														</Button>
+														<Button
+															w={"50%"}
+															rounded={"4px"}
+															overflow={"hidden"}
+															color={"white"}
+															bg={
+																!isDateInThePast(item.deadline) &&
+																isProcurement(item, ProcurementState.PENDING)
+																	? colorPallete.deleteButton
+																	: colorPallete.disabledButton
+															}
+															_hover={{
+																bg:
+																	!isDateInThePast(item.deadline) &&
+																	isProcurement(item, ProcurementState.PENDING) &&
+																	colorPallete.deleteButtonHover,
+																transform: "scale(1.05,1.05)",
+																transition: "0.2s",
+															}}
+															onClick={() => handlePenalize(item)}
+															isDisabled={
+																isDateInThePast(item.deadline) ||
+																!isProcurement(item, ProcurementState.PENDING)
+															}
+														>
+															Penalize
+														</Button>
+														<Button
+															w={"50%"}
+															rounded={"4px"}
+															overflow={"hidden"}
+															color={"white"}
+															bg={
+																!isProcurement(item, ProcurementState.PENDING)
+																	? colorPallete.disabledButton
+																	: colorPallete.deleteButton
+															}
+															_hover={{
+																bg:
+																	isProcurement(item, ProcurementState.PENDING) &&
+																	colorPallete.deleteButtonHover,
+																transform: "scale(1.05,1.05)",
+																transition: "0.2s",
+															}}
+															onClick={() => handleDelete(item)}
+															isDisabled={!isProcurement(item, ProcurementState.PENDING)}
+														>
+															Delete
+														</Button>
+													</Flex>
+												</Td>
+											</Tr>
+										))}
 								</Tbody>
 							</Table>
 						</TableContainer>
@@ -293,11 +243,7 @@ export const ProcurementPage = () => {
 						setCurrentPage={setCurrentPage}
 						getPage={handleProcurementsPage}
 					/>
-					<PartItemModal
-						isOpen={isOpenModal}
-						onClose={onCloseModal}
-						partsItems={partItems}
-					/>
+					<PartItemModal isOpen={isOpenModal} onClose={onCloseModal} partsItems={partItems} />
 				</Flex>
 			</Flex>
 		</MainContrainer>

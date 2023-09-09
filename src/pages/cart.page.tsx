@@ -149,11 +149,7 @@ export const CartPage = () => {
 								py={"16px"}
 								justifyContent={"space-between"}
 								key={index}
-								bg={
-									index % 2 === 0
-										? colorPallete.oddTableColor
-										: colorPallete.evenTableColor
-								}
+								bg={index % 2 === 0 ? colorPallete.oddTableColor : colorPallete.evenTableColor}
 								onClick={() => {
 									setFocusedPart(part);
 								}}
@@ -195,14 +191,10 @@ export const CartPage = () => {
 										/>
 									)}
 									<Flex flexDirection={"column"} justifyContent={"center"}>
-										<Text fontWeight={"bold"} fontSize={"2xl"} maxW={"162px"}>
+										<Text fontWeight={"bold"} fontSize={"xl"} maxW={"162px"}>
 											{part.generatedByBuyer ? (
 												<Flex flexDir={"column"}>
-													<Text
-														whiteSpace={"nowrap"}
-														textOverflow={"ellipsis"}
-														overflow={"hidden"}
-													>
+													<Text whiteSpace={"nowrap"} textOverflow={"ellipsis"} overflow={"hidden"}>
 														{part.name}
 													</Text>
 													<Text>(Your custom keyboard)</Text>
@@ -215,8 +207,8 @@ export const CartPage = () => {
 								</Flex>
 								{user?.role !== "ADMIN" && (
 									<Center fontWeight={"700"} fontSize={"large"}>
-										{part.price} $ x {part.quantity} ={" "}
-										{part.price * part.quantity} $
+										{part.price.toFixed(2)} $ x {part.quantity} ={" "}
+										{(part.price * part.quantity).toFixed(2)} $
 									</Center>
 								)}
 

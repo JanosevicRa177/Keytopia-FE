@@ -73,7 +73,7 @@ export const cartStoreSlice: StateCreator<Store, [], [], CartStore> = (set, get)
         get().procurementParts.forEach(part => { price += part.price * part.quantity })
         set(
             produce((state: CartStoreState) => {
-                state.completePrice = price;
+                state.completePrice = Math.round(price * 100) / 100;
                 return state;
             })
         );

@@ -72,6 +72,23 @@ export function normalizeStabilizerType(
     return;
 }
 
+export function normalizeKeycapMaterial(
+    variable: string,
+    data: VariableWithValue[],
+    normalizedNames: string[]
+) {
+    let value = "";
+    if (variable === "DOUBLESHOT_ABS") value = "Doubleshot ABS";
+    else if (variable === "DOUBLESHOT_PBT") value = "Doubleshot PBT";
+    else value = variable
+    data.push({
+        variable: normalizedNames[0],
+        value: value,
+    });
+    normalizedNames.shift();
+    return;
+}
+
 export function normalizePinType(
     variable: string,
     data: VariableWithValue[],
@@ -201,10 +218,18 @@ export function handlePartVariables(part: Part, setData: React.Dispatch<React.Se
             );
             return;
         }
+        if (name === "material" && (partType === PartType.KEYCAP_SET || partType === PartType.KEYCAP)) {
+            normalizeKeycapMaterial(
+                part[name as keyof Part]?.toString() as string,
+                data,
+                normalizedNames
+            );
+            return;
+        }
         if (name === "price") {
             data.push({
                 variable: normalizedNames[0],
-                value: (part[name as keyof Part]?.toString() as string) + " $",
+                value: (part[name as keyof Part] as number).toFixed(2) + " $",
             });
             normalizedNames.shift();
             return;

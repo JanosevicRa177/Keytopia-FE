@@ -87,6 +87,7 @@ export const SwitchSetForm = ({ isOpen, onClose, fetchPage }: SwitchSetFormProps
 					return;
 				}
 				setSwitchNames(res.data);
+				setValue("switchName", res.data[0]);
 			});
 			setInit(false);
 		}
@@ -161,9 +162,7 @@ export const SwitchSetForm = ({ isOpen, onClose, fetchPage }: SwitchSetFormProps
 									}}
 								/>
 								{errors.name ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.name.message}
-									</FormErrorMessage>
+									<FormErrorMessage ml={"8px"}>{errors.name.message}</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
@@ -181,9 +180,7 @@ export const SwitchSetForm = ({ isOpen, onClose, fetchPage }: SwitchSetFormProps
 									}}
 								/>
 								{errors.price ? (
-									<FormErrorMessage ml={"8px"}>
-										Price should be a positive number
-									</FormErrorMessage>
+									<FormErrorMessage ml={"8px"}>Price should be a positive number</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
@@ -231,18 +228,8 @@ export const SwitchSetForm = ({ isOpen, onClose, fetchPage }: SwitchSetFormProps
 									</Select>
 								</Flex>
 							)}
-							<Flex
-								justifyContent={"center"}
-								minH={"100%"}
-								mt={"25px"}
-								minW={"calc(33% - 8px)"}
-							>
-								<FormLabel
-									fontWeight={"semibold"}
-									h={"25px"}
-									textAlign={"center"}
-									my={"auto"}
-								>
+							<Flex justifyContent={"center"} minH={"100%"} mt={"25px"} minW={"calc(33% - 8px)"}>
+								<FormLabel fontWeight={"semibold"} h={"25px"} textAlign={"center"} my={"auto"}>
 									Has brand
 								</FormLabel>
 								<Checkbox
@@ -320,9 +307,7 @@ export const SwitchSetForm = ({ isOpen, onClose, fetchPage }: SwitchSetFormProps
 									))}
 								</Select>
 								{errors.switchName ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.switchName.message}
-									</FormErrorMessage>
+									<FormErrorMessage ml={"8px"}>{errors.switchName.message}</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}

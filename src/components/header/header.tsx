@@ -62,12 +62,7 @@ export const Header = () => {
 					backdropBlur="4px"
 				>
 					<Box w={"1140px"} mx={"auto"}>
-						<Flex
-							w={"100%"}
-							h={"40px"}
-							alignItems={"center"}
-							justifyContent="space-between"
-						>
+						<Flex w={"100%"} h={"40px"} alignItems={"center"} justifyContent="space-between">
 							<Flex gap={"16px"} position={"relative"}>
 								<Box
 									position={"absolute"}
@@ -97,9 +92,7 @@ export const Header = () => {
 								/>
 								<CustomLink
 									link={"/parts/keyboard"}
-									text={
-										user?.role !== "ADMIN" ? "Shop keyboards" : "Show keyboards"
-									}
+									text={user?.role !== "ADMIN" ? "Shop keyboards" : "Show keyboards"}
 								/>
 								<CustomLink link={"/make-keyboard"} text={"Make keyboard"} />
 								{user?.role === "ADMIN" && (
@@ -113,19 +106,10 @@ export const Header = () => {
 								<Flex gap="15px">
 									{user ? (
 										<Flex cursor={"pointer"} gap={"12px"}>
-											<Center
-												gap={"4px"}
-												cursor={"pointer"}
-												onClick={() => handleUserProfile()}
-											>
+											<Center gap={"4px"} cursor={"pointer"} onClick={() => handleUserProfile()}>
 												<Text color={"white"}>{user.name}</Text>
 												<Text color={"white"}>{user.surname}</Text>
-												<Img
-													src={userImg}
-													w={"30px"}
-													h={"30px"}
-													ml={"4px"}
-												/>
+												<Img src={userImg} w={"30px"} h={"30px"} ml={"4px"} />
 											</Center>
 											<Flex
 												flexDirection={"column"}
@@ -150,11 +134,7 @@ export const Header = () => {
 																Register admin
 															</Text>
 														)}
-														<Text
-															cursor={"pointer"}
-															onClick={handleLogout}
-															fontWeight={"bold"}
-														>
+														<Text cursor={"pointer"} onClick={handleLogout} fontWeight={"bold"}>
 															Logout
 														</Text>
 													</UserControlComponent>
@@ -163,13 +143,10 @@ export const Header = () => {
 										</Flex>
 									) : (
 										<Flex gap="15px" color={"white"}>
-											<Text onClick={() => handleLogin()} fontWeight={"bold"}>
+											<Text onClick={() => handleLogin()} fontWeight={"medium"}>
 												Login
 											</Text>
-											<Text
-												onClick={() => handleRegister()}
-												fontWeight={"bold"}
-											>
+											<Text onClick={() => handleRegister()} fontWeight={"medium"}>
 												Register
 											</Text>
 										</Flex>

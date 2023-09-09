@@ -101,10 +101,10 @@ export const SupplierView = () => {
 							<Thead>
 								<Tr>
 									<Th w={"10%"}>Name</Th>
-									<Th w={"30%"}>Address</Th>
-									<Th w={"10%"}>Phone</Th>
-									<Th w={"10%"}>Penals</Th>
-									<Th></Th>
+									<Th w={"25%"}>Address</Th>
+									<Th w={"7%"}>Phone</Th>
+									<Th w={"7%"}>Penals</Th>
+									<Th minW={"250px"}></Th>
 								</Tr>
 							</Thead>
 							<Tbody>
@@ -112,14 +112,13 @@ export const SupplierView = () => {
 									getSuppliersPageRes.data.content.map((item: Supplier) => (
 										<Tr key={item.name}>
 											<Td w={"10%"}>{item.name}</Td>
-											<Td w={"30%"}>
-												{item.address.street} {item.address.streetNumber},{" "}
-												{item.address.zipCode} {item.address.city},{" "}
-												{item.address.country}
+											<Td w={"25%"}>
+												{item.address.street} {item.address.streetNumber}, {item.address.zipCode}{" "}
+												{item.address.city}, {item.address.country}
 											</Td>
-											<Td w={"10%"}>{item.phone}</Td>
-											<Td w={"10%"}>{item.penals}</Td>
-											<Td>
+											<Td w={"7%"}>{item.phone}</Td>
+											<Td w={"7%"}>{item.penals}</Td>
+											<Td w={"250px"}>
 												<Flex gap={"4"}>
 													<Button
 														fontSize={"small"}
@@ -128,9 +127,7 @@ export const SupplierView = () => {
 														overflow={"hidden"}
 														color={"#343434"}
 														bg={colorPallete.button}
-														onClick={() =>
-															handleShowBrands(item.brands, item.name)
-														}
+														onClick={() => handleShowBrands(item.brands, item.name)}
 														_hover={{
 															bg: colorPallete.buttonHover,
 															transform: "scale(1.05,1.05)",
@@ -146,9 +143,7 @@ export const SupplierView = () => {
 														bg={colorPallete.deleteButton}
 														color={"white"}
 														fontSize={"small"}
-														onClick={() =>
-															handleDeleteSupplier(item.name)
-														}
+														onClick={() => handleDeleteSupplier(item.name)}
 														_hover={{
 															bg: colorPallete.deleteButtonHover,
 															transform: "scale(1.05,1.05)",
@@ -173,11 +168,7 @@ export const SupplierView = () => {
 					getPage={getSuppliersPage}
 				/>
 			</Flex>
-			<SupplierForm
-				isOpen={isOpenForm}
-				onClose={onCloseForm}
-				fetchSuppliers={getSuppliersPage}
-			/>
+			<SupplierForm isOpen={isOpenForm} onClose={onCloseForm} fetchSuppliers={getSuppliersPage} />
 			<SupplierBrandsModal
 				supplierName={chosenSupplierName}
 				isOpen={isOpenModal}

@@ -58,7 +58,7 @@ export const PartCard = ({
 				</Text>
 				<Flex textAlign={"end"} mr={"12px"} justifyContent={"space-between"}>
 					<Text>Price: </Text>
-					<Text>{part.price} $ </Text>
+					<Text>{part.price.toFixed(2)} $ </Text>
 				</Flex>
 			</Flex>
 

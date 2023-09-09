@@ -35,10 +35,10 @@ export const KeyboardCards = () => {
 			price: keyboard.cable?.price ?? 0,
 		});
 		tempParts.push({
-			name: keyboard.keycapSet?.name ?? "",
-			imageUrl: keyboard.keycapSet?.imageUrl ?? "",
-			partType: PartType.KEYCAP_SET,
-			price: keyboard.keycapSet?.price ?? 0,
+			name: keyboard.switchSet?.name ?? "",
+			imageUrl: keyboard.switchSet?.imageUrl ?? "",
+			partType: PartType.SWITCH_SET,
+			price: keyboard.switchSet?.price ?? 0,
 		});
 		tempParts.push({
 			name: keyboard.stabilizers?.name ?? "",
@@ -47,10 +47,10 @@ export const KeyboardCards = () => {
 			price: keyboard.stabilizers?.price ?? 0,
 		});
 		tempParts.push({
-			name: keyboard.switchSet?.name ?? "",
-			imageUrl: keyboard.switchSet?.imageUrl ?? "",
-			partType: PartType.SWITCH_SET,
-			price: keyboard.switchSet?.price ?? 0,
+			name: keyboard.keycapSet?.name ?? "",
+			imageUrl: keyboard.keycapSet?.imageUrl ?? "",
+			partType: PartType.KEYCAP_SET,
+			price: keyboard.keycapSet?.price ?? 0,
 		});
 		setKeyboardParts(tempParts);
 	}, [keyboard]);

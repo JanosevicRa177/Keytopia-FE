@@ -103,22 +103,22 @@ export const SwitchView = () => {
 						<Table variant="striped" colorScheme={"purple"} fontSize={"small"}>
 							<Thead>
 								<Tr>
-									<Th px={"12px"} py={"16px"}>
+									<Th px={"11px"} py={"16px"}>
 										Name
 									</Th>
-									<Th px={"12px"} py={"16px"}>
+									<Th px={"11px"} py={"16px"}>
 										Actuation force
 									</Th>
-									<Th px={"12px"} py={"16px"}>
+									<Th px={"11px"} py={"16px"}>
 										Actuation point
 									</Th>
-									<Th px={"12px"} py={"16px"}>
+									<Th px={"11px"} py={"16px"}>
 										Pin type
 									</Th>
-									<Th px={"12px"} py={"16px"}>
+									<Th px={"11px"} py={"16px"}>
 										Switch type
 									</Th>
-									<Th px={"12px"} py={"16px"}>
+									<Th px={"11px"} py={"16px"}>
 										Price weight
 									</Th>
 									<Th></Th>
@@ -152,9 +152,7 @@ export const SwitchView = () => {
 														overflow={"hidden"}
 														bg={colorPallete.deleteButton}
 														color={"white"}
-														onClick={() =>
-															handleDeleteSwitch(item.name)
-														}
+														onClick={() => handleDeleteSwitch(item.name)}
 														_hover={{
 															bg: colorPallete.deleteButtonHover,
 															transform: "scale(1.05,1.05)",

@@ -73,11 +73,7 @@ export const PartModalControl = ({ partData, setPartData }: PartModalControlProp
 			});
 		else if (part.partType === PartType.SWITCH_SET)
 			await getSwitchSet(part.name).then((switchSet: ApiResponse<SwitchSet | null>) => {
-				handlePartVariables(
-					switchSet.data as unknown as Part,
-					setPart,
-					PartType.SWITCH_SET
-				);
+				handlePartVariables(switchSet.data as unknown as Part, setPart, PartType.SWITCH_SET);
 				onOpen();
 			});
 		else if (part.partType === PartType.PCB)
@@ -87,11 +83,7 @@ export const PartModalControl = ({ partData, setPartData }: PartModalControlProp
 			});
 		else if (part.partType === PartType.STABILIZER)
 			await getStabilizers(part.name).then((stabilizers: ApiResponse<Stabilizers | null>) => {
-				handlePartVariables(
-					stabilizers.data as unknown as Part,
-					setPart,
-					PartType.STABILIZER
-				);
+				handlePartVariables(stabilizers.data as unknown as Part, setPart, PartType.STABILIZER);
 				onOpen();
 			});
 		else if (part.partType === PartType.KEYCAP)
@@ -101,11 +93,7 @@ export const PartModalControl = ({ partData, setPartData }: PartModalControlProp
 			});
 		else if (part.partType === PartType.KEYCAP_SET)
 			await getKeycapSet(part.name).then((keycapSet: ApiResponse<KeycapSet | null>) => {
-				handlePartVariables(
-					keycapSet.data as unknown as Part,
-					setPart,
-					PartType.KEYCAP_SET
-				);
+				handlePartVariables(keycapSet.data as unknown as Part, setPart, PartType.KEYCAP_SET);
 				onOpen();
 			});
 	}

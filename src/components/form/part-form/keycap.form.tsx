@@ -87,13 +87,14 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 					return;
 				}
 				setKeycapProfileNames(res.data);
+				setValue("keycapProfile", res.data[0]);
 			});
 			setInit(false);
 		}
 	}, [init]);
 	async function handleCreateKeycap(values: Keycap) {
 		if (image === undefined || image === null) {
-			toast.error("You did not choose image for case!");
+			toast.error("You did not choose image for keycap!");
 			return;
 		}
 		createKeycap(values, image).then((response: ApiResponse<null>) => {
@@ -161,9 +162,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									}}
 								/>
 								{errors.name ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.name.message}
-									</FormErrorMessage>
+									<FormErrorMessage ml={"8px"}>{errors.name.message}</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
@@ -181,9 +180,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									}}
 								/>
 								{errors.price ? (
-									<FormErrorMessage ml={"8px"}>
-										Price should be a positive number
-									</FormErrorMessage>
+									<FormErrorMessage ml={"8px"}>Price should be a positive number</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
@@ -205,9 +202,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									<option value={PriceWeight.HEAVY}>Heavy</option>
 								</Select>
 								{errors.priceWeight ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.priceWeight.message}
-									</FormErrorMessage>
+									<FormErrorMessage ml={"8px"}>{errors.priceWeight.message}</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
@@ -255,18 +250,8 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									</Select>
 								</Flex>
 							)}
-							<Flex
-								justifyContent={"center"}
-								minH={"100%"}
-								mt={"25px"}
-								minW={"calc(33% - 8px)"}
-							>
-								<FormLabel
-									fontWeight={"semibold"}
-									h={"25px"}
-									textAlign={"center"}
-									my={"auto"}
-								>
+							<Flex justifyContent={"center"} minH={"100%"} mt={"25px"} minW={"calc(33% - 8px)"}>
+								<FormLabel fontWeight={"semibold"} h={"25px"} textAlign={"center"} my={"auto"}>
 									Has brand
 								</FormLabel>
 								<Checkbox
@@ -317,18 +302,12 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									defaultValue={KeycapMaterial.ABS}
 								>
 									<option value={KeycapMaterial.ABS}>ABS</option>
-									<option value={KeycapMaterial.DOUBLESHOT_ABS}>
-										Doubleshot ABS
-									</option>
-									<option value={KeycapMaterial.DOUBLESHOT_PBT}>
-										Doubleshot PBT
-									</option>
+									<option value={KeycapMaterial.DOUBLESHOT_ABS}>Doubleshot ABS</option>
+									<option value={KeycapMaterial.DOUBLESHOT_PBT}>Doubleshot PBT</option>
 									<option value={KeycapMaterial.PBT}>PBT</option>
 								</Select>
 								{errors.material ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.material.message}
-									</FormErrorMessage>
+									<FormErrorMessage ml={"8px"}>{errors.material.message}</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}
@@ -352,9 +331,7 @@ export const KeycapForm = ({ isOpen, onClose, fetchPage }: KeycapFormProps) => {
 									))}
 								</Select>
 								{errors.keycapProfile ? (
-									<FormErrorMessage ml={"8px"}>
-										{errors.keycapProfile.message}
-									</FormErrorMessage>
+									<FormErrorMessage ml={"8px"}>{errors.keycapProfile.message}</FormErrorMessage>
 								) : (
 									<Box h={"25px"} w="100%" ml={"8px"}></Box>
 								)}

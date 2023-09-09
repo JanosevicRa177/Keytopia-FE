@@ -66,22 +66,12 @@ export const FinalStep = () => {
 						</>
 					)}
 					<Text w={"350px"} fontSize={"2xl"} mt={"24px"}>
-						Price: {calculatePrice()} $
+						Price: {calculatePrice().toFixed(2)} $
 					</Text>
 				</Flex>
 				<Flex gap={"20px"}>
-					<Flex
-						justifyContent={"center"}
-						minH={"100%"}
-						mt={"25px"}
-						minW={"calc(33% - 8px)"}
-					>
-						<FormLabel
-							fontWeight={"semibold"}
-							h={"25px"}
-							textAlign={"center"}
-							my={"auto"}
-						>
+					<Flex justifyContent={"center"} minH={"100%"} mt={"25px"} minW={"calc(33% - 8px)"}>
+						<FormLabel fontWeight={"semibold"} h={"25px"} textAlign={"center"} my={"auto"}>
 							Assemble keyboard (+20 $)
 						</FormLabel>
 						<Checkbox
@@ -100,18 +90,8 @@ export const FinalStep = () => {
 						/>
 					</Flex>
 					{keyboard.switchSet != null && (
-						<Flex
-							justifyContent={"center"}
-							minH={"100%"}
-							mt={"25px"}
-							minW={"calc(33% - 8px)"}
-						>
-							<FormLabel
-								fontWeight={"semibold"}
-								h={"25px"}
-								textAlign={"center"}
-								my={"auto"}
-							>
+						<Flex justifyContent={"center"} minH={"100%"} mt={"25px"} minW={"calc(33% - 8px)"}>
+							<FormLabel fontWeight={"semibold"} h={"25px"} textAlign={"center"} my={"auto"}>
 								Lube switches and stabilizers with krytox 205g0 (+25 $)
 							</FormLabel>
 							<Checkbox

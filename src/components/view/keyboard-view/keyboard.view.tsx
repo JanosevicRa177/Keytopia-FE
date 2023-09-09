@@ -52,7 +52,6 @@ export const KeyboardView = () => {
 			<Flex
 				color={"#343434"}
 				bg={"rgba(255,255,255,0.9)"}
-				mb={"32px"}
 				px={"32px"}
 				py={"32px"}
 				boxShadow={"4px 4px 12px 0px rgba(0,0,0,0.3)"}
@@ -82,8 +81,7 @@ export const KeyboardView = () => {
 								h={"45px"}
 								borderColor={colorPallete.inputBorder}
 								onChange={(e) => {
-									if (e.target.value === "undefined")
-										setGeneratedByAdmin(undefined);
+									if (e.target.value === "undefined") setGeneratedByAdmin(undefined);
 									else setGeneratedByAdmin(e.target.value === "true");
 								}}
 								_hover={{
@@ -137,7 +135,6 @@ export const KeyboardView = () => {
 					getPage={fetchPage}
 				/>
 			</Flex>
-			<Box h={"calc(100vh - 815px)"} />
 		</Box>
 	);
 };

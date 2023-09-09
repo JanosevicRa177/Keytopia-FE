@@ -28,7 +28,7 @@ export const FirstStep = () => {
 				return;
 			}
 			setSizeNames(res.data);
-			setSizeName(res.data[0]);
+			setSizeName(res.data.reverse()[0]);
 			setPriceWeight(PriceWeight.MEDIUM);
 			setColor("");
 			setSwitchType(SwitchType.TACTILE);

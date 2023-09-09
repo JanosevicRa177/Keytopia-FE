@@ -15,6 +15,7 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { PartItem } from "../../store/part-store/types/part.type";
+import { colorPallete } from "../../styles/color";
 
 interface PartItemModalProps {
 	isOpen: boolean;
@@ -31,28 +32,24 @@ export const PartItemModal = ({ isOpen, onClose, partsItems }: PartItemModalProp
 			}}
 		>
 			<ModalOverlay />
-			<ModalContent margin={"auto"}>
+			<ModalContent margin={"auto"} maxW="560px">
 				<ModalHeader textAlign={"center"} mt={4}>
 					Parts
 				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
 					<Flex position={"relative"} w={"100%"} h={"450px"}>
-						<Flex
-							flexDir={"column"}
-							cursor={"pointer"}
-							w={"100%"}
-							h={"450px"}
-							position={"absolute"}
-						>
+						<Flex flexDir={"column"} w={"100%"} h={"450px"} position={"absolute"}>
 							<TableContainer
 								flex={1}
 								rounded={"4px"}
 								mx={"auto"}
-								mb={"8px"}
+								mb={"32px"}
 								w={"calc(100% - 30px)"}
 								h={"400px"}
 								overflowY={"auto"}
+								border={"2px"}
+								borderColor={colorPallete.button}
 							>
 								<Table fontSize={"small"} variant="striped" colorScheme={"purple"}>
 									<Tbody>

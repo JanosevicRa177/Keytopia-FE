@@ -32,9 +32,7 @@ export const PartPage = () => {
 		if (location.pathname === oldLocation) return;
 		if (location.pathname === "/parts/part" || location.pathname === "/parts/keyboard") {
 			setChosenView(
-				location.pathname === "/parts/part"
-					? parts[0]
-					: { value: "Keyboards", route: "keyboard" }
+				location.pathname === "/parts/part" ? parts[0] : { value: "Keyboards", route: "keyboard" }
 			);
 		}
 		setOldLocation(location.pathname);
